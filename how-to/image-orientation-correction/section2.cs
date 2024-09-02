@@ -1,0 +1,2 @@
+// Apply deskew
+imageInput.Deskew();

@@ -1,0 +1,1 @@
+string Text = new IronTesseract().Read(@"img\Screenshot.png").Text;

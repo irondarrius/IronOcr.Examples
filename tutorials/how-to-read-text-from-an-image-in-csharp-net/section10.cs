@@ -1,0 +1,12 @@
+using IronOcr;
+
+IronTesseract ocr = new IronTesseract();
+using OcrInput input = new OcrInput();
+input.LoadPdf("example.pdf", Password: "password");
+// We can also select specific PDF page numbers to OCR
+
+OcrResult result = ocr.Read(input);
+
+Console.WriteLine(result.Text);
+Console.WriteLine($"{result.Pages.Length} Pages");
+// 1 page for every page of the PDF

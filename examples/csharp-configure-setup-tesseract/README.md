@@ -1,0 +1,1 @@
+The `IronTesseract.Configuration` object enables advanced users to tap into the underlying Tesseract API within C# / .NET for customized configurations.

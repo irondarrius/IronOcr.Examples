@@ -1,0 +1,1 @@
+This case study demonstrates how targeting specific sections of an image for OCR (Optical Character Recognition) within a .NET application can lead to a significant acceleration in processing speed, with improvements up to 41%. In technical terms, these targeted regions are referred to as `ContentAreas` or `CropAreas`.

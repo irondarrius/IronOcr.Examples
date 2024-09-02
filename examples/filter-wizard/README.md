@@ -1,0 +1,1 @@
+To assist users in selecting the appropriate filters for their OCR inputs, the `OcrInputFilterWizard` presents a variety of filtering options tailored specifically for OCR tasks.
