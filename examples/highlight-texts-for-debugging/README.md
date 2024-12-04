@@ -1,3 +1,5 @@
-## Add Visual Debugging Highlights to PDF Text
+***Based on <https://ironsoftware.com/examples/highlight-texts-for-debugging/>***
 
-The method involves enclosing detected characters, words, lines, or paragraphs within red rectangles and subsequently saving these marked images as a `.png` file to aid in debugging tasks.
+## Debugging by Highlighting Text on a Page
+
+By identifying and marking characters, words, lines, or paragraphs with red boxes, you can highlight them for debugging purposes. This technique allows these elements to be visually distinguished, making it easier to troubleshoot issues. Once highlighted, the results are saved as a `.png` file for further analysis.

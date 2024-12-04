@@ -1,1 +1,3 @@
-The `IronTesseract.Configuration` object enables advanced users to tap into the underlying Tesseract API within C# / .NET for customized configurations.
+***Based on <https://ironsoftware.com/examples/csharp-configure-setup-tesseract/>***
+
+The `IronTesseract.Configuration` object facilitates access to the Tesseract API in C# / .NET for advanced setup and configuration by experienced users.

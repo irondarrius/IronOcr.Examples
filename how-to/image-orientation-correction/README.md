@@ -1,36 +1,43 @@
-# Adjusting Image Orientation for Optimal Text Recognition
+# How to Correct Image Orientation for Text Recognition
 
-Adjusting the orientation of images is crucial in image processing to prepare them for tasks like text recognition. IronOcr excels in correcting image orientation, providing functionalities like rotation, deskewing, and scaling to ensure that images are perfectly aligned for text extraction.
+***Based on <https://ironsoftware.com/how-to/image-orientation-correction/>***
 
-These operations are vital to ensure the text within images is correctly positioned and sized, which enhances the accuracy of text recognition.
 
-## Example of Rotating an Image
+Correcting the orientation of images for text recognition involves adjusting their alignment to facilitate better extraction of text. The IronOcr library provides robust tools to handle image orientation by offering techniques such as rotation, deskewing, and scaling, which significantly enhance the accuracy of text extraction by ensuring the images are correctly oriented and appropriately scaled.
 
-To change the orientation of an image, you can rotate it by a certain degree (e.g., 90 degrees) either in a clockwise or counterclockwise direction. This ensures content within the image is properly aligned.
+## Example of Image Rotation
 
-Specify the degree of rotation when calling the `Rotate` method on an `OcrImageInput`. Positive values indicate a clockwise rotation, whereas negative values denote counterclockwise adjustments.
+Changing the orientation of an image to make the content upright is achieved by rotating the image by a specific degree. This adjustment ensures the text within the image is vertically aligned.
+
+Assign a degree to the `Rotate` method to rotate the image. Positive values rotate the image clockwise and negative values counterclockwise.
 
 ```cs
 using IronOcr;
-
-// Create an instance of IronTesseract
-IronTesseract ocrEngine = new IronTesseract();
-
-// Load the image
-using var inputImage = new OcrImageInput("paragraph_skewed.png");
-
-// Apply a 180-degree clockwise rotation
-inputImage.Rotate(180);
-
-// Save the rotated image
-inputImage.SaveAsImages("rotate_result");
+namespace ironocr.ImageOrientationCorrection
+{
+    public class Section1
+    {
+        public void Execute()
+        {
+            IronTesseract ocrTesseract = new IronTesseract();
+            
+            using var inputImage = new OcrImageInput("paragraph_skewed.png");
+            
+            // Rotating the image by 180 degrees
+            inputImage.Rotate(180);
+            
+            // Saving the modified image
+            inputImage.SaveAsImages("rotated");
+        }
+    }
+}
 ```
 
-After modifying the image, it can be saved using the `SaveAsImages` method. Here’s how the image looks before and after the rotation:
+You can save the modified version of the image using the `SaveAsImages` method. Here is a visual comparison of the image before and after the rotation:
 
 <div class="competitors-section__wrapper-even-1">
     <div class="competitors__card" style="width: 48%;">
-        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-orientation-correction/paragraph_skewed.png" alt="Sample image before rotation" class="img-responsive add-shadow">
+        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-orientation-correction/paragraph_skewed.png" alt="Sample image" class="img-responsive add-shadow">
         <p class="competitors__download-link" style="color: #181818; font-style: italic;">Before</p>
     </div>
     <div class="competitors__card" style="width: 48%;">
@@ -41,48 +48,68 @@ After modifying the image, it can be saved using the `SaveAsImages` method. Here
 
 <hr>
 
-## Deskewing an Image Example
+## Example of Deskewing an Image
 
-Deskewing corrects images that are slightly tilted or skewed, making sure that all textual or graphic content is aligned horizontally.
+Deskewing corrects any tilt or skew in the images by realigning them so that the text appears horizontally straight.
 
-To deskew an image, utilize the `Deskew` method which can adjust mishaps up to a certain angle, enhancing alignment:
+Utilize the `Deskew` method to straighten the image. This method corrects misalignments to a specified maximum angle, enhancing text alignment but possibly increasing processing time and error risk.
 
 ```cs
-// Straighten the skewed image
-inputImage.Deskew();
+using IronOcr;
+namespace ironocr.ImageOrientationCorrection
+{
+    public class Section2
+    {
+        public void Execute()
+        {
+            imageInput.Deskew();
+        }
+    }
+}
 ```
+
+Here is how the image looks before and after the deskewing process:
 
 <div class="competitors-section__wrapper-even-1">
     <div class="competitors__card" style="width: 48%;">
-        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-orientation-correction/paragraph_skewed.png" alt="Sample image before deskewing" class="img-responsive add-shadow">
+        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-orientation-correction/paragraph_skewed.png" alt="Sample image" class="img-responsive add-shadow">
         <p class="competitors__download-link" style="color: #181818; font-style: italic;">Before</p>
     </div>
     <div class="competitors__card" style="width: 48%;">
-        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-orientation-correction/deskew_0.webp" alt="Deskewed image" class="img-responsive add-shadow">
+        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-orientation-correction/deskew_0.webp"  alt="Deskewed image" class="img-responsive add-shadow">
         <p class="competitors__download-link" style="color: #181818; font-style: italic;">After</p>
     </div>
 </div>
 
 <hr>
 
-## Scaling an Image Example
+## Example of Scaling an Image
 
-Scaling adjusts the size of an image to a precise dimension or ratio, which is particularly useful in standardizing sizes for uniform text recognition.
+Scaling adjusts the size of an image, which is useful for standardizing dimensions for reliable text recognition.
 
-The `Scale` method adjusts the size of the image based on a percentage input, where 100% means original size. It also allows adjusting associated cropping areas proportionally:
+To resize an image, use the `Scale` method. This function requires a percentage value; at 100%, the original size is maintained. The **ScaleCropArea** parameter should typically be set to `true` to keep crop areas proportionally scaled.
 
 ```cs
-// Resize the image
-inputImage.Scale(70);
+using IronOcr;
+namespace ironocr.ImageOrientationCorrection
+{
+    public class Section3
+    {
+        public void Execute()
+        {
+            imageInput.Scale(70, true);
+        }
+    }
+}
 ```
 
-### Comparison of Image Sizes
+### Image Size Comparison
 
 <div class="content-img-align-center">
     <div class="center-image-wrapper">
-        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-orientation-correction/size-comparison.webp" alt="Size comparison before scaling" class="img-responsive add-shadow">
+         <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-orientation-correction/size-comparison.webp" alt="Size comparison" class="img-responsive add-shadow">
     </div>
     <div class="center-image-wrapper">
-         <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-orientation-correction/size-comparison2.webp" alt="Size comparison after scaling" class="img-responsive add-shadow">
+         <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-orientation-correction/size-comparison2.webp" alt="Size comparison" class="img-responsive add-shadow">
     </div>
 </div>

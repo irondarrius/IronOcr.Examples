@@ -1,13 +1,13 @@
-Here's the paraphrased content, with relative URL paths resolved to ironsoftware.com:
+***Based on <https://ironsoftware.com/examples/fix-image-orientation/>***
 
 ## Rotate Images
 
-Adjust the orientation of images by rotating them a specific number of degrees in a clockwise direction. To rotate images counter-clockwise, specify a negative degree value.
+Adjust the orientation of images by rotating them a specific number of degrees in a clockwise direction. To rotate images counter-clockwise, input negative values.
 
-## Deskew
+## Correct Image Alignment
 
-Correct the alignment of images to ensure they are upright and properly oriented. This adjustment is particularly beneficial for Optical Character Recognition (OCR) processes, as the Tesseract engine has a limited skew tolerance of up to 5 degrees.
+Correct any skewness in images to ensure they are vertically and horizontally aligned. This adjustment is crucial for effective OCR processing, as the OCR engine, Tesseract, can only handle deviations of up to 5 degrees.
 
-## Scale
+## Adjust Image Size
 
-Proportionally resize pages within an `OcrInput` to alter their dimensions.
+Resize the pages within an `OcrInput` in a proportional manner, maintaining the aspect ratio of the images.

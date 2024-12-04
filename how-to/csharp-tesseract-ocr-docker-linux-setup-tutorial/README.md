@@ -1,112 +1,142 @@
-# Configuring IronOCR within Docker Containers
+# Configuring IronOCR in Docker Environments
 
-Interested in [OCR capabilities for Images or PDF files in C#](https://ironsoftware.com/csharp/ocr/)?
+***Based on <https://ironsoftware.com/how-to/csharp-tesseract-ocr-docker-linux-setup-tutorial/>***
 
-IronOCR offers comprehensive support for Docker, including environments like Azure Docker Containers, applicable to both Linux and Windows platforms.
 
-![Docker Logo](https://img.icons8.com/color/96/000000/docker--v1.png) ![Azure Logo](https://img.icons8.com/color/96/000000/azure--v1.png) ![Linux Logo](https://img.icons8.com/color/96/000000/linux--v1.png) ![AWS Logo](https://img.icons8.com/color/96/000000/amazon-web-services--v1.png) ![Windows Logo](https://img.icons8.com/color/96/000000/windows-logo--v1.png)
+Are you looking to [implement OCR with Images or PDFs in C#](https://ironsoftware.com/csharp/ocr/)?
 
-## Benefits of Docker
+IronOCR is now fully compatible with Docker, supporting environments like Azure Docker Containers across both Linux and Windows platforms.
 
-Docker simplifies the packaging, distribution, and consistent operation of applications across varied environments by encapsulating them into lightweight, portable containers. These containers can operate seamlessly in virtually any system.
+![](https://img.icons8.com/color/96/000000/docker--v1.png) ![](https://img.icons8.com/color/96/000000/linux--v1.png) ![](https://img.icons8.com/color/96/000000/amazon-web-services--v1.png) ![](https://img.icons8.com/color/96/000000/windows-logo--v1.png)
 
-## Introduction to IronOCR on Linux using Docker
+## Benefits of Using Docker
 
-For newcomers to Docker with .NET, we suggest checking out this thorough guide on [setting up Docker for debugging and integration within Visual Studio projects](https://docs.microsoft.com/en-us/visualstudio/containers/edit-and-refresh?view=vs-2019).
+Docker provides a streamlined framework for developers to package, ship, and run applications within lightweight, portable containers that are capable of operating virtually everywhere.
 
-It's also worthwhile to explore our detailed [IronOCR Linux Setup and Compatibility Guide](https://ironsoftware.com/csharp/ocr/how-to/tesseract-ocr-setup-linux-ubuntu-debian/).
+## Getting Started with IronOCR on Linux
 
-### Optimal Linux Distributions for Docker
+For developers new to Docker in the context of .NET, the following guide on [Docker debugging and integration with Visual Studio](https://docs.microsoft.com/en-us/visualstudio/containers/edit-and-refresh?view=vs-2019) is indispensable.
 
-For simpler setup experiences with IronOCR, we recommend the following contemporary 64-bit Linux distributions:
+We further encourage you to explore our detailed [IronOCR Linux Setup and Compatibility Guide](https://ironsoftware.com/csharp/ocr/how-to/tesseract-ocr-setup-linux-ubuntu-debian/).
+
+### Suggested Linux Distributions for Docker
+
+The following 64-bit Linux distributions are recommended for optimal configuration of IronPDF:
 
 - Ubuntu 20
 - Ubuntu 18
 - Debian 11
-- Debian 10 (Presently, the default Linux distribution on Microsoft Azure)
+- Debian 10 _[The default Linux distribution on Microsoft Azure currently]_
 
-Utilizing Microsoft's [Official Docker Images](https://hub.docker.com/_/microsoft-dotnet-runtime/) is advised. While other distributions are supported, they may require manual configurations via `apt-get`. For guidance on these setups, please refer to our [Manual Linux Setup Guide](https://ironsoftware.com/csharp/ocr/how-to/tesseract-ocr-setup-linux-ubuntu-debian/).
+It's advisable to use [Microsoft's Official Docker Images](https://hub.docker.com/_/microsoft-dotnet-runtime/). Although other Linux distributions can be used, they might require additional manual configuration with `apt-get`. Refer to our "[Linux Manual Setup](https://ironsoftware.com/csharp/ocr/how-to/tesseract-ocr-setup-linux-ubuntu-debian/)" guide for more details.
 
-Example Docker files for both Ubuntu and Debian are included below:
+Sample Dockerfiles for both Ubuntu and Debian are provided within this document.
 
-## Essential Installation Steps for IronOCR in Linux Docker
+## Installation Essentials for IronOCR on Linux Using Docker
 
-### Using IronOCR via NuGet
+### Integrating via Our NuGet Package
 
-We recommend leveraging the [IronOcr NuGet Package](https://www.nuget.org/packages/IronOcr) for development across Windows, macOS, and Linux.
+For cross-platform development (Windows, macOS, and Linux), we recommend incorporating the [IronOcr NuGet Package](https://www.nuget.org/packages/IronOcr).
 
 ```shell
 PM> Install-Package IronOcr
 ```
 
-## Dockerfile Examples for Ubuntu with .NET
+## Docker Configurations for Ubuntu Linux
 
-![Docker Logo](https://img.icons8.com/color/96/000000/docker--v1.png) ![Linux Logo](https://img.icons8.com/color/96/000000/linux--v1.png) ![Ubuntu Logo](https://img.icons8.com/color/96/000000/ubuntu--v1.png)
+![](https://img.icons8.com/color/96/000000/docker--v1.png) ![](https://img.icons8.com/color/96/000000/linux--v1.png) ![](https://img.icons8.com/color/96/000000/ubuntu--v1.png)
 
-### Ubuntu 20 with .NET 5 SDK and Runtime
+### Setup for Ubuntu 20 with .NET 5
 
 ```shell
-# Base runtime image for Ubuntu 20 with .NET 5
+# Base runtime image (Ubuntu 20 with .NET runtime)
+
+***Based on <https://ironsoftware.com/how-to/csharp-tesseract-ocr-docker-linux-setup-tutorial/>***
+
 FROM mcr.microsoft.com/dotnet/runtime:5.0-focal AS base
 WORKDIR /app
-# Installing critical libraries
+# Install necessary packages
+
+***Based on <https://ironsoftware.com/how-to/csharp-tesseract-ocr-docker-linux-setup-tutorial/>***
+
 RUN apt-get update && apt-get install -y apt-utils libgdiplus libc6-dev
 
-# Base SDK image for development
+# Base development image (Ubuntu 20 with .NET SDK)
+
+***Based on <https://ironsoftware.com/how-to/csharp-tesseract-ocr-docker-linux-setup-tutorial/>***
+
 FROM mcr.microsoft.com/dotnet/sdk:5.0-focal AS build
 WORKDIR /src
-# Restoring NuGet packages
+# Restore NuGet packages
+
+***Based on <https://ironsoftware.com/how-to/csharp-tesseract-ocr-docker-linux-setup-tutorial/>***
+
 COPY ["Example/Example.csproj", "Example/"]
 RUN dotnet restore "Example/Example.csproj"
-# Project build sequence
+# Build the project
+
+***Based on <https://ironsoftware.com/how-to/csharp-tesseract-ocr-docker-linux-setup-tutorial/>***
+
 COPY . .
-WORKROOM "/src/Example"
+WORKDIR "/src/Example"
 RUN dotnet build "Example.csproj" -c Release -o /app/build
-# Publishing project
+# Publish the project
+
+***Based on <https://ironsoftware.com/how-to/csharp-tesseract-ocr-docker-linux-setup-tutorial/>***
+
 FROM build AS publish
 RUN dotnet publish "Example.csproj" -c Release -o /app/publish
-# Final runtime environment setup
+# Final build stage
+
+***Based on <https://ironsoftware.com/how-to/csharp-tesseract-ocr-docker-linux-setup-tutorial/>***
+
 FROM base AS final
-WORKROOM /app
+WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Example.dll"]
 ```
 
-[Additional detailed Dockerfile configurations for other Ubuntu and Debian versions are provided further in this document, adapting to different .NET versions.]
-
-## Dockerfile Templates for Debian with .NET
-
-![Docker Logo](https://img.icons8.com/color/96/000000/docker--v1.png) ![Linux Logo](https://img.icons8.com/color/96/000000/linux--v1.png) ![Debian Logo](https://img.icons8.com/color/96/000000/debian--v1.png)
-
-### Debian 11 with .NET 5 SDK and Runtime
+### Setup for Ubuntu 18 with .NET 3.1 LTS
 
 ```shell
-# Base runtime image for Debian 11 with .NET 5
-FROM mcr.microsoft.com/dotnet/aspnet:5.0-bullseye-slim AS base
-WORKROOM /app
-# Installing necessary packages
-RUN apt-get update && apt-get install -y apt-utils libgdiplus libc6-dev
+# Base runtime and development configurations for Ubuntu 18 with .NET 3.1 LTS
 
-# Base SDK image for development
-FROM mcr.microsoft.com/dotnet/sdk:5.0-bullseye-slim AS build
-WORKROOM /src
-# NuGet package restoration
-COPY ["Example/Example.csproj", "Example/"]
-RUN dotnet restore "Example/Example.csproj"
-# Compilation and build instructions
-COPY . .
-WORKROOM "/src/Example"
-RUN dotnet build "Example.csproj" -c Release -o /app/build
-# Publishing the application
-FROM build AS publish
-RUN dotnet publish "Example.csproj" -c Release -o /app/publish
-# Preparing final runtime environment
-FROM base AS final
-WORKROOM /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Example.dll"]
+***Based on <https://ironsoftware.com/how-to/csharp-tesseract-ocr-docker-linux-setup-tutorial/>***
+
+# Similar steps as Ubuntu 20, substituting with the appropriate images
+
+***Based on <https://ironsoftware.com/how-to/csharp-tesseract-ocr-docker-linux-setup-tutorial/>***
+
 ```
 
-[Steps for additional configurations for other Debian versions are analogously detailed further in this document.]
+## Docker Configurations for Debian Linux
 
-Through these setups, deploying IronOCR within Docker containers becomes streamlined, ensuring optimal OCR capabilities on a variety of platforms.
+![](https://img.icons8.com/color/96/000000/docker--v1.png) ![](https://img.icons8.com/color/96/000000/linux--v1.png) ![](https://img.icons8.com/color/96/000000/debian--v1.png)
+
+### Setup for Debian 11 with .NET 5
+
+```shell
+# Base runtime and development configurations for Debian 11 with .NET 5
+
+***Based on <https://ironsoftware.com/how-to/csharp-tesseract-ocr-docker-linux-setup-tutorial/>***
+
+# Similar steps as Ubuntu setups, substituting with the appropriate Debian images
+
+***Based on <https://ironsoftware.com/how-to/csharp-tesseract-ocr-docker-linux-setup-tutorial/>***
+
+```
+
+### Setup for Debian 11 and Debian 10 with .NET 5 and .NET 3.1 LTS
+
+```shell
+# Base runtime and development configurations for Debian 10 and Debian 11 with .NET 5 and .NET 3.1 LTS
+
+***Based on <https://ironsoftware.com/how-to/csharp-tesseract-ocr-docker-linux-setup-tutorial/>***
+
+# Similar steps as above configurations, substituting with the appropriate Debian images
+
+***Based on <https://ironsoftware.com/how-to/csharp-tesseract-ocr-docker-linux-setup-tutorial/>***
+
+```
+
+These configurations provide foundational templates for setting up IronOCR within Docker on Linux environments, accommodating different versions and distributions efficiently.

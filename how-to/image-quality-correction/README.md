@@ -1,144 +1,126 @@
-# Enhancing Image Quality with Filters for Improved Text Recognition
+# Enhancing Image Quality for Improved OCR Accuracy with IronOcr Filters
 
-Digital image filters are essential tools in image processing, particularly useful for augmenting the readability and quality of images in text recognition tasks. IronOcr offers several filters such as sharpen, enhance resolution, denoise, dilate, and erode, specifically designed to preprocess images for more effective OCR.
+***Based on <https://ironsoftware.com/how-to/image-quality-correction/>***
 
-These filters are crucial for improving the clarity and visibility of text while minimizing any unwanted noise or disturbances that might impede the OCR process.
+
+Image correction filters are sophisticated techniques within digital image processing aimed at enhancing the features and overall quality of images, particularly to boost text recognition and extraction capabilities. IronOcr includes a suite of useful filters such as sharpen, enhance resolution, denoise, dilate, and erode, which are essential for pre-processing images in preparation for Optical Character Recognition (OCR).
+
+These filters are instrumental in refining the image to ensure highly accurate text extraction by sharpening text visibility and minimizing unwanted noise or visual artifacts.
 
 ## Example of Using the Sharpen Filter
 
-The sharpen filter is useful for enhancing the contrast at the edges within an image, which clarifies the text and details, aiding in the accuracy of character recognition by OCR technologies.
+The sharpen filter works by increasing contrast at the edges within an image, thus enhancing the definition and making text more distinguishable. This helps OCR algorithms to better identify individual characters.
 
-You can apply the sharpen filter by using the `Sharpen` method on an `OcrImageInput` object.
+Here’s how to apply the `Sharpen` filter using the `OcrImageInput` object in IronOcr:
 
 ```cs
 using IronOcr;
+namespace ironocr.ImageQualityCorrection
+{
+    public class SharpenSection
+    {
+        public void Execute()
+        {
+            // Create an IronTesseract instance
+            IronTesseract ocr = new IronTesseract();
 
-// Create an instance of IronTesseract
-IronTesseract ocr = new IronTesseract();
-
-// Load the image
-using var image = new OcrImageInput("sample.jpg");
-
-// Apply the sharpen filter
-image.Sharpen();
-
-// Save the enhanced image
-image.SaveAsImages("sharpen");
+            // Load the image
+            using var inputImage = new OcrImageInput("sample.jpg");
+            // Apply the sharpen filter
+            inputImage.Sharpen();
+            
+            // Save the optimized image
+            inputImage.SaveAsImages("sharpened_output");
+        }
+    }
+}
 ```
 
-This saves the improved image. Here's a visual before and after applying the sharpen filter:
+You can save the optimized image using the `SaveAsImages` method. Here is a visual comparison of the image before and after the sharpen filter is applied.
 
-<div class="competitors-section__wrapper-even-1">
-    <div class="competitors__card" style="width: 48%;">
-        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-quality-correction/sample.jpg" alt="Sample image" class="img-responsive add-shadow">
-        <p class="competitors__download-link" style="color: #181818; font-style: italic;">Before</p>
+<div class="image-comparison">
+    <div class="image-box" style="width: 48%;">
+        ![Before Sharpen](https://ironsoftware.com/static-assets/ocr/how-to/image-quality-correction/sample.jpg "Original Image")
+        <p>Before</p>
     </div>
-    <div class="competitors__card" style="width: 48%;">
-        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-quality-correction/sharpen_0.webp" alt="Sharpen filter applied" class="img-responsive add-shadow">
-        <p class="competitors__download-link" style="color: #181818; font-style: italic;">After</p>
+    <div class="image-box" style="width: 48%;">
+        ![After Sharpen](https://ironsoftware.com/static-assets/ocr/how-to/image-quality-correction/sharpen_0.webp "Sharpened Image")
+        <p>After</p>
     </div>
 </div>
 
-<hr>
+---
 
-## Application of the Enhance Resolution Filter
+## Example of Enhancing Image Resolution
 
-This filter boosts the pixel density in an image, significantly enhancing sharpness and text legibility in low-resolution images.
+The enhance resolution filter increases the pixel density of an image, which sharpens and clarifies the image details, and is particularly advantageous for text in low-resolution images.
 
-Invoke the `EnhanceResolution` method to raise the image's resolution.
+To enhance the resolution of an image, the `EnhanceResolution` method can be applied:
 
 ```cs
-// Enhance the resolution of the image
-image.EnhanceResolution();
+using IronOcr;
+namespace ironocr.ImageQualityCorrection
+{
+    public class ResolutionEnhancement
+    {
+        public void Execute()
+        {
+            // Enhance image resolution
+            imageInput.EnhanceResolution();
+        }
+    }
+}
 ```
 
-Below are images showing the improvement:
+Here's how the image appears before and after resolution enhancement:
 
-<div class="competitors-section__wrapper-even-1">
-    <div class="competitors__card" style="width: 48%;">
-        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-quality-correction/sample.jpg" alt="Sample image" class="img-responsive add-shadow">
-        <p class="competitors__download-link" style="color: #181818; font-style: italic;">Before</p>
+<div class="image-comparison">
+    <div class="image-box" style="width: 48%;">
+        ![Before Resolution Enhancement](https://ironsoftware.com/static-assets/ocr/how-to/image-quality-correction/sample.jpg "Original Image")
+        <p>Before</p>
     </div>
-    <div class="competitors__card" style="width: 48%;">
-        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-quality-correction/enhanceResolution_0.webp" alt="Enhance resolution filter applied" class="img-responsive add-shadow">
-        <p class="competitors__download-link" style="color: #181818; font-style: italic;">After</p>
+    <div class="image-box" style="width: 48%;">
+        ![After Resolution Enhancement](https://ironsoftware.com/static-assets/ocr/how-to/image-quality-correction/enhanceResolution_0.webp "Enhanced Resolution Image")
+        <p>After</p>
     </div>
 </div>
 
-<hr>
+---
 
-## Denoise Filter Example
+## Example of Applying the Denoise Filter
 
-The Denoise filter aims to remove noise and artifacts, which is particularly useful for isolating text from background disturbances, resulting in clearer OCR results.
+The denoise filter is crucial for reducing the noise level within images, aiding in the isolation of text from its background, which in turn facilitates cleaner, more precise character recognition.
 
-To apply it, use the `DeNoise` method.
+Here is how to use the `DeNoise` method:
 
 ```cs
-// Reduce noise in the image
-image.DeNoise();
+using IronOcr;
+namespace ironocr.ImageQualityCorrection
+{
+    public class NoiseReduction
+    {
+        public void Execute()
+        {
+            // Use denoise filter
+            imageInput.DeNoise();
+        }
+    }
+}
 ```
 
-Visual comparison of the effect:
+Visual comparison of the image before and after noise reduction:
 
-<div class="competitors-section__wrapper-even-1">
-    <div class="competitors__card" style="width: 48%;">
-        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-quality-correction/sample.jpg" alt="Sample image" class="img-responsive add-shadow">
-        <p class="competitors__download-link" style="color: #181818; font-style: italic;">Before</p>
+<div class="image-comparison">
+    <div class="image-box" style="width: 48%;">
+        ![Before Denoise](https://ironsoftware.com/static-assets/ocr/how-to/image-quality-correction/sample.jpg "Original Image")
+        <p>Before</p>
     </div>
-    <div class="competitors__card" style="width: 48%;">
-        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-quality-correction/denoise_0.webp" alt="Denoise filter applied" class="img-responsive add-shadow">
-        <p class="competitors__download-link" style="color: #181818; font-style: italic;">After</p>
+    <div class="image-box" style="width: 48%;">
+        ![After Denoise](https://ironsoftware.com/static-assets/ocr/how-to/image-quality-correction/denoise_0.webp "Denoised Image")
+        <p>After</p>
     </div>
 </div>
 
-<hr>
+---
 
-## Applying the Dilate Filter
-
-Dilating an image expands the brighter areas, enhancing and thickening text, which simplifies OCR interpretation.
-
-Activate this effect with the `Dilate` method.
-
-```cs
-// Expand bright regions in the image
-image.Dilate();
-```
-
-Here is a demonstration of its impact:
-
-<div class="competitors-section__wrapper-even-1">
-    <div class="competitors__card" style="width: 48%;">
-        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-quality-correction/sample.jpg" alt="Sample image" class="img-responsive add-shadow">
-        <p class="competitors__download-link" style="color: #181818; font-style: italic;">Before</p...
-    </div>
-    <div class="competitors__card" style="width: 50%;">
-        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-quality-correction/dilate_0.webp" alt="Dilate filter applied" class="img-responsive add-shadow">
-        <p class="competitors__download-link" style="color: #181818; font-style: italic;">After</p>
-    </div>
-</div>
-
-<hr>
-
-## Erode Filter Application
-
-The erosion filter minimizes the size of bright spots in an image, which can refine and clear up characters or lines that are overly bold or slightly blurred.
-
-Implement this by using the `Erode` method.
-
-```cs
-// Reduce bright regions in the image
-image.Erode();
-```
-
-Visualization of results before and after:
-
-<div class="competitors-section__wrapper-even-1">
-    <div class="competitors__card" style="width: 48%;">
-        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-quality-correction/sample.jpg" alt="Sample image" class="img-responsive add-shadow">
-        <p class="competitors__download-link" style="color: #181818; font-style: italic;">Before</p...
-    </div>
-    <div class="competitors__card" style="width: 50%;">
-        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-quality-correction/erode_0.webp" alt="Erode filter applied" class="img-responsive add-shadow">
-        <p class="competitors__download-link" style="color: #181818; font-style: italic;">After</p>
-    </div>
-</div>
+Each of these filters—sharpen, enhance resolution, denoise, dilate, and erode—offer significant benefits to the quality and clarity of images, thus contributing to the efficiency and accuracy of OCR processes using IronOcr.

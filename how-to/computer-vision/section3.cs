@@ -1,18 +1,24 @@
-using IronOcr;
-using IronSoftware.Drawing;
-using System;
 using System.Linq;
-
-var ocr = new IronTesseract();
-using var input = new OcrInput();
-input.LoadImage("wh-words-sign.jpg");
-
-// Find the text region using Computer Vision
-Rectangle textCropArea = input.GetPages().First().FindTextRegion();
-
-// For debugging and demonstration purposes, lets see what region it found:
-input.StampCropRectangleAndSaveAs(textCropArea, Color.Red, "image_text_area", AnyBitmap.ImageFormat.Png);
-
-// Looks good, so let us apply this region to hasten the read:
-var ocrResult = ocr.Read("wh-words-sign.jpg", textCropArea);
-Console.WriteLine(ocrResult.Text);
+using IronOcr;
+namespace ironocr.ComputerVision
+{
+    public class Section3
+    {
+        public void Run()
+        {
+            var ocr = new IronTesseract();
+            using var input = new OcrInput();
+            input.LoadImage("wh-words-sign.jpg");
+            
+            // Find the text region using Computer Vision
+            Rectangle textCropArea = input.GetPages().First().FindTextRegion();
+            
+            // For debugging and demonstration purposes, lets see what region it found:
+            input.StampCropRectangleAndSaveAs(textCropArea, Color.Red, "image_text_area", AnyBitmap.ImageFormat.Png);
+            
+            // Looks good, so let us apply this region to hasten the read:
+            var ocrResult = ocr.Read("wh-words-sign.jpg", textCropArea);
+            Console.WriteLine(ocrResult.Text);
+        }
+    }
+}

@@ -1,64 +1,85 @@
-# Leveraging Multiple Languages with Tesseract and IronOCR
+# Leveraging IronOCR for Multilingual OCR Using Tesseract
 
-Optical Character Recognition (OCR) is a transformative technology that scans text within images for editing and indexing. IronOCR harnesses the power of the Tesseract Engine, renowned for its proficiency in multiple languages and scripts, making it a staple tool for developers seeking robust, multilingual OCR capabilities.
+***Based on <https://ironsoftware.com/how-to/ocr-multiple-languages/>***
 
-This guide explores how IronOCR employs Tesseract to process text in a variety of languages. Whether you are an adept developer needing a dependable OCR tool or just interested in the technology, this content illuminates the diverse applications and benefits of IronOCR and its integration with the Tesseract engine.
 
-## Example: Reading Multi-Language PDFs
+IronOCR stands out in the Optical Character Recognition (OCR) domain for its proficiency in deciphering text across a variety of languages and scripts. It harnesses the power of the Tesseract Engine to deliver a dependable and user-friendly OCR solution.
 
-IronOcr supports around 125 language packs, with English available upon installation and additional languages accessible via NuGet. Explore all available [language packs here](https://ironsoftware.com/csharp/ocr/languages).
+This guide explores how IronOCR efficiently processes text in multiple languages with Tesseract. It is designed for both seasoned developers in search of a robust multilingual OCR tool and individuals keen to learn about the technology behind it. We aim to illuminate the functionalities of IronOCR and its Tesseract engine, highlighting the immense value this tool provides.
 
-Below is an example demonstrating how to utilize IronOcr for extracting text from a PDF file in multiple languages:
 
-```cs
-using IronOcr;
-using System;
 
-// Initialize IronTesseract
-IronTesseract ocrTesseract = new IronTesseract();
+## Extracting Text from Multilanguage PDFs
 
-// Include Russian as a secondary language
-ocrTesseract.AddSecondaryLanguage(OcrLanguage.Russian);
+IronOCR supports approximately 125 language packs. By default, only the English language pack is installed; additional packs are available via NuGet. Discover all the supported [language packs here](https://ironsoftware.com/csharp/ocr/languages).
 
-// Load the PDF
-using var pdfInput = new OcrPdfInput(@"example.pdf");
-// Execute OCR
-OcrResult result = ocrTesseract.Read(pdfInput);
-
-// Display the extracted text
-Console.WriteLine(result.Text);
-```
-
-Adding multiple secondary languages is possible via the `AddSecondaryLanguage` method. Be aware, the more languages added, the more it might impact processing time and accuracy. The sequence of language addition matters, priority is given to the first language added.
-
-## Example: Reading Multi-Language Images
-
-By default, the primary recognition language is set to English. This can be modified, along with the addition of secondary languages, to enhance the recognition process.
+Below is an example demonstrating how to employ multiple languages with IronOCR to extract text from a PDF document.
 
 ```cs
-using IronOcr;
 using System;
-
-// Initialize IronTesseract
-IronTesseract ocrTesseract = new IronTesseract();
-
-// Change primary language to Russian and add Japanese as secondary
-ocrTesseract.Language = OcrLanguage.Russian;
-ocrTesseract.AddSecondaryLanguage(OcrLanguage.Japanese);
-
-// Load the image
-using var imageInput = new OcrImageInput(@"example.png");
-// Execute OCR
-OcrResult result = ocrTesseract.Read(imageInput);
-
-// Print the extracted text
-Console.WriteLine(result.Text);
+using IronOcr;
+namespace ironocr.OcrMultipleLanguages
+{
+    public class Section1
+    {
+        public void Run()
+        {
+            // Create a new IronTesseract instance
+            IronTesseract ocrTesseract = new IronTesseract();
+            
+            // Include Russian as a secondary language
+            ocrTesseract.AddSecondaryLanguage(OcrLanguage.Russian);
+            
+            // Load a PDF file
+            using var pdfInput = new OcrPdfInput(@"example.pdf");
+            // Execute OCR
+            OcrResult result = ocrTesseract.Read(pdfInput);
+            
+            // Display the extracted text
+            Console.WriteLine(result.Text);
+        }
+    }
+}
 ```
 
-Implemented correctly, this configuration yields high-quality OCR results from various languages.
+Additional secondary languages can be added using the `AddSecondaryLanguage` method. Note that adding languages might impact the processing speed and performance. The sequence in which languages are added influences their priority; languages added earlier have higher precedence.
 
-![Russian and Japanese Text Recognition](https://ironsoftware.com/static-assets/ocr/how-to/multiple-languages/russian_japanese%20.webp)
+## Extracting Text from Multilanguage Images
 
-## Conclusion
+By default, the primary language is English. To modify the primary OCR language and add secondary languages, follow the example below.
 
-IronOCR, equipped with the potent Tesseract engine, excels in extracting text from multilingual documents. Whether parsing through PDFs or analyzing images with texts in various languages, IronOCR simplifies the process of text recognition across diverse languages, offering a reliable solution for developers and enthusiasts alike.
+```cs
+using System;
+using IronOcr;
+namespace ironocr.OcrMultipleLanguages
+{
+    public class Section2
+    {
+        public void Run()
+        {
+            // Instantiate a new IronTesseract object
+            IronTesseract ocrTesseract = new IronTesseract();
+            
+            // Set Russian as the primary language
+            ocrTesseract.Language = OcrLanguage.Russian;
+            ocrTesseract.AddSecondaryLanguage(OcrLanguage.Japanese);
+            
+            // Load an image
+            using var imageInput = new OcrImageInput(@"example.png");
+            // Conduct OCR
+            OcrResult result = ocrTesseract.Read(imageInput);
+            
+            // Print the OCR results
+            Console.WriteLine(result.Text);
+        }
+    }
+}
+```
+
+Below is the visual output showcasing the OCR results.
+
+![Russian and Japanese OCR Results](https://ironsoftware.com/static-assets/ocr/how-to/multiple-languages/russian_japanese%20.webp)
+
+## Summary
+
+In conclusion, IronOCR, with its robust Tesseract engine, is excellent at extracting text from documents in multiple languages. It offers a comprehensive solution for developers and enthusiasts dealing with multilingual texts in PDFs or images, streamlining the task of recognizing and extracting such content. Whether your applications deal with varied linguistic content across different document types, IronOCR simplifies the endeavor with its powerful capabilities.

@@ -1,1 +1,3 @@
-This case study demonstrates how targeting specific sections of an image for OCR (Optical Character Recognition) within a .NET application can lead to a significant acceleration in processing speed, with improvements up to 41%. In technical terms, these targeted regions are referred to as `ContentAreas` or `CropAreas`.
+***Based on <https://ironsoftware.com/examples/net-tesseract-content-area-rectangle-crop/>***
+
+The sample demonstrates a significant enhancement in performance—up to 41% faster—by selecting a particular region of an image for OCR processing in .NET. This method utilizes `ContentAreas` or `CropAreas` to specify the region.

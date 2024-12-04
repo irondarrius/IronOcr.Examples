@@ -1,9 +1,11 @@
-Optical Character Recognition (OCR) is most effective and precise when processing text of a single color against a uniform background color.
+***Based on <https://ironsoftware.com/examples/select-text-by-color/>***
 
-Using the `SelectTextColor` function, the software can binarize an image, converting pixels of the targeted text color to black (factoring in different shades confidently), while transforming all other pixels to white.
+Optical Character Recognition (OCR) is most effective and precise when deciphering text that is a single color against a uniform background.
 
-For instance, to focus OCR on text of specific color(s) against any colored background, `SelectTextColor` and `SelectTextColors` will alter the text of the chosen color(s) to black, and turn all non-selected colors and backgrounds to white. This allows for some flexibility as users can set a tolerance level for the exact RGB values. This functionality effectively eliminates the need for tools like Photoshop or ImageMagick for pre-processing images before OCR.
+The feature `SelectTextColor` transforms the image into a binary format, rendering all pixels of the chosen text color as black (factoring in variations in shade), and conversely turning all other colors to white.
 
-The API uses the `IronSoftware.Drawing.Color` for defining HTML colors.
+Take, for instance, the scenario where it's necessary to isolate text of one or several specified colors set against a backdrop of varying hues. Using `SelectTextColor` and `SelectTextColors`, text in the selected colors will be converted to black, while text and backgrounds in non-selected colors will turn white. This transformation is not strict; rather, it enables a degree of leeway in matching the exact RGB values. This capacity obviates the need for pre-processing images with tools like Photoshop or ImageMagick for OCR tasks.
 
-For more information on using these colors, please visit [Color-Hex](https://www.color-hex.com).
+The class `IronSoftare.Drawing.Color` adopts HTML color coding.
+
+For additional information and reference, please visit: [Color Hex](https://www.ironsoftware.com/www.color-hex.com)

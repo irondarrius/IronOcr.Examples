@@ -22,8 +22,8 @@ foreach (var page in ocrResult.Pages)
     // null if we dont set Ocr.Configuration.ReadBarCodes = true;
     OcrResult.Barcode[] Barcodes = page.Barcodes;
     AnyBitmap PageImage = page.ToBitmap(ocrInput);
-    int PageWidth = page.Width;
-    int PageHeight = page.Height;
+    double PageWidth = page.Width;
+    double PageHeight = page.Height;
     double PageRotation = page.Rotation; // angular correction in degrees from OcrInput.Deskew()
 
     foreach (var paragraph in page.Paragraphs)

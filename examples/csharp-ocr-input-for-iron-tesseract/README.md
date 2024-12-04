@@ -1,5 +1,7 @@
-Introducing Enhanced Coding with `OcrInput` for Improved OCR Control.
+***Based on <https://ironsoftware.com/examples/csharp-ocr-input-for-iron-tesseract/>***
 
-This framework forms the foundation for creating efficient OCR applications using C#. 
+Introducing Enhanced Control in OCR Processing with `OcrInput`
 
-Key features encompass automatic or manual image enhancements, guaranteed memory leak protection, multithreading capabilities, and support for multipage documents. Additionally, it includes OCR functionalities for PDFs and multipage TIFF files, with outputs available in PDF and HTML formats.
+`OcrInput` offers a robust framework for designing high-performance OCR applications using C#. This architecture not only enhances developer oversight but also improves the application's overall efficiency.
+
+Key features of `OcrInput` include both automatic and manual image optimizations, secure management that prevents memory leaks, support for multithreading, and the ability to handle multipage documents. It also supports converting OCR results to PDF and HTML formats, and can process OCR for PDF and multipage TIFF files.

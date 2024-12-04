@@ -1,3 +1,5 @@
-The `IronTesseract` class includes an `OcrProgress` event, which serves as a tool to monitor the status of OCR operations. Each time a page completes OCR processing, an `OcrProgresEventsArgs` object is dispatched to this event. 
+***Based on <https://ironsoftware.com/examples/progress-tracking/>***
 
-Employing this feature is advantageous across various applications such as GUI applications, web applications, and command-line interfaces. It helps in providing feedback to users about the expected waiting time for the OCR task to complete.
+The `IronTesseract` class offers an `OcrProgress` event, which serves to monitor the progress of OCR operations. This event leverages the `OcrProgressEventArgs` object, which is triggered after the completion of text reading for each page.
+
+This feature proves beneficial across various application types such as graphical user interface applications, web applications, and command-line interfaces, by providing users with updates on the expected time remaining.

@@ -1,3 +1,5 @@
-Utilizing Iron's sophisticated Tesseract engine, it's possible to transform images into searchable PDFs and to render existing PDFs searchable as well.
+***Based on <https://ironsoftware.com/examples/tesseract-create-searchable-pdf/>***
 
-This enhancement significantly benefits SEO performance and enhances the search indexing capabilities within intranets and databases.
+Iron Software's sophisticated Tesseract engine is adept at transforming images into searchable PDFs and enhancing existing PDFs with searchable functionalities. 
+
+This enhancement significantly boosts SEO effectiveness and facilitates search indexing in intranets and databases.

@@ -1,16 +1,23 @@
-# Implementing OCR in iOS Using .NET MAUI
+# Conducting OCR on iOS with .NET MAUI
 
-## Introduction to .NET MAUI for iOS
+***Based on <https://ironsoftware.com/how-to/setup-ios/>***
 
-![iOS logo](https://ironsoftware.com/img/platforms/h74/ios.svg)
 
-.NET MAUI, which stands for Multi-platform App UI, is the successor to Xamarin.Forms and is engineered to facilitate the development of cross-platform applications for Android, iOS, macOS, and Windows with .NET. It streamlines the creation of native user interfaces deployable across various platforms.
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <img src="https://ironsoftware.com/img/platforms/h74/ios.svg">
+        </div>
+    </div>
+</div>
 
-The **IronOcr.iOS library** is specifically tailored to add OCR capabilities to iOS devices within .NET cross-platform projects, without necessitating the general IronOCR library.
+.NET MAUI (Multi-platform App UI) represents an advanced iteration of the Xamarin.Forms framework, crafted to develop cross-platform applications for Android, iOS, macOS, and Windows using .NET. It endeavors to streamline the development of native interfaces across various platforms.
 
-## Installing IronOCR for iOS
+The **IronOcr.iOS package** provides powerful OCR capabilities specifically tailored for iOS platforms.
 
-You can easily incorporate OCR functionalities into your iOS devices by integrating the **IronOcr.iOS library**. This package can be installed directly via NuGet, negating the need for the standard IronOCR package:
+## IronOCR iOS Integration
+
+Utilizing the **IronOcr.iOS package**, iOS devices can leverage OCR features directly through .NET cross-platform development, without the need for the standard IronOCR library.
 
 ```shell
 PM > Install-Package IronOcr.iOS
@@ -22,49 +29,51 @@ PM > Install-Package IronOcr.iOS
             <img class="img-responsive add-shadow" alt="C# NuGet Library for PDF" src="https://ironsoftware.com/img/nuget-logo.svg">
         </div>
         <div class="product-info">
-            <h3>Install with <span>NuGet</span></h3>
+            <h3>Install via <span>NuGet</span></h3>
         </div>
         <div class="js-open-modal-ignore copy-nuget-section" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Click to copy">
             <div class="copy-nuget-row">
-                <pre class="install-script">Install-Package IronOcr.iOS</pre>
-                <div class="copy-button">
-                    <button class="btn btn-default copy-nuget-script" type="button" data-toggle="popover" data-placement="bottom" data-content="Copied." aria-label="Copy the Package Manager command" data-original-title="" title="">
-                        <span class="far fa-copy"></span>
-                    </button>
-                </div>
+            <pre class="install-script">Install-Package IronOcr.iOS</pre>
+            <div class="copy-button">
+                <button class="btn btn-default copy-nuget-script" type="button" data-toggle="popover" data-placement="bottom" data-content="Copied." aria-label="Copy the Package Manager command" data-original-title="" title="">
+                <span class="far fa-copy"></span>
+                </button>
             </div>
         </div>
     </div>
     <div class="nuget-link">nuget.org/packages/IronOcr.iOS/</div>
+    </div>
 </div>
 
-## Starting a New .NET MAUI Project
+## Starting a .NET MAUI Project
 
-Select .NET MAUI App under the Multiplatform section to kickstart your project.
+When creating a new project, choose .NET MAUI App under the Multiplatform category.
 
-![Create a new .NET MAUI App project](https://ironsoftware.com/static-assets/ocr/how-to/setup-ios/create-maui-app.webp)
+![Initiate .NET MAUI App project](https://ironsoftware.com/static-assets/ocr/how-to/setup-ios/create-maui-app.webp)
 
-## Integrating IronOCR.iOS into Your Project
+## How to Introduce IronOCR.iOS
 
-Integration via NuGet is straightforward and can be accomplished as follows:
+Incorporating the IronOCR.iOS library is straightforward, especially through NuGet.
 
-1. Right-click "Dependencies > Nuget" in Visual Studio and choose "Manage NuGet Packages ...".
-2. Navigate to the "Browse" tab and search for "IronOcr.iOS".
-3. Select and install the "IronOcr.iOS" package.
+1. Within Visual Studio, navigate to "Dependencies > Nuget" by right-clicking and choosing "Manage NuGet Packages ...".
+2. Click on the "Browse" tab, then search for and select "IronOcr.iOS".
+3. Hit "Add Package" to incorporate the package into your project.
 
-![Integrate IronOcr.iOS package into your project](https://ironsoftware.com/static-assets/ocr/how-to/setup-ios/download-package.webp)
+![Incorporate the IronOcr.iOS package](https://ironsoftware.com/static-assets/ocr/how-to/setup-ios/download-package.webp)
 
-Ensure that the IronOcr.iOS package is included only for iOS builds using this approach in your project's csproj file:
+To ensure compatibility only on iOS, adjust the project file accordingly:
 
-```xml
-<ItemGroup Condition="$(TargetFramework.Contains('ios')) == true">
-    <PackageReference Include="IronOcr.iOS" Version="x.x.x" />
-</ItemGroup>
-```
+1. Right-click on the project file (*.csproj) and pick "Edit Project File".
+2. Insert a new `ItemGroup` with a condition to apply only for iOS targets:
+    ```xml
+    <ItemGroup Condition="$(TargetFramework.Contains('ios')) == true">
+    </ItemGroup>
+    ```
+3. Place the `PackageReference` for **IronOcr.iOS** within this newly created `ItemGroup`.
 
-## Editing MainPage.xaml
+## Customize "MainPage.xaml"
 
-Include a button and a label in your MainPage.xaml to handle file import and display OCR results:
+Design the XAML layout to include a button and label for displaying OCR results:
 
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
@@ -96,9 +105,9 @@ Include a button and a label in your MainPage.xaml to handle file import and dis
 </ContentPage>
 ```
 
-## Editing MainPage.xaml.cs for OCR Functionality
+## Modify "MainPage.xaml.cs"
 
-Define OCR operations within the MainPage.xaml.cs file effectively, using the IronTesseract class for OCR tasks after picking a file through a user interface:
+Develop the logic in the code-behind to handle the OCR processes:
 
 ```cs
 using IronOcr;
@@ -107,50 +116,44 @@ namespace MAUIIronOCRiOSSample;
 
 public partial class MainPage : ContentPage
 {
-    private IronTesseract ocrTesseract = new IronTesseract();
+    private IronTesseract ocrTesseract = new IronTesseract(); // Ensure IronTesseract is initialized once per class for optimal performance
 
     public MainPage()
     {
         InitializeComponent();
-        IronOcr.License.LicenseKey = "IRONOCR-MYLICENSE-KEY-1EF01";
     }
 
     private async void ReadFileOnImport(object sender, EventArgs e)
     {
-        var options = new PickOptions { PickerTitle = "Please select a file" };
-        var result = await FilePicker.PickAsync(options);
-        if (result != null)
+        var file = await FilePicker.PickAsync(new PickOptions { PickerTitle = "Please select a file" });
+        if (file != null)
         {
-            using var stream = await result.OpenReadAsync();
-            using var ocrInput = new OcrInput();
-            ocrInput.LoadImage(stream);
-            var ocrResult = ocrTesseract.Read(ocrInput);
-            OutputText.Text = ocrResult.Text;
-        }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine(ex);
+            using var fileStream = await file.OpenReadAsync();
+            using var input = new OcrInput(fileStream);  // Prepare the image file for OCR
+
+            var result = ocrTesseract.Read(input);  // Conduct OCR
+            OutputText.Text = result.Text;  // Display results
         }
     }
 }
 ```
 
-Subsequently, configure your project's build target to the iOS Simulator and execute your app.
+Switch to the iOS Simulator and deploy your application to see it in action.
 
-#### Visualizing OCR in Action
+#### Deploy the Application
 
-Running the project on iOS would visually resemble the following:
+Learn how to run your newly created OCR application on iOS.
 
-![Run the project and see OCR in action](https://ironsoftware.com/static-assets/ocr/how-to/setup-ios/mauiProjectRun.gif)
+<img src="https://ironsoftware.com/static-assets/ocr/how-to/setup-ios/mauiProjectRun.gif" alt="Demonstration of running the .NET MAUI App" class="img-responsive add-shadow" style="margin-bottom: 30px;"/>
 
-## Downloadable .NET MAUI Project Example
+## Obtain the Complete .NET MAUI App Project
 
-For hands-on practice, download the complete guide's project as a zipped file, directly openable in Visual Studio as a .NET MAUI App project:
+Download the full example project, packed as a zipfile, to explore in Visual Studio.
 
-[Download .NET MAUI App project](https://ironsoftware.com/static-assets/ocr/how-to/setup-ios/MAUIIronOCRiOSSample.zip)
+[Access the complete codebase here.](https://ironsoftware.com/static-assets/ocr/how-to/setup-ios/MAUIIronOCRiOSSample.zip)
 
-## Configuring IronOcr.iOS with Avalonia
+## Setting Up IronOcr.iOS with Avalonia
 
-To employ IronOcr.iOS within an Avalonia project, ensure you have .NET SDK version 8.0.101 installed. Setup steps mirror those in MAUI. 
+The setup of IronOcr.iOS in Avalonia mirrors that in MAUI, but with the necessity of having [.NET SDK 8.0.101](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) ready for successful operation. Following these guidelines, you can incorporate IronOcr.iOS into an Avalonia project.
 
-For insights into applying OCR on Android using .NET MAUI, refer to this article: ["How to Perform OCR on Android in .NET MAUI"](https://ironsoftware.com/csharp/ocr/how-to/setup-android/)
+Explore OCR on Android by referring to: "[How to Perform OCR on Android in .NET MAUI](https://ironsoftware.com/csharp/ocr/how-to/setup-android/)"

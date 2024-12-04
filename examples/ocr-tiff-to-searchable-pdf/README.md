@@ -1,16 +1,22 @@
-The `IronTesseract` class from Iron Software provides an efficient solution for .NET developers by enabling the automated conversion of TIFF images to searchable PDF documents. This functionality is essential for processing document images into formats that are more usable and accessible, particularly beneficial in archiving, searching, and managing documents digitally.
+***Based on <https://ironsoftware.com/examples/ocr-tiff-to-searchable-pdf/>***
 
-Below is a snippet illustrating how to use `IronTesseract` to convert a TIFF file to a searchable PDF:
+The `IronTesseract` class from Iron Software is crafted specifically for .NET developers, facilitating the seamless conversion of TIFF images into searchable PDF files. This functionality is crucial for implementing Optical Character Recognition (OCR) capabilities within C# applications, allowing businesses and individuals to digitize and index large volumes of archival content efficiently.
 
 ```csharp
-// Include IronOcr to use its OCR capabilities
+// Install the necessary package via NuGet
+// PM> Install-Package IronOcr
+
 using IronOcr;
 
-// Create an instance of IronTesseract 
-var ocr = new IronTesseract();
+var Ocr = new IronTesseract();
 
-// Use the Read method to convert TIFF to PDF
-ocr.Read(@"path\to\your\file.tiff").SaveAsSearchablePdf(@"path\to\output\file.pdf");
+// Set up the input TIFF file and output PDF file paths
+string inputPath = @"path\to\your\file.tif";
+string outputPath = @"path\to\your\output.pdf";
+
+// Configure the OCR engine to read from TIFF and output as PDF
+Ocr.Read(inputPath).SaveAsSearchablePdf(outputPath);
+
 ```
 
-This concise example demonstrates the ease with which developers can incorporate high-level OCR functions into their .NET applications, enhancing the value of the software solutions they provide .
+For comprehensive guidance on using the `IronTesseract` OCR functionality and to view additional customization options, see the complete documentation here: [IronTesseract Documentation](https://ironsoftware.com/csharp/ocr/) .

@@ -1,35 +1,45 @@
-# Saving Documents as Searchable PDFs
+# How to Generate Searchable PDFs with OCR
 
-A searchable PDF, often referred to by its technical term 'OCR PDF', merges the capabilities of a scanned image PDF with machine-readable text elements. This hybrid is possible thanks to Optical Character Recognition (OCR), a technology that identifies textual content within images, transforming it into editable and searchable data.
+***Based on <https://ironsoftware.com/how-to/searchable-pdf/>***
 
-IronOCR enables the creation of these enhanced documents by providing robust features to apply OCR on imagery and convert the recognized data into searchable PDFs. These capabilities extend to various output forms including files, bytes, and streams.
 
-## Example of Exporting a Searchable PDF
+A searchable PDF, often termed as an OCR PDF, encompasses a hybrid of scan-quality images and text that is readable by machine, made possible through Optical Character Recognition (OCR). This capability derives from OCR technology applied to digital scans or image files, converting embedded textual content into a format that is both searchable and selectable.
 
-To convert OCR results into a searchable PDF, users should firstly set the `Configuration.RenderSearchablePdf` property to `true`. After OCR processing via the `Read` method, the `SaveAsSearchablePdf` method is employed to generate the output. Here's how it works, demonstrated using the [sample TIFF](https://ironsoftware.com/static-assets/ocr/how-to/html-export/Potter.tiff) image.
+IronOCR is a robust library that facilitates optical character recognition of documents and enables the generation of these enhanced PDFs. It supports creating searchable PDFs in various formats such as files, bytes, and streams.
+
+## Creating a Searchable PDF
+
+To generate a searchable PDF, users should enable the **Configuration.RenderSearchablePdf** to `true`. Following this, after extracting the OCR results from the `Read` method, the `SaveAsSearchablePdf` method is utilized for saving the output. Below illustrates this process using the [sample TIFF image](https://ironsoftware.com/static-assets/ocr/how-to/html-export/Potter.tiff).
 
 ```cs
 using IronOcr;
-
-// Initialize the IronTesseract class
-IronTesseract ocrTesseract = new IronTesseract();
-
-// Activate rendering as a searchable PDF
-ocrTesseract.Configuration.RenderSearchablePdf = true;
-
-// Load the image file for OCR processing
-using var imageInput = new OcrImageInput("Potter.tiff");
-
-// Execute the OCR operation
-OcrResult ocrResult = ocrTesseract.Read(imageInput);
-
-// Save the OCR result as a searchable PDF file
-ocrResult.SaveAsSearchablePdf("searchablePdf.pdf");
+namespace ironocr.SearchablePdf
+{
+    public class Section1
+    {
+        public void Run()
+        {
+            // Initialize IronTesseract
+            IronTesseract ocrTesseract = new IronTesseract();
+            
+            // Configuration for rendering a searchable PDF
+            ocrTesseract.Configuration.RenderSearchablePdf = true;
+            
+            // Load image for OCR processing
+            using var imageInput = new OcrImageInput("Potter.tiff");
+            // Execute OCR on the image
+            OcrResult ocrResult = ocrTesseract.Read(imageInput);
+            
+            // Saving OCR result as a searchable PDF
+            ocrResult.SaveAsSearchablePdf("searchablePdf.pdf");
+        }
+    }
+}
 ```
 
-Below, you'll find a visual comparison using the sample TIFF alongside an embedded searchable PDF. This enables you to explore the impact of OCR; text within the PDF is now selectable, enhancing functionalities such as text search within most PDF viewing software.
+Below you'll find a visual of the original TIFF image and the produced searchable PDF for sampling purposes. You'll notice you can select text in the searchable PDF, enabling search functionality in your desired PDF viewer application.
 
-While IronOCR aims for accuracy in text reproduction, variations in text size may occur as the software uses a particular font to overlay text on the image.
+IronOCR employs a specific font when overlaying recognized text onto images; therefore, at times, you might notice variations in the text and image sizes.
 
 <div class="competitors-section__wrapper-even-1">
     <div class="competitors__card" style="width: 48%;">
@@ -46,14 +56,24 @@ While IronOCR aims for accuracy in text reproduction, variations in text size ma
     </div>
 </div>
 
-## Byte and Stream Outputs for Searchable PDFs
+## Outputting Searchable PDF as Bytes and Streams
 
-IronOCR not only supports file output but also allows the extraction of searchable PDF data as bytes and streams. Below is a succinct example demonstrating the use of these methods for your reference.
+It's also feasible to retrieve the searchable PDF in byte array format or as a stream, utilizing the `SaveAsSearchablePdfBytes` and `SaveAsSearchablePdfStream` methods accordingly. Here's a code example showcasing these outputs.
 
 ```cs
-// Retrieve the searchable PDF through byte data
-byte[] pdfByte = ocrResult.SaveAsSearchablePdfBytes();
-
-// Get the searchable PDF as a stream
-Stream pdfStream = ocrResult.SaveAsSearchablePdfStream();
+using IronOcr;
+namespace ironocr.SearchablePdf
+{
+    public class Section2
+    {
+        public void Run()
+        {
+            // Export the searchable PDF as a byte array
+            byte[] pdfByte = ocrResult.SaveAsSearchablePdfBytes();
+            
+            // Export the searchable PDF as a stream
+            Stream pdfStream = ocrResult.SaveAsSearchablePdfStream();
+        }
+    }
+}
 ```

@@ -1,2 +1,12 @@
-// Apply enhance resolution filter
-imageInput.EnhanceResolution();
+using IronOcr;
+namespace ironocr.ImageQualityCorrection
+{
+    public class Section2
+    {
+        public void Run()
+        {
+            // Apply enhance resolution filter
+            imageInput.EnhanceResolution();
+        }
+    }
+}

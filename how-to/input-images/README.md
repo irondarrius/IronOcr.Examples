@@ -1,24 +1,36 @@
-# Reading Text from Images with OCR Technology
+# How to Use OCR to Extract Text from Images
 
-Optical Character Recognition (OCR) technology enables the identification and extraction of text from images. This is incredibly beneficial for converting printed documents into a digital format, allowing the manipulation and use of text from scans, photos, and other image-based files.
+***Based on <https://ironsoftware.com/how-to/input-images/>***
 
-The IronOCR library is adept at processing various image formats such as jpg, png, gif, tiff, and bmp. It includes image filters which enhance its ability to accurately read text.
 
-## Example: Using OCR to Read Images
+Optical Character Recognition (OCR) is a powerful technology used to identify and extract text from images. This capability is invaluable for converting printed materials into a digital format, enabling the manipulation and analysis of the text contained in images such as scanned documents, photos, and more.
 
-To begin OCR operations with IronOCR, you first need to create an instance of the `IronTesseract` class. With a `using` statement, construct an `OcrImageInput` object by providing the path to the image. This approach ensures that system resources are managed efficiently by disposing of them when they are not needed anymore. IronOCR can handle different image formats like jpg, png, gif, tiff, and bmp. To execute the OCR process, call the `Read` method.
+IronOCR offers comprehensive support for multiple image file types including jpg, png, gif, tiff, and bmp. Additionally, it provides image filters that improve the quality and accuracy of OCR results.
+
+
+## Example of Image Reading
+
+First, create an instance of the `IronTesseract` class to access OCR functionality. Using the `using` statement, construct an `OcrImageInput` with the designated image filepath, ensuring efficient resource management. IronOCR accepts various image formats such as jpg, png, gif, tiff, and bmp. The `Read` method is then used to execute OCR on the image.
 
 ```cs
 using IronOcr;
-
-// Create a new instance of IronTesseract
-IronTesseract ocr = new IronTesseract();
-
-// Load the image
-using var imageInput = new OcrImageInput("Potter.png");
-
-// Execute OCR
-OcrResult result = ocr.Read(imageInput);
+namespace ironocr.InputImages
+{
+    public class Section1
+    {
+        public void Run()
+        {
+            // Create an instance of IronTesseract
+            IronTesseract ocrTesseract = new IronTesseract();
+            
+            // Load the image
+            using var imageInput = new OcrImageInput("Potter.png");
+            
+            // Execute OCR
+            OcrResult ocrResult = ocrTesseract.Read(imageInput);
+        }
+    }
+}
 ```
 
 <div class="content-img-align-center">
@@ -27,53 +39,68 @@ OcrResult result = ocr.Read(imageInput);
     </div>
 </div>
 
-For detailed guidance on processing multi-frame/page GIF and TIFF images, check out [How to Read Multi-Frame/Page GIFs and TIFFs](https://ironsoftware.com/csharp/ocr/how-to/input-tiff-gif/).
+Explore more about OCR for multi-frame or multi-page images by visiting [How to Read Multi-Frame/Page GIFs and TIFFs](https://ironsoftware.com/csharp/ocr/how-to/input-tiff-gif/) to understand the handling of TIFF and GIF files.
 
-## Importing Image Data Directly
+## Importing Images as Bytes
 
-Beyond simple file paths, the `OcrImageInput` class is versatile in accepting image data in bytes, `AnyBitmap`, `Stream`, and `Image`. The `AnyBitmap` refers to an object from [IronSoftware.Drawing.AnyBitmap](https://ironsoftware.com/open-source/csharp/drawing/examples/bitmap-to-stream/).
+Beyond simple file paths, the `OcrImageInput` class can also receive image data directly as bytes, `AnyBitmap`, `Stream`, or `Image`. `AnyBitmap` refers to a versatile bitmap object available at [IronSoftware.Drawing.AnyBitmap](https://ironsoftware.com/open-source/csharp/drawing/examples/bitmap-to-stream/).
 
 ```cs
-using IronOcr;
 using System.IO;
-
-// Initialize IronTesseract
-IronTesseract ocr = new IronTesseract();
-
-// Read image bytes from a file
-byte[] imageData = File.ReadAllBytes("Potter.tiff");
-
-// Load image from bytes
-using var imageInput = new OcrImageInput(imageData);
-// Execute OCR
-OcrResult result = ocr.Read(imageInput);
+using IronOcr;
+namespace ironocr.InputImages
+{
+    public class Section2
+    {
+        public void Run()
+        {
+            // Create an instance of IronTesseract
+            IronTesseract ocrTesseract = new IronTesseract();
+            
+            // Load image data from a file
+            byte[] data = File.ReadAllBytes("Potter.tiff");
+            
+            // Import image data
+            using var imageInput = new OcrImageInput(data);
+            // Execute OCR
+            OcrResult ocrResult = ocrTesseract.Read(imageInput);
+        }
+    }
+}
 ```
 
-## Defining the Scanning Area
+## Defining a Scanning Region
 
-You can increase the efficiency and focus of OCR by defining a crop rectangle when creating `OcrImageInput`. This allows you to specify the exact area of the image that should be scanned for text. In the example below, the crop rectangle isolates a chapter number and title.
+When creating `OcrImageInput`, it's possible to specify a `CropRectangle`, defining the specific area of the image to be scanned. This can be crucial for optimizing performance by focusing on key areas of an image.
 
 ```cs
-using IronOcr;
-using IronSoftware.Drawing;
 using System;
-
-// Create an instance of IronTesseract
-IronTesseract ocr = new IronTesseract();
-
-// Define the scanning area
-Rectangle cropArea = new Rectangle(800, 200, 900, 400);
-
-// Load the image with specified content area
-using var imageInput = new OcrImageInput("Potter.tiff", ContentArea: cropArea);
-// Perform OCR
-OcrResult result = ocr.Read(imageInput);
-
-// Print the extracted text
-Console.WriteLine(result.Text);
+using IronOcr;
+namespace ironocr.InputImages
+{
+    public class Section3
+    {
+        public void Run()
+        {
+            // Create an instance of IronTesseract
+            IronTesseract ocrTesseract = new IronTesseract();
+            
+            // Define the scan region
+            Rectangle scanRegion = new Rectangle(800, 200, 900, 400);
+            
+            // Load the image with a specified content area
+            using var imageInput = new OcrImageInput("Potter.tiff", ContentArea: scanRegion);
+            // Execute OCR
+            OcrResult ocrResult = ocrTesseract.Read(imageInput);
+            
+            // Print the OCR result
+            Console.WriteLine(ocrResult.Text);
+        }
+    }
+}
 ```
 
-### OCR Outcome
+### Output of OCR Process
 
 <div class="content-img-align-center">
     <div class="center-image-wrapper">

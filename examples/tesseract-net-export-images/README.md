@@ -1,7 +1,3 @@
-Here's the paraphrased version of the given content, with resolved URL paths as per your instructions:
+***Based on <https://ironsoftware.com/examples/tesseract-net-export-images/>***
 
----
-
-This sample illustrates how `IronTesseract` can efficiently extract both the image and the coordinates for each character, word, line, or paragraph within any document processed via OCR.
-
----
+This sample demonstrates the capabilities of `IronTesseract` in extracting images and coordinates for each character, word, line, or paragraph from any OCR-processed document.

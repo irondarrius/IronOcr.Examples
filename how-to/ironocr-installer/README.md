@@ -1,42 +1,45 @@
-# Installation Guide for IronOCR
+# Installing IronOCR Using the Provided Installer
 
-## How to Install IronOCR with the Provided Installer
+***Based on <https://ironsoftware.com/how-to/ironocr-installer/>***
 
-1. Initiate the installation by downloading the installer from **[this link](https://ironsoftware.com/csharp/ocr/packages/IronOcrInstaller.zip)** and then execute it.
-2. Make sure to read and agree to the license terms:
-   ![View License Agreement](https://ironsoftware.com/static-assets/ocr/how-to/ironocr-installer/license-agreement.webp)
 
-3. Proceed following the displayed instructions and select `Install`:
-   ![Install](https://ironsoftware.com/static-assets/ocr/how-to/ironocr-installer/license-install.webp)
-4. Go through the Information page, then click on `Next` to proceed:
-   ![License Information](https://ironsoftware.com/static-assets/ocr/how-to/ironocr-installer/license-information.webp)
-5. Tap `Finish` to conclude the setup process:
-   ![Installation Complete](https://ironsoftware.com/static-assets/ocr/how-to/ironocr-installer/license-complete.webp)
+## Download and Execute the Installer
+
+1. Obtain the installer by clicking **[here](https://ironsoftware.com/csharp/ocr/packages/IronOcrInstaller.zip)**, then execute the downloaded file.
+2. Review and agree to the license terms:
+![license-agreement-image](https://ironsoftware.com/static-assets/ocr/how-to/ironocr-installer/license-agreement.webp)
+
+3. Proceed with the installation steps and select `Install`:
+![license-install](https://ironsoftware.com/static-assets/ocr/how-to/ironocr-installer/license-install.webp)
+4. After reviewing the Information page, press `Next` to proceed:
+![license information](https://ironsoftware.com/static-assets/ocr/how-to/ironocr-installer/license-information.webp)
+5. Conclude the installation by clicking `Finish`:
+![license complete](https://ironsoftware.com/static-assets/ocr/how-to/ironocr-installer/license-complete.webp)
 
 ## Updating Environment Variables on Windows 11
 
-For the modifications to environment variables to fully integrate, a system restart is necessary. Although the installer typically handles this, manual steps might be required if the automatic setup fails:
+It's important to note that modifications to Environment Variables become effective only after a system restart. Although the installer typically handles these updates, you might need to make them manually if necessary:
 
-1. Hit the `Windows+R` keys to trigger the "Run" dialog box and type `sysdm.cpl` into the "Open" field:
-   ![Run Dialog](https://ironsoftware.com/static-assets/ocr/how-to/ironocr-installer/run-program-win11.webp)
-2. In the `System Properties` dialog that pops up, switch to the `Advanced` tab and click on `Environment Variables...`:
-   ![System Properties](https://ironsoftware.com/static-assets/ocr/how-to/ironocr-installer/system-properties-win11.webp)
-3. Utilize this interface to either add or modify variables. You can update `User Variables` for individual user adjustments or `System Variables` for changes affecting the entire system.
-   ![Environment Variables Setup](https://ironsoftware.com/static-assets/ocr/how-to/ironocr-installer/environment-variables-window.webp)
-4. Add or modify the IronOCR variable.
-5. Specify the `Variable Name` as `IRONOCR_INSTALL_DIR` and the `Variable Value` as `C:\Program Files (x86)\IronSoftware\IronOcr`:
-   ![Edit Variable](https://ironsoftware.com/static-assets/ocr/how-to/ironocr-installer/edit-user-variable.webp)
-6. Restart your computer to apply the environmental changes.
+1. Open the "Run" dialog by pressing `Windows+R`, and type `sysdm.cpl` in the "Open" field:
+![run program win11](https://ironsoftware.com/static-assets/ocr/how-to/ironocr-installer/run-program-win11.webp)
+2. In the `System Properties` window that pops up, go to the `Advanced` tab and click the `Environment Variables...` button:
+![system properties win11](https://ironsoftware.com/static-assets/ocr/how-to/ironocr-installer/system-properties-win11.webp)
+3. This window allows you to create new or modify existing `User Variables` and `System Variables`.
+![environment variables window](https://ironsoftware.com/static-assets/ocr/how-to/ironocr-installer/environment-variables-window.webp)
+4. Next, define or update the variable for IronOCR.
+5. Set `Variable Name` to `IRONOCR_INSTALL_DIR` and `Variable Value` to `C:\Program Files (x86)\IronSoftware\IronOcr`:
+![edit user variable win11](https://ironsoftware.com/static-assets/ocr/how-to/ironocr-installer/edit-user-variable.webp)
+6. Restart your computer to apply these changes.
 
-## Configuring Environment Variables on Windows 10
+## Updating Environment Variables on Windows 10
 
-Adjusting environment variables also requires a system restart to take effect. Follow these steps if the installer does not set them automatically:
+Changes to Environment Variables require a restart to take effect. Follow these instructions if the installer doesn’t automatically update these settings:
 
-1. Right click on the Windows icon on the taskbar and select `System`.
-2. From the `Settings` window, go to `Related Settings`->`Advanced System Settings`
-3. In the `Advanced` tab, locate and click on `Environment Variables...`:
-   ![Windows 10 System Properties](https://ironsoftware.com/static-assets/ocr/how-to/ironocr-installer/system-properties-win10.webp)
-4. This window allows the addition or modification of `User Variables` (specific to your profile) and `System Variables` (affecting the entire system).
-   ![Environment Variables Interface](https://ironsoftware.com/static-assets/ocr/how-to/ironocr-installer/environment-variables-window.webp)
-5. Create or update the IronOCR variable as needed, setting the `Variable Name` as `IRONOCR_INSTALL_DIR` and the `Variable Value` as `C:\Program Files (x86)\IronSoftware\IronOcr`
-6. Restart the computer to ensure the changes to environment variables are activated.
+1. Right-click the Windows icon on the taskbar and choose `System`.
+2. Navigate to `Related Settings` -> `Advanced System Settings` in the `Settings` window.
+3. In the `Advanced` tab, locate the `Environment Variables...` button:
+![system properties win10](https://ironsoftware.com/static-assets/ocr/how-to/ironocr-installer/system-properties-win10.webp)
+4. This section allows for the addition or editing of `User Variables` and `System Variables`.
+![environment variables window](https://ironsoftware.com/static-assets/ocr/how-to/ironocr-installer/environment-variables-window.webp)
+5. Define or update the IronOCR variable. Set `Variable Name` to `IRONOCR_INSTALL_DIR` and `Variable Value` to `C:\Program Files (x86)\IronSoftware\IronOcr`
+6. Reboot your system to enact these changes.

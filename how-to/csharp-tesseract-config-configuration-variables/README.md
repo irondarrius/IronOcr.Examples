@@ -1,83 +1,89 @@
------
-# Configuring Tesseract Variables in C&num;
+# Configuring Tesseract Settings in C#
 
-The IronOcr library provides comprehensive access to customize Tesseract configuration variables via the `[IronOcr.TesseractConfiguration Class](https://ironsoftware.com/csharp/ocr/object-reference/api/IronOcr.TesseractConfiguration.html)`.
------
+***Based on <https://ironsoftware.com/how-to/csharp-tesseract-config-configuration-variables/>***
 
-Here's the paraphrased section:
 
------
-## Example of Setting Tesseract Configuration in C#
+The IronOcr library provides comprehensive access to modify Tesseract configuration variables using the 
 
-The following C# code snippet demonstrates how to customize various Tesseract OCR settings using IronOcr's `IronTesseract` class.
+[IronOcr.TesseractConfiguration Class](https://ironsoftware.com/csharp/ocr/object-reference/api/IronOcr.TesseractConfiguration.html)
+
+Here's the paraphrased section as requested:
+
+## Demonstrating Tesseract Configuration in C&num;
+
+Leverage full control of Tesseract's configuration through the IronOcr library using the [`IronOcr.TesseractConfiguration` class](https://ironsoftware.com/csharp/ocr/object-reference/api/IronOcr.TesseractConfiguration.html).
+
+### Example Code:
 
 ```cs
+// Import required namespace
 using IronOcr;
 
+// Initialize the IronTesseract class
 var ironOcr = new IronTesseract();
 
-// Setting the language for OCR
+// Define the language and OCR settings
 ironOcr.Language = OcrLanguage.English;
-
-// Configuration to not decode barcodes
 ironOcr.Configuration.ReadBarCodes = false;
-
-// Specifying characters to ignore during OCR
 ironOcr.Configuration.BlackListCharacters = "`ë|^";
-
-// Generate a searchable PDF
 ironOcr.Configuration.RenderSearchablePdf = true;
-
-// Output results in hOCR format
 ironOcr.Configuration.RenderHocr = true;
-
-// Set the page segmentation mode
 ironOcr.Configuration.PageSegmentationMode = TesseractPageSegmentationMode.AutoOsd;
-
-// Disable parallel processing
 ironOcr.Configuration.TesseractVariables["tessedit_parallelize"] = false;
 
-using (var input = new OcrInput(@"images/image.png"))
+// Load the image to be read
+using (var inputImage = new OcrInput(@"images\image.png"))
 {
-    var result = ironOcr.Read(input);
-    Console.WriteLine(result.Text);
-}
-```
-
-In this example, we instantiate `IronTesseract`, configure it for English language OCR, disable barcode reading, set a blacklist for specific characters, and opt to produce both searchable PDFs and hOCR output. The segmentation mode is set to automatically detect orientation and script, and parallel processing is disabled for Tesseract's operations. The OCR process is then applied to an image, and the text result is outputted to the console.
-
-Here's the paraphrased version of the code section you specified:
-
-```cs
-using IronOcr; // Namespace for IronOCR functionality
-
-// Create an IronTesseract object
-var tesseractOcr = new IronTesseract();
-
-// Configure the OCR settings
-tesseractOcr.Language = OcrLanguage.English; // Set the language to English
-tesseractOcr.Configuration.ReadBarCodes = false; // Disable barcode reading
-tesseractOcr.Configuration.BlackListCharacters = "`ë|^"; // Specify characters to blacklist
-tesseractOcr.Configuration.RenderSearchablePdf = true; // Enable rendering of searchable PDFs
-tesseractOcr.Configuration.RenderHocr = true; // Enable rendering of HOCR content
-tesseractOcr.Configuration.PageSegmentationMode = TesseractPageSegmentationMode.AutoOsd; // Set the page segmentation mode
-tesseractOcr.Configuration.TesseractVariables["tessedit_parallelize"] = false; // Disable parallel processing
-
-// Load the image into OCR
-using (var inputImage = new OcrInput(@"images/image.png"))
-{
-    // Read the text from the image
-    var ocrResult = tesseractOcr.Read(inputImage);
-    // Print the extracted text
+    // Perform the OCR operation
+    var ocrResult = ironOcr.Read(inputImage);
     Console.WriteLine(ocrResult.Text);
 }
 ```
 
-This code remains functionally similar but incorporates different naming conventions and comments for clarity and to differentiate from the original.
+This code snippet demonstrates setting various Tesseract configurations, which dictate how the OCR process will be handled, including language selection, page segmentation, and output settings.
 
-## Comprehensive List of Tesseract Configuration Options
+Here's the paraphrased section of the article with resolved path:
 
-Each option available in the Tesseract engine can be defined through the following syntax: `IronTesseract.Configuration.TesseractVariables["key"] = value;` Here, the `key` corresponds to the configuration variable, and `value` is the setting you want to apply.
+```cs
+using IronOcr;
+
+// Instantiate IronTesseract
+var ironOcr = new IronTesseract();
+
+// Configure Tesseract with English language
+ironOcr.Language = OcrLanguage.English;
+// Turn off barcode reading
+ironOcr.Configuration.ReadBarCodes = false;
+// Set characters to exclude from OCR
+ironOcr.Configuration.BlackListCharacters = "`ë|^";
+// Enable production of searchable PDF
+ironOcr.Configuration.RenderSearchablePdf = true;
+// Enable HOCR output
+ironOcr.Configuration.RenderHocr = true;
+// Set page segmentation mode to automatic with orientation and script detection
+ironOcr.Configuration.PageSegmentationMode = TesseractPageSegmentationMode.AutoOsd;
+// Disable parallel processing in Tesseract
+ironOcr.Configuration.TesseractVariables["tessedit_parallelize"] = false;
+
+// Load an image file for OCR processing
+using (var input = new OcrInput(@"https://ironsoftware.com/images/image.png"))
+{
+    // Execute OCR on the loaded image
+    var result = ironOcr.Read(input);
+    // Output the recognized text
+    Console.WriteLine(result.Text);
+}
+```
+
+## Comprehensive Guide to Tesseract Configuration Settings
+
+To customize the behavior of Tesseract using IronTesseract, modifications can be made with the following syntax:
+
+```csharp
+IronTesseract.Configuration.TesseractVariables["key"] = value;
+```
+
+Use this approach to configure various operational parameters within your OCR processing tasks.
 
 <table class="table table__configuration-variables">
     <tr>
@@ -293,8 +299,8 @@ Each option available in the Tesseract engine can be defined through the followi
     <tr><td>classify_learning_debug_level</td><td>0</td><td>Learning Debug Level: </td></tr>
     <tr><td>matcher_permanent_classes_min</td><td>1</td><td>Min # of permanent classes </td></tr>
 
-<tr><td>matcher_min_examples_for_prototyping</td><td>3</td><td>Minimum instances required for initial training</td></tr>
-<tr><td>matcher_sufficient_examples_for_prototyping</td><td>5</td><td>Allow adjustment based on new patterns, regardless of previous ambiguity exposure</td></tr>
+<tr><td>matcher_min_examples_for_prototyping</td><td>3</td><td>Stable Configuration Threshold</td></tr>
+<tr><td>matcher_sufficient_examples_for_prototyping</td><td>5</td><td>Allow adaptation in the absence of observed ambiguities</td></tr>
 ```
 
 <tr><td>classify_adapt_proto_threshold</td><td>230</td><td>Threshold for good protos during adaptive 0-255 </td></tr>
@@ -327,7 +333,7 @@ Each option available in the Tesseract engine can be defined through the followi
     <tr><td>language_model_debug_level</td><td>0</td><td>Language model debug level </td></tr>
     <tr><td>language_model_ngram_order</td><td>8</td><td>Maximum order of the character ngram model </td></tr>
 
-<tr><td>language_model_viterbi_list_max_num_prunable</td><td>10</td><td>The highest amount of prunable entries, as defined by PrunablePath() being true, allowed in each viterbi list as documented in BLOB_CHOICEs </td></tr>
+<tr><td>language_model_viterbi_list_max_num_prunable</td><td>10</td><td>Highest count of entries eligible for pruning (verified by PrunablePath()) in each Viterbi list, as noted in BLOB_CHOICE records</td></tr>
 ```
 
 <tr><td>language_model_viterbi_list_max_size</td><td>500</td><td>Maximum size of viterbi lists recorded in BLOB_CHOICEs </td></tr>
@@ -423,8 +429,9 @@ Each option available in the Tesseract engine can be defined through the followi
     <tr><td>save_alt_choices</td><td>1</td><td>Save alternative paths found during chopping and segmentation search </td></tr>
     <tr><td>language_model_ngram_on</td><td>0</td><td>Turn on/off the use of character ngram model </td></tr>
 
-<tr><td>language_model_ngram_use_only_first_utf8_step</td><td>0</td><td>Compute log probabilities using just the initial UTF8 step of the provided string.</td></tr>
-<tr><td>language_model_ngram_space_delimited_language</td><td>1</td><td>Space character used as delimiter between words.</td></tr>
+```html
+<tr><td>language_model_ngram_use_only_first_utf8_step</td><td>0</td><td>Compute log probabilities using only the initial UTF8 step of the string provided.</td></tr>
+<tr><td>language_model_ngram_space_delimited_language</td><td>1</td><td>Separate words using spaces.</td></tr>
 ```
 
 <tr><td>language_model_use_sigmoidal_certainty</td><td>0</td><td>Use sigmoidal score for certainty </td></tr>
@@ -562,17 +569,14 @@ Each option available in the Tesseract engine can be defined through the followi
     <tr><td>chs_trailing_punct1</td><td>).,;:?!</td><td>1st Trailing punctuation </td></tr>
     <tr><td>chs_trailing_punct2	)'`"</td><td>2nd Trailing punctuation</td><td></td></tr>
 
-<tr><td>outlines_odd</td><td>%|</td><td>Characters with atypical outline counts</td></tr>
+<tr><td>outlines_odd</td><td>%</td><td>Non-standard number of outlines</td></tr>
 ```
 
 </td><td>Non standard number of outlines </td></tr>
     <tr><td>outlines_2	ij!?%":;</td><td>Non standard number of outlines</td><td></td></tr>
     <tr><td>numeric_punctuation</td><td>.,</td><td>Punct. chs expected WITHIN numbers </td></tr>
 
-Here's the paraphrased section of the article with updated relative path links:
-
-```
-<tr><td>unrecognised_char</td><td>|</td><td>Symbol for unidentified elements</td></tr>
+<tr><td>unrecognized_character</td><td>|</td><td>Output character for unidentified elements</td></tr>
 ```
 
 </td><td>Output char for unidentified blobs </td></tr>
@@ -598,12 +602,8 @@ Here's the paraphrased section of the article with updated relative path links:
     <tr><td>classify_adapted_pruning_factor</td><td>2.5</td><td>Prune poor adapted results this much worse than best result </td></tr>
     <tr><td>classify_adapted_pruning_threshold</td><td>-1</td><td>Threshold at which classify_adapted_pruning_factor starts </td></tr>
 
-```
-<tr>
-    <td>classify_character_fragments_garbage_certainty_threshold</td>
-    <td>-3</td>
-    <td>Omit fragments that appear incomplete or partial from the training and adaptation processes</td>
-</tr>
+```html
+<tr><td>classify_character_fragments_garbage_certainty_threshold</td><td>-3</td><td>Omit character fragments that appear incomplete from both training and adaptation processes</td></tr>
 ```
 
 <tr><td>speckle_large_max_size</td><td>0.3</td><td>Max large speckle size </td></tr>

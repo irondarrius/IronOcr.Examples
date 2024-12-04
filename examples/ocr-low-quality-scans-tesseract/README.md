@@ -1,5 +1,7 @@
-The `IronTesseract` OCR class offers detailed control for C# and .NET developers. It enables the incorporation of OCR capabilities (converting images and PDFs to text) into their applications and allows them to optimize performance according to specific requirements.
+***Based on <https://ironsoftware.com/examples/ocr-low-quality-scans-tesseract/>***
 
-Developers can achieve an ideal balance between speed and accuracy by adjusting various settings while using real-world examples. Some of these settings include: `CleanBackgroundNoise`, `EnhanceContrast`, `EnhanceResolution`, Language, Strategy, `RotateAndStraighten`, `ColorSpace`, `DetectWhiteTextOnDarkBackgrounds`, and `InputImageType`.
+The `IronTesseract` OCR class offers detailed control, allowing C# and .NET developers to integrate OCR capabilities — converting images and PDFs to text — into their applications. Moreover, developers can tailor the performance to suit their particular needs.
 
-This level of customization is particularly effective for processing low-quality scans that typical Tesseract tools might not be able to decipher properly.
+Users can adjust various settings to optimize the balance between conversion speed and accuracy, based on practical examples. These settings encompass options like `CleanBackgroundNoise`, `EnhanceContrast`, `EnhanceResolution`, `Language`, `Strategy`, `RotateAndStraighten`, `ColorSpace`, `DetectWhiteTextOnDarkBackgrounds`, and `InputImageType`.
+
+Such configurations significantly improve the readability of lower-quality scans, which standard Tesseract may not process effectively.

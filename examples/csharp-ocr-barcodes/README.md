@@ -1,3 +1,5 @@
-The `OcrResult` object from Iron Tesseract has the capability to recognize barcodes and QR Codes during the OCR process when you set `Ocr.Configuration.ReadBarCodes` to `true`.
+***Based on <https://ironsoftware.com/examples/csharp-ocr-barcodes/>***
 
-This enhancement is among many that Iron Software introduces to enhance the basic functionality offered by the open-source Tesseract engine.
+The `OcrResult` object from Iron Tesseract is capable of reading barcodes and QR Codes while performing OCR when this capability is activated with the property `Ocr.Configuration.ReadBarCodes = true;`.
+
+This feature exemplifies one of the many enhancements that Iron Software offers over the standard functionality found in the free version of Tesseract.

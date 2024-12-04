@@ -1,29 +1,30 @@
-# Guide to IronOCR Computer Vision Application
+# Guide to Leveraging IronOCR Computer Vision
+
+***Based on <https://ironsoftware.com/tutorials/csharp-recognize-text-from-image-computer-vision/>***
+
 
 ## Introduction
 
-IronOCR incorporates OpenCV technology to engage computer vision techniques capable of detecting textual content within images. This capability proves invaluable with images that contain excessive noise, multiple text locations, or distorted text. By harnessing computer vision, IronOCR pinpoints text-rich areas, enabling the Tesseract engine to interpret the text accurately.
+IronOCR employs OpenCV to implement Computer Vision, which identifies text-rich regions within an image. This feature is particularly beneficial for processing images that are noisy, contain text in multiple places, or have distorted text. By deploying computer vision, IronOCR can pinpoint regions where text is present and subsequently use Tesseract for text extraction.
 
 ## Installing IronOCR.ComputerVision via NuGet Package
 
-The functionalities encompassing computer vision in IronOCR are integrated within the usual IronOCR NuGet package.
-
-To leverage these functionalities, it's necessary to install `IronOcr.ComputerVision` across different operating systems:
-
+The Computer Vision functionality in IronOCR is accessible through the standard IronOCR NuGet package. To use these functionalities, you need to ensure the `IronOcr.ComputerVision` package is installed in your project. Here are the platform-specific packages:
 - Windows: `IronOcr.ComputerVision.Windows`
 - Linux: `IronOcr.ComputerVision.Linux`
 - macOS: `IronOcr.ComputerVision.MacOS`
 - macOS ARM: `IronOcr.ComputerVision.MacOS.ARM`
 
-Execute the following command in the NuGet Package Manager Console to begin the installation:
+For installation, utilize the NuGet Package Manager or execute the following command in the Package Manager Console:
 ```
 PM> Install-Package IronOcr.ComputerVision.Windows
 ```
-This command ensures the required assemblies are made available for utilizing IronOCR Computer Vision alongside our model file.
+This command installs the essential assemblies required to integrate IronOCR Computer Vision into your application.
 
-## Overview of Functionality and API
+## Functionality and API Overview
 
-Below, you will find a snapshot of the available methods with their respective descriptions:
+Below are some key methods available for IronOCR Computer Vision:
+
 <table class="table table__configuration-variables">
     <tr>
         <th scope="col">Method</th>
@@ -31,120 +32,171 @@ Below, you will find a snapshot of the available methods with their respective d
     </tr>
     <tr>
         <td><a href="#anchor-findtextregion">FindTextRegion</a></td>
-        <td class="word-break--break-word">Identifies text-laden regions, directing Tesseract to focus its textual extraction on those detected areas.</td>
+        <td class="word-break--break-word">Identifies regions with text and directs Tesseract to analyze these specific areas.</td>
     </tr>
-     <tr>
+    <tr>
         <td><a href="#anchor-findmultipletextregions">FindMultipleTextRegions</a></td>
-        <td class="word-break--break-word">Locates multiple text-bearing areas and delineates the image into distinct segments based on these regions.</td>
+        <td class="word-break--break-word">Locates text regions and segregates them into distinct images for individual processing.</td>
     </tr>
     <tr>
         <td><a href="#anchor-gettextregions">GetTextRegions</a></td>
-        <td class="word-break--break-word">Scans an image to compile a listing of `List<CropRectangle>` containing detected text zones.</td>
+        <td class="word-break--break-word">Scans an image and outputs a collection of identified text regions as `List<CropRectangle>`.</td>
     </tr>
 </table>
 
-## Coding Examples
+## Code Examples
 
-### Using `FindTextRegion`
+### FindTextRegion
 
-This method facilitates the detection of textual regions within an `OcrInput` object across all image pages:
+The `FindTextRegion` method applies computer vision to detect text across all pages of an `OcrInput` object.
 ```cs
 using IronOcr;
-
-var ocr = new IronTesseract();
-using var input = new OcrInput();
-// Loading at least one image
-input.LoadImage("https://ironsoftware.com/path/file.png");
-
-input.FindTextRegion();
-OcrResult result = ocr.Read(input);
-string resultText = result.Text;
+namespace ironocr.CsharpRecognizeTextFromImageComputerVision
+{
+    public class Section1
+    {
+        public void Run()
+        {
+            var ocr = new IronTesseract();
+            using var input = new OcrInput();
+            // Loading an image
+            input.LoadImage("https://ironsoftware.com/path/file.png");
+            
+            input.FindTextRegion();
+            OcrResult result = ocr.Read(input);
+            string resultText = result.Text;
+        }
+    }
+}
 ```
 
-Tailoring the task with specific parameters is also feasible:
+This method can be customized using additional parameters:
 ```cs
 using IronOcr;
-
-var ocr = new IronTesseract();
-using var input = new OcrInput();
-// Ensuring the image is loaded
-input.LoadImage("https://ironsoftware.com/path/file.png");
-
-input.FindTextRegion(Scale: 2.0, DilationAmount: 20, Binarize: true, Invert: true);
-OcrResult result = ocr.Read(input);
-string resultText = result.Text;
+namespace ironocr.CsharpRecognizeTextFromImageComputerVision
+{
+    public class Section2
+    {
+        public void Run()
+        {
+            var ocr = new IronTesseract();
+            using var input = new OcrInput();
+            // Loading an image
+            input.LoadImage("https://ironsoftware.com/path/file.png");
+            
+            input.FindTextRegion(Scale: 2.0, DilationAmount: 20, Binarize: true, Invert: true);
+            OcrResult result = ocr.Read(input);
+            string resultText = result.Text;
+        }
+    }
+}
 ```
 
-The method also allows for returning the text region as a `Rectangle`:
+You can also retrieve the text region as a `Rectangle` using this overload:
 ```cs
 using IronOcr;
-
-using var input = new OcrInput();
-// Image is loaded
-input.LoadImage("https://ironsoftware.com/path/file.png");
-
-input.FindTextRegion(Scale: 2.0, Binarize: true);
+namespace ironocr.CsharpRecognizeTextFromImageComputerVision
+{
+    public class Section3
+    {
+        public void Run()
+        {
+            using var input = new OcrInput();
+            // Loading image for processing
+            input.LoadImage("https://ironsoftware.com/path/file.png");
+            
+            input.FindTextRegion(Scale: 2.0, Binarize: true);
+        }
+    }
+}
 ```
+### FindMultipleTextRegions
 
-### Using `FindMultipleTextRegions`
-
-This function processes an `OcrInput` object, detecting text-laden areas and splitting the input into separate images aligned with these regions:
+`FindMultipleTextRegions` processes all pages of an `OcrInput` 객체 to detect text areas and splits the data into distinct images:
 ```cs
 using IronOcr;
-
-var ocr = new IronTesseract();
-using var input = new OcrInput();
-// Image loading is essential
-input.LoadImage("https://ironsoftware.com/path/file.png");
-
-input.FindMultipleTextRegions();
-OcrResult result = ocr.Read(input);
-string resultText = result.Text;
+namespace ironocr.CsharpRecognizeTextFromImageComputerVision
+{
+    public class Section4
+    {
+        public void Run()
+        {
+            var ocr = new IronTesseract();
+            using var input = new OcrInput();
+            // Loading image for OCR
+            input.LoadImage("https://ironsoftware.com/path/file.png");
+            
+            input.FindMultipleTextRegions();
+            OcrResult result = ocr.Read(input);
+            string resultText = result.Text;
+        }
+    }
+}
 ```
-
-Alterations with additional parameters are also supported:
+Customizable parameters are available for this method:
 ```cs
 using IronOcr;
-
-var ocr = new IronTesseract();
-using var input = an OcrInput();
-// First, load the image
-input.LoadImage("https://ironsoftware.com/path/file.png");
-
-input.FindMultipleTextRegions(Scale: 2.0, DilationAmount: -1, Binarize: true, Invert: false);
-OcrResult result = ocr.Read(input);
-string resultText = result.Text;
+namespace ironocr.CsharpRecognizeTextFromImageComputerVision
+{
+    public class Section5
+    {
+        public void Run()
+        {
+            var ocr = new IronTesseract();
+            using var input = a new OcrInput();
+            // Loading image
+            input.LoadImage("https://ironsoftware.com/path/file.png");
+            
+            input.FindMultipleTextRegions(Scale: 2.0, DilationAmount: -1, Binarize: true, Invert: false);
+            OcrResult result = ocr.Read(input);
+            string resultText = result.Text;
+        }
+    }
+}
 ```
-
-Another version of `FindMultipleTextRegions` can extract and return multiple OCR Pages, one for each detected text region:
+Another option for `FindMultipleTextRegions` returns an array of OCR Pages, each representing a discovered text area:
 ```cs
-using IronOcr;
-using System.Collections.Generic;
 using System.Linq;
-
-int pageIndex = 0;
-using var input = an OcrInput();
-// Remember to load the image
-input.LoadImage("https://ironsoftware.com/path/file.png");
-
-var selectedPage = input.GetPages().ElementAt(pageIndex);
-List<OcrInputPage> textRegionsOnPage = selectedPage.FindMultipleTextRegions();
-```
-
-### Using `GetTextRegions`
-
-Retrieves a inventory of cropping zones detected with text on an image page:
-```cs
 using IronOcr;
-using IronSoftware.Drawing;
-using System.Collections.Generic;
-using System.Linq;
-
-int pageIndex = 0;
-using var input = an OcrInput();
-// It is necessary to load an image
-input.LoadImage("https://ironsoftware.com/path/file.png");
-
-var selectedPage = input.GetPages().ElementAt(pageIndex);
-var regions = selectedPage.GetTextRegions();
+namespace ironocr.CsharpRecognizeTextFromImageComputerVision
+{
+    public class Section6
+    {
+        public void Run()
+        {
+            int pageIndex = 0;
+            using var input = a new OcrInput();
+            // Load an image for extraction
+            input.LoadImage("https://ironsoftware.com/path/file.png");
+            
+            var selectedPage = input.GetPages().ElementAt(pageIndex);
+            List<OcrInputPage> textRegionsOnPage = selectedPage.FindMultipleTextRegions();
+        }
+    }
+}
 ```
+
+### GetTextRegions
+
+The `GetTextRegions` function retrieves a list of cropping areas detected with text within a page:
+```cs
+using System.Linq;
+using IronOcr;
+namespace ironocr.CsharpRecognizeTextFromImageComputerVision
+{
+    public class Section7
+    {
+        public void Run()
+        {
+            int pageIndex = 0;
+            using var input = new OcrInput();
+            // Image loading for OCR task
+            input.LoadImage("https://ironsoftware.com/path/file.png");
+            
+            var selectedPage = input.GetPages().Elementat(pageIndex);
+            var regions = selectedPage.GetTextRegions();
+        }
+    }
+}
+```
+These examples illustrate how to implement IronOCR's Computer Vision features to enhance text recognition in complex images.

@@ -1,3 +1,11 @@
 using IronOcr;
-
-var text = new IronTesseract().Read("img.png").Text;
+namespace ironocr.CSharpTesseractOcr
+{
+    public class Section5
+    {
+        public void Run()
+        {
+            var text = new IronTesseract().Read("img.png").Text;
+        }
+    }
+}

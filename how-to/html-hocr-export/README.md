@@ -1,38 +1,66 @@
-# Saving OCR Results as hOCR in an HTML Format
+# Guide to Saving OCR Results as hOCR in HTML Format
 
-hOCR, an abbreviation for "HTML-based OCR," is a format used to express the output of Optical Character Recognition (OCR) in a structured HTML format. It is designed to encapsulate the recognized text, layout details, and positions of individual characters from scanned documents.
+***Based on <https://ironsoftware.com/how-to/html-hocr-export/>***
 
-IronOCR, a robust .NET library, facilitates OCR on various documents, allowing results to be exported as hOCR in an HTML file. This functionality supports both direct HTML file outputs and HTML strings.
 
-## Example of Exporting Results as hOCR
+hOCR, known as "HTML-based OCR," is a specialized file format designed to store the output of Optical Character Recognition (OCR) processes. These files, written in HTML, capture recognized text and its spatial arrangement, including detailed coordinates for each detected character within a document or image.
 
-To export OCR results as hOCR, set the `Configuration.RenderHocr` property of the IronOCR configuration object to `true`. After executing the OCR process using the `Read` method, you can then save the results as an hOCR HTML file using the `SaveAsHocrFile` method. The following code snippet uses a sample TIFF file available [here](https://ironsoftware.com/static-assets/ocr/how-to/html-export/Potter.tiff).
+IronOCR offers a robust means to execute OCR on documents and save these results in the hOCR HTML file format, accommodating both HTML files and strings.
+
+
+
+## Example: Saving OCR Results as hOCR
+
+To save OCR results as hOCR, you need to activate the **Configuration.RenderHocr** setting by enabling it. Following the OCR process using the `Read` method, the `SaveAsHocrFile` method can be utilized to create an HTML file encapsulating the OCR outcomes. Below you'll find example code that uses the [sample TIFF image](https://ironsoftware.com/static-assets/ocr/how-to/html-export/Potter.tiff) provided.
 
 ```cs
 using IronOcr;
-
-// Create an instance of IronTesseract
-IronTesseract ocrEngine = new IronTesseract();
-
-// Set the rendering mode to hOCR
-ocrEngine.Configuration.RenderHocr = true;
-
-// Load the image for OCR processing
-using var inputImage = new OcrImageInput("Potter.tiff");
-inputImage.Title = "Sample OCR Document";
-
-// Execute the OCR process
-OcrResult result = ocrEngine.Read(inputImage);
-
-// Save the OCR results as hOCR-formatted HTML file
-result.SaveAsHocrFile("output.html");
+namespace ironocr.HtmlHocrExport
+{
+    public class Section1
+    {
+        public void Run()
+        {
+            // Initialize IronTesseract
+            IronTesseract ocrTesseract = new IronTesseract();
+            
+            // Configure to generate hOCR
+            ocrTesseract.Configuration.RenderHocr = true;
+            
+            // Load image for OCR
+            using var imageInput = new OcrImageInput("Potter.tiff");
+            imageInput.Title = "Html Title";
+            
+            // Execute OCR and read results
+            OcrResult ocrResult = ocrTesseract.Read(imageInput);
+            
+            // Output results as HTML file
+            ocrResult.SaveAsHocrFile("result.html");
+        }
+    }
+}
 ```
 
-## Exporting Result as an HTML String
+## Exporting OCR Result as HTML String
 
-For instances where you might prefer to obtain a string representation of the hOCR results, proceed with the `SaveAsHocrString` method, following the processing of the same TIFF sample image. This method returns an HTML-formatted string representing the OCR results.
+To further extend functionality with the same TIFF sample, you might want to use the `SaveAsHocrString` method. This will generate the OCR results in the form of an HTML string.
 
 ```cs
-// Convert OCR results to HTML string
-string htmlResult = result.SaveAsHocrString();
+using IronOcr;
+namespace ironocr.HtmlHocrExport
+{
+    public class Section2
+    {
+        public void Run()
+        {
+            IronTesseract ocrTesseract = new IronTesseract();
+            ocrTesseract.Configuration.RenderHocr = true;
+            using var imageInput = new OcrImageInput("Potter.tiff");
+            OcrResult ocrResult = ocrTesseract.Read(imageInput);
+
+            // Return the OCR results as an HTML string
+            string hocr = ocrResult.SaveAsHocrString();
+        }
+    }
+}
 ```

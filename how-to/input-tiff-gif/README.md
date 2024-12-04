@@ -1,25 +1,36 @@
-# How to Utilize IronOCR for Multi-Frame/Page GIFs and TIFFs Reading
+# Reading Multi-Frame/Page GIFs and TIFFs
 
-TIFF (Tagged Image File Format) is well-known for its high-quality image storage capabilities. It utilizes lossless compression, which preserves the image's original quality, making it ideal for applications such as scanned documents and professional photography.
+***Based on <https://ironsoftware.com/how-to/input-tiff-gif/>***
 
-GIF (Graphics Interchange Format), on the other hand, is often used for simple web graphics and animations. It supports both lossless and lossy compression and is renowned for its capability to hold multiple frames, enabling animations, making it a favorite for short loops used on websites and communication applications.
 
-IronOCR offers comprehensive support for reading both single and multi-frame/page images in GIF and TIFF formats. Simply load the image using the methods provided and IronOCR will handle the rest efficiently.
+TIFF (Tagged Image File Format) is commonly used for high-quality images, supporting lossless compression, ideal for archival quality images such as scanned documents and professional photographs.
 
-## Example of Reading Single/Multi-Frame TIFF
+GIF (Graphics Interchange Format) is chosen for simple, internet-friendly images and animations due to its support for both lossless and lossy compression. Known for its animated capabilities in a single file, GIF is widely adopted for brief, repeating animations frequently seen on web pages and social media platforms.
 
-When using OCR technology, you start by creating an instance of the `IronTesseract` class. Using the `using` statement helps manage resources efficiently by creating an instance of `OcrImageInput`. This supports reading both single and multi-frame TIFF and TIF files. After initializing, use the `Read()` method to apply OCR on your TIFF file.
+IronOCR offers functionality to process both single and multiple-frame/page GIFs and TIFFs effortlessly. Just by importing the image file with one of the provided methods, IronOCR handles the image reading seamlessly.
+
+## Example: Reading Single/Multi-Frame TIFF
+
+To utilize OCR, initiate by creating an instance of the `IronTesseract` class. Through the `using` statement, form an `OcrImageInput` object. This object accommodates single or multiple frames in both TIFF and TIF formats. Use the `Read` method afterward to execute OCR on your TIFF file.
 
 ```cs
 using IronOcr;
-
-// Create an instance of IronTesseract
-IronTesseract ocrTesseract = new IronTesseract();
-
-// Load TIFF/TIF file
-using var imageInput = new OcrImageInput("Potter.tiff");
-// Execute OCR
-OcrResult ocrResult = ocrTesseract.Read(imageInput);
+namespace ironocr.InputTiffGif
+{
+    public class Section1
+    {
+        public void Run()
+        {
+            // Set up IronTesseract
+            IronTesseract ocrTesseract = new IronTesseract();
+            
+            // Load the TIFF/TIF image
+            using var imageInput = new OcrImageInput("Potter.tiff");
+            // Execute OCR
+            OcrResult ocrResult = ocrTesseract.Read(imageInput);
+        }
+    }
+}
 ```
 
 <div class="content-img-align-center">
@@ -28,47 +39,62 @@ OcrResult ocrResult = ocrTesseract.Read(imageInput);
     </div>
 </div>
 
-## Example of Reading a GIF File
+## Example: Reading GIF
 
-Reading a GIF file is just as easy. You need to specify the path of the GIF file when creating the `OcrImageInput` instance. The class takes care of all the necessary steps to load the image.
+For reading GIF files, simply define the file path in the `OcrImageInput` constructor. The class automatically prepares the image file for processing.
 
 ```cs
 using IronOcr;
-
-// Initialize IronTesseract
-IronTesseract ocrTesseract = new IronTesseract();
-
-// Load GIF file
-using var imageInput = new OcrImageInput("Potter.gif");
-// Apply OCR
-OcrResult ocrResult = ocrTesseract.Read(imageInput);
+namespace ironocr.InputTiffGif
+{
+    public class Section2
+    {
+        public void Run()
+        {
+            // Create IronTesseract
+            IronTesseract ocrTesseract = new IronTesseract();
+            
+            // Import the GIF
+            using var imageInput = new OcrImageInput("Potter.gif");
+            // Apply OCR
+            OcrResult ocrResult = ocrTesseract.Read(imageInput);
+        }
+    }
+}
 ```
 
-## Define a Scan Region for OCR
+## Specifying a Scan Region
 
-Adding a `CropRectangle` during the construction of `OcrImageInput` allows you to specify a particular area in the image for OCR. This is particularly useful for large images where analyzing the entire image is unnecessary and resource-heavy.
+Incorporate a `CropRectangle` object when initializing the `OcrImageInput` class to specify a region within the image document for targeted OCR. This technique is particularly beneficial for large images to improve OCR accuracy and performance.
 
 ```cs
-using IronOcr;
-using IronSoftware.Drawing;
 using System;
-
-// Create an instance of IronTesseract
-IronTesseract ocrTesseract = new IronTesseract();
-
-// Define OCR scan region
-Rectangle scanRegion = new Rectangle(800, 200, 900, 400);
-
-// Load image with specific scan area
-using var imageInput = new OcrImageInput("Potter.tiff", ContentArea: scanRegion);
-// Execute OCR
-OcrResult ocrResult = ocrTesseract.Read(imageInput);
-
-// Print the result
-Console.WriteLine(ocrResult.Text);
+using IronOcr;
+namespace ironocr.InputTiffGif
+{
+    public class Section3
+    {
+        public void Run()
+        {
+            // Initialize IronTesseract
+            IronTesseract ocrTesseract = new IronTesseract();
+            
+            // Set the crop area
+            Rectangle scanRegion = new Rectangle(800, 200, 900, 400);
+            
+            // Include the image location and crop area
+            using var imageInput = new OcrImageInput("Potter.tiff", ContentArea: scanRegion);
+            // Start the OCR process
+            OcrResult ocrResult = ocrTesseract.Read(imageInput);
+            
+            // Print the OCR results
+            Console.WriteLine(ocrResult.Text);
+        }
+    }
+}
 ```
 
-### Displaying OCR Results
+### OCR Output Example
 
 <div class="content-img-align-center">
     <div class="center-image-wrapper">

@@ -1,136 +1,185 @@
-# Getting Started with Iron Tesseract
+# Utilizing Iron Tesseract
 
-IronOCR presents a streamlined API called Iron Tesseract, an enhanced version of Tesseract 5. With IronOCR and Iron Tesseract, you can efficiently transform images containing text and scanned documents into editable text as well as searchable PDFs.
+***Based on <https://ironsoftware.com/how-to/iron-tesseract/>***
 
-## Setting Up IronTesseract
 
-To start with IronTesseract, you can easily initiate a new tesseract object following this syntax:
+IronOCR offers a user-friendly API that leverages the customized and enhanced capabilities of Tesseract 5, dubbed Iron Tesseract. With the integration of IronOCR and IronTesseract, you can effortlessly transform images containing text or scanned documents into editable text and searchable PDF files.
 
+Here's the paraphrased section:
+
+-----
+## Initiating an IronTesseract Instance
+
+To begin, you can create a new instance of a Tesseract object in the following manner:
+
+Paraphrased section:
+-----
 ```cs
 using IronOcr;
-
-IronTesseract ocr = new IronTesseract();
-```
-
-Here is the paraphrased section with the URL resolved:
-
-```cs
-using IronOcr;
-
-// Instantiate a new IronTesseract object
-var tesseractInstance = new IronTesseract();
-```
-
-IronTesseract's functionality can be tailored through several adjustable settings, including the choice of language, the activation of barcode reading capabilities, and the definition of specific character whitelists and blacklists.
-
-Here's the paraphrased section of the article, with appropriate modifications:
-
-```cs
-IronTesseract ocrInstance = new IronTesseract
+namespace ironocr.IronTesseract
 {
-    Configuration = new TesseractConfiguration
+    public class InitializeTesseract
     {
-        ReadBarCodes = false, // Do not read barcodes
-        RenderHocr = true, // Enable rendering of hOCR format
-        TesseractVariables = null, // No specific Tesseract variables set
-        WhiteListCharacters = null, // No character whitelisting
-        BlackListCharacters = "`ë|^", // Blacklist specific script characters
-    },
-    MultiThreaded = false, // Single-threaded operation
-    Language = OcrLanguage.English, // Set OCR language to English
-    EnableTesseractConsoleMessages = true // Activate console messages for feedback, off by default
-};
+        public void Execute()
+        {
+            IronTesseract tesseractInstance = new IronTesseract();
+        }
+    }
+}
 ```
 
-After setting up your `IronTesseract` instance, you're ready to utilize its capabilities to process `OcrInput` objects:
+IronTesseract offers flexibility to tailor its operations by allowing you to choose various languages, activate barcode recognition, and manage character recognition through whitelists and blacklists.
 
-Here's the paraphrased section with improved code comments:
+Here's the paraphrased section with resolved relative URL paths:
 
 ```cs
-// Create a new instance of IronTesseract
-IronTesseract ocr = new IronTesseract();
+using IronOcr;
+namespace ironocr.IronTesseract
+{
+    public class Section2
+    {
+        public void Execute()
+        {
+            IronTesseract tesseractOCR = new IronTesseract
+            {
+                Configuration = new TesseractConfiguration
+                {
+                    ReadBarCodes = false,  // Do not scan for barcodes
+                    RenderHocr = true,     // Enable rendering of HOCR
+                    WhiteListCharacters = null,  // No character whitelisting
+                    BlackListCharacters = "`ë^",  // Specify characters to ignore
+                    TesseractVariables = null  // Use default Tesseract variables
+                },
+                MultiThreaded = false,  // Disable multithreading
+                Language = OcrLanguage.English,  // Set language to English
+                EnableTesseractConsoleMessages = true  // Enable console messages, disabled by default
+            };
+        }
+    }
+}
+``` 
 
-// Prepare the image input
-using OcrInput input = new OcrInput();
-input.LoadImage("attachment.png");  // Load the image file into the OCR input
-OcrResult result = ocr.Read(input); // Perform OCR on the loaded image
-string text = result.Text;          // Retrieve the recognized text from the OCR result
+This rewritten excerpt initializes an instance of `IronTesseract` with specified properties, including disabling barcode reading, enabling HOCR rendering, and setting language preferences while outlining which characters to explicitly blacklist from OCR processing.
+
+After setting up your configuration, you can utilize Tesseract's capabilities to process `OcrInput` objects:
+
+Here's the paraphrased section with the relative URL paths resolved from ironsoftware.com:
+
+```cs
+using IronOcr;
+namespace ironocr.IronTesseract
+{
+    public class Section3
+    {
+        public void ExecuteOCR()
+        {
+            IronTesseract ocr = new IronTesseract(); // Create an IronTesseract instance
+
+            using OcrInput inputDocument = new OcrInput(); // Instantiate the OcrInput object
+            inputDocument.LoadImage("attachment.png"); // Load the image from the input
+            OcrResult ocrResult = ocr.Read(inputDocument); // Perform OCR on the loaded image
+            string extractedText = ocrResult.Text; // Retrieve the recognized text from the OCR result
+        }
+    }
+}
 ```
 
-## Configuring Tesseract with IronOcr
+## Tesseract Advanced Configuration Options
 
-The interface provided by IronOcr allows detailed management of Tesseract's configuration settings via the
+Complete manipulation of Tesseract configuration variables is facilitated through the
 
 [IronOcr.TesseractConfiguration Class](https://ironsoftware.com/csharp/ocr/object-reference/api/IronOcr.TesseractConfiguration.html).
 
-### Example of Configuring Tesseract with IronOCR
+### Example Configuration Code Using Tesseract
+
+Integrating advanced Tesseract options is streamlines in the `IronOcr.IronTesseract` namespace as shown in the example below:
 
 ```cs
-using IronOcr;
 using System;
+using IronOcr;
+namespace ironocr.IronTesseract
+{
+    public class Section4
+    {
+        public void Run()
+        {
+            IronTesseract Ocr = new IronTesseract();
+            
+            // Setting the OCR language to English
+            Ocr.Language = OcrLanguage.English;
 
-// Instantiate IronTesseract
-IronTesseract Ocr = new IronTesseract();
+            // Configuring page segmentation mode for optimal accuracy
+            Ocr.Configuration.PageSegmentationMode = TesseractPageSegmentationMode.AutoOsd;
+            
+            // Disabling parallel processing to ensure single-threaded operation
+            Ocr.Configuration.TesseractVariables["tessedit_parallelize"] = false;
+            
+            using var input = new OcrInput();
 
-// Set the language for OCR processing
-Ocr.Language = OcrLanguage.English;
+            // Load an image for OCR processing
+            input.LoadImage("https://ironsoftware.com/csharp/ocr/assets/file.png");
 
-// Configure page segmentation mode
-Ocr.Configuration.PageSegmentationMode = TesseractPageSegmentationMode.AutoOsd;
+            // Execute the OCR process and capture the results
+            OcrResult Result = Ocr.Read(input);
 
-// Disable parallel processing in Tesseract
-Ocr.Configuration.TesseractVariables["tessedit_parallelize"] = false;
-
-// Load the image into an OcrInput
-using var input = new OcrInput();
-input.LoadImage("https://ironsoftware.com/csharp/ocr/path/file.png");
-
-// Perform OCR and retrieve the text
-OcrResult Result = Ocr.Read(input);
-Console.WriteLine(Result.Text);
+            // Output OCR results to the console
+            Console.WriteLine(Result.Text);
+        }
+    }
+}
 ```
+This C# code snippet illustrates initializing `IronTesseract`, setting up language preferences, defining the page segmentation mode, and disabling parallel processing for the Tesseract engine. It demonstrates how to load an image from a specific URL and process it, later printing the detected text to the console.
 
-This code snippet demonstrates setting up `IronTesseract` to utilize English language OCR, specifying the page segmentation mode, controlling Tesseract's parallel processing, and processing a specific image to extract text. The result is then output to the console.
+The paraphrased section of the article is formatted in markdown below:
 
 ```cs
-// Import necessary libraries
-using IronOcr;
 using System;
+using IronOcr;
 
-// Create an instance of IronTesseract
-IronTesseract Ocr = new IronTesseract();
+// Define the namespace specific to IronTesseract usage
+namespace ironocr.IronTesseract
+{
+    public class Section4
+    {
+        public void Run()
+        {
+            // Instantiate IronTesseract object
+            IronTesseract tesseract = new IronTesseract();
 
-// Set the language for OCR
-Ocr.Language = OcrLanguage.English;
+            // Setting the OCR language to English
+            tesseract.Language = OcrLanguage.English;
 
-// Configure the page segmentation mode
-Ocr.Configuration.PageSegmentationMode = TesseractPageSegmentationMode.AutoOsd;
+            // Adjust the page segmentation mode
+            tesseract.Configuration.PageSegmentationMode = TesseractPageSegmentationMode.AutoOsd;
 
-// Disable parallel processing in Tesseract
-Ocr.Configuration.TesseractVariables["tessedit_parallelize"] = false;
+            // Turn off parallel processing for Tesseract
+            tesseract.Configuration.TesseractVariables["tessedit_parallelize"] = false;
 
-// Prepare input image for OCR
-using var input = new OcrInput();
-input.LoadImage("https://ironsoftware.com/path/file.png");
+            // Create a new OCR input and load an image
+            using var imageInput = new OcrInput();
+            imageInput.LoadImage("https://ironsoftware.com/path/file.png");
 
-// Read text from the prepared input
-OcrResult Result = Ocr.Read(input);
-
-// Output the recognized text to the console
-Console.WriteLine(Result.Text);
+            // Execute the OCR process
+            OcrResult ocrResult = tesseract.Read(imageInput);
+            
+            // Output the extracted text to the console
+            Console.WriteLine(ocrResult.Text);
+        }
+    }
+}
 ```
 
-Below is a paraphrased version of the specified section of the article, with the relative URL paths resolved:
+Here is the paraphrased section of the article:
 
-----
+## Comprehensive Configuration Options for Tesseract in IronOCR
 
-## Comprehensive Guide to Tesseract Configuration Settings
-
-Adjustments to Tesseract settings can be made by using the following syntax: 
+Configuration parameters for Tesseract within IronOCR can be customized as follows:
 
 ```cs
 IronTesseract.Configuration.TesseractVariables["key"] = value;
 ```
+
+This allows for extensive adjustment of settings according to your specific requirements.
 
 <table class="table table__configuration-variables">
     <tr>
@@ -346,8 +395,8 @@ IronTesseract.Configuration.TesseractVariables["key"] = value;
     <tr><td>classify_learning_debug_level</td><td>0</td><td>Learning Debug Level: </td></tr>
     <tr><td>matcher_permanent_classes_min</td><td>1</td><td>Min # of permanent classes </td></tr>
 
-<tr><td>matcher_min_examples_for_prototyping</td><td>3</td><td>Threshold for reliable configurations</td></tr>
-<tr><td>matcher_sufficient_examples_for_prototyping</td><td>5</td><td>Allow adjustments regardless of observed ambiguities</td></tr>
+<tr><td>matcher_min_examples_for_prototyping</td><td>3</td><td>Stable configuration threshold</td></tr>
+<tr><td>matcher_sufficient_examples_for_prototyping</td><td>5</td><td>Allows adaptation in absence of prior ambiguities</td></tr>
 ```
 
 <tr><td>classify_adapt_proto_threshold</td><td>230</td><td>Threshold for good protos during adaptive 0-255 </td></tr>
@@ -380,7 +429,10 @@ IronTesseract.Configuration.TesseractVariables["key"] = value;
     <tr><td>language_model_debug_level</td><td>0</td><td>Language model debug level </td></tr>
     <tr><td>language_model_ngram_order</td><td>8</td><td>Maximum order of the character ngram model </td></tr>
 
-<tr><td>language_model_viterbi_list_max_num_prunable</td><td>10</td><td>Highest count of prunable entries (validated by PrunablePath()) per viterbi list, as recorded in BLOB_CHOICEs</td></tr>
+Here is the paraphrased section of the article with paths resolved:
+
+
+<tr><td>language_model_viterbi_list_max_num_prunable</td><td>10</td><td>The highest count of prunable entries (determined by PrunablePath() being true) allowed per viterbi list in BLOB_CHOICEs</td></tr>
 ```
 
 <tr><td>language_model_viterbi_list_max_size</td><td>500</td><td>Maximum size of viterbi lists recorded in BLOB_CHOICEs </td></tr>
@@ -476,8 +528,8 @@ IronTesseract.Configuration.TesseractVariables["key"] = value;
     <tr><td>save_alt_choices</td><td>1</td><td>Save alternative paths found during chopping and segmentation search </td></tr>
     <tr><td>language_model_ngram_on</td><td>0</td><td>Turn on/off the use of character ngram model </td></tr>
 
-<tr><td>language_model_ngram_use_only_first_utf8_step</td><td>0</td><td>Compute log probabilities using only the first UTF8 step of any given string.</td></tr>
-<tr><td>language_model_ngram_space_delimited_language</td><td>1</td><td>Spaces are used to separate words.</td></tr>
+<tr><td>language_model_ngram_use_only_first_uft8_step</td><td>0</td><td>Only utilize the initial UTF8 step of the entered string for calculating log probabilities.</td></tr>
+<tr><td>language_model_ngram_space_delimited_language</td><td>1</td><td>Words are separated by spaces.</td></tr>
 ```
 
 <tr><td>language_model_use_sigmoidal_certainty</td><td>0</td><td>Use sigmoidal score for certainty </td></tr>
@@ -615,14 +667,14 @@ IronTesseract.Configuration.TesseractVariables["key"] = value;
     <tr><td>chs_trailing_punct1</td><td>).,;:?!</td><td>1st Trailing punctuation </td></tr>
     <tr><td>chs_trailing_punct2	)'`"</td><td>2nd Trailing punctuation</td><td></td></tr>
 
-<tr><td>outlines_odd</td><td>%|</td><td>Representation for characters with an unusual number of outlines</td></tr>
+<tr><td>outlines_odd</td><td>%|</td><td>Non-standard number of outlines</td></tr>
 ```
 
 </td><td>Non standard number of outlines </td></tr>
     <tr><td>outlines_2	ij!?%":;</td><td>Non standard number of outlines</td><td></td></tr>
     <tr><td>numeric_punctuation</td><td>.,</td><td>Punct. chs expected WITHIN numbers </td></tr>
 
-|<td>unrecognized_char</td>|<td>|</td>|
+<tr><td>unrecognized_char</td><td>|</td><td>Character output for unidentifiable elements</td></tr>
 
 </td><td>Output char for unidentified blobs </td></tr>
     <tr><td>ok_repeated_ch_non_alphanum_wds</td><td>-?*=</td><td>Allow NN to unrej </td></tr>
@@ -647,7 +699,12 @@ IronTesseract.Configuration.TesseractVariables["key"] = value;
     <tr><td>classify_adapted_pruning_factor</td><td>2.5</td><td>Prune poor adapted results this much worse than best result </td></tr>
     <tr><td>classify_adapted_pruning_threshold</td><td>-1</td><td>Threshold at which classify_adapted_pruning_factor starts </td></tr>
 
-<tr><td>classify_character_fragments_garbage_certainty_threshold</td><td>-3</td><td>Omit parts that do not resemble complete characters for training and adaptation purposes</td></tr>
+```html
+<tr>
+  <td>classify_character_fragments_garbage_certainty_threshold</td>
+  <td>-3</td>
+  <td>Omit fragments appearing incomplete or partial from training processes and adaptative learning.</td>
+</tr>
 ```
 
 <tr><td>speckle_large_max_size</td><td>0.3</td><td>Max large speckle size </td></tr>

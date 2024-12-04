@@ -1,89 +1,81 @@
-# IronOCR Linux Compatibility & Installation Guide
+# IronOCR Compatibility & Setup on Linux
 
-IronOCR is fully supported on Linux for **.NET Core** and **.NET 5** projects, with additional compatibility for platforms like [Docker](https://ironsoftware.com/csharp/ocr/how-to/csharp-tesseract-ocr-docker-linux-setup-tutorial/), Azure, macOS, and Windows, ensuring a flexible integration across various environments.
+***Based on <https://ironsoftware.com/how-to/tesseract-ocr-setup-linux-ubuntu-debian/>***
+
+
+IronOCR offers robust support for **.NET Core** and **.NET 5** on various platforms, including Linux, [Docker](https://ironsoftware.com/csharp/ocr/how-to/csharp-tesseract-ocr-docker-linux-setup-tutorial/), Azure, macOS, and Windows.
 
 ![Linux](https://img.icons8.com/color/96/000000/linux--v1.png) ![Docker](https://img.icons8.com/color/96/000000/docker.png) ![Azure](https://img.icons8.com/fluency/96/000000/azure-1.png) ![AWS](https://img.icons8.com/color/96/000000/amazon-web-services.png) ![Ubuntu](https://img.icons8.com/color/96/000000/ubuntu--v1.png) ![Debain](https://img.icons8.com/color/96/000000/debian--v1.png)
 
-For best results, we advocate using .NET Core 3.1 or any other [Microsoft LTS-supported runtimes](https://dotnet.microsoft.com/platform/support/policy), as they provide reliable, long-term support and have proven stability on Linux systems.
+We advise using .NET Core 3.1 and other runtimes that are [endorsed as LTS by Microsoft](https://dotnet.microsoft.com/platform/support/policy) for their extended support and stable performance on Linux.
 
-IronOCR delivers a seamless experience on Linux platforms right out of the box, benefiting from numerous hours of meticulous testing and optimization by our dedicated engineering team.
+IronOCR typically requires no additional code modifications to function on Linux, performing optimally right away due to extensive testing and fine-tuning by our team.
 
-The significance of Linux compatibility cannot be overstated, particularly for cloud-based services such as Azure Web Apps, Azure Functions, AWS EC2, AWS Lambda, and Docker containers in Azure DevOps, which predominantly run on Linux. At Iron Software, our extensive use of these technologies ensures a profound understanding of the requirements and challenges faced by our Enterprise and SAAS clientele.
+Support for Linux is crucial as it underpins many cloud solutions like Azure Web Apps, Azure Functions, AWS EC2, AWS Lambda, and Azure Devops Docker, which are integral to many of our Enterprise and SaaS customers at Iron Software.
 
-## Officially Supported Linux Distributions
+## Supported Linux Distributions
 
-IronOCR offers **official support** for the latest **64-bit** versions of Linux listed below, designed for effortless, "zero configuration" setup:
+We **officially support** these 64-bit Linux distributions for seamless IronOCR integration:
 
 - Ubuntu 20
 - Ubuntu 18
 - Debian 11
-- Debian 10 _[Currently the default Linux Distro in Microsoft Azure]_
+- Debian 10 _[Currently the Microsoft Azure Default Linux Distro]_
 
-For guidance on setups involving Linux distributions not **officially supported**, please see the "Other Linux Distros" section below.
+For guidance on installing IronOCR on other Linux distributions, see "Other Linux Distros" section below.
 
 ## IronOCR NuGet Packages
 
-```
+To install, use:
+
+```bash
 PM > Install-Package IronOCR
 ```
 
-## Ubuntu Compatibility
+## Compatibility with Ubuntu
 
-Ubuntu ranks as our most scrutinized Linux OS due to its significant role in the Azure ecosystem that we leverage for continuous integration and production deployments. This platform benefits from both official Microsoft .NET support and established Docker images.
+Ubuntu is thoroughly tested as it is widely used in Azure, where we conduct ongoing testing and deployments. It enjoys robust support from Microsoft for .NET and official Docker images.
 
-### Ubuntu 20
+### Setup for Ubuntu 20
 
-![](https://img.icons8.com/color/48/000000/microsoft.png) ![](https://img.icons8.com/color/48/000000/ubuntu--v1.png) ![](https://img.icons8.com/color/48/000000/chrome--v1.png) ![](https://img.icons8.com/color/48/000000/safari--v1.png) ![](https://img.icons8.com/color/48/000000/docker.png) ![](https://img.icons8.com/fluency/48/000000/azure-1.png)
+![Icons](https://img.icons8.com/color/48/000000/microsoft.png) ![Ubuntu](https://img.icons8.com/color/48/000000/ubuntu--v1.png) ![Chrome](https://img.icons8.com/color/48/000000/chrome--v1.png) ![Safari](https://img.icons8.com/color/48/000000/safari--v1.png) ![Docker](https://img.icons8.com/color/48/000000/docker.png) ![Azure](https://img.icons8.com/fluency/48/000000/azure-1.png)
 
-**Manual Ubuntu 20 Installation** - For manual setups or where your application cannot utilize _sudo_ privileges:
-
-```sh
-sudo apt update
-sudo apt install -y apt-utils libgdiplus libc6-dev
-```
-
-### Ubuntu 18
-
-![](https://img.icons8.com/color/48/000000/microsoft.png) ![](https://img.icons8.com/color/48/000000/ubuntu--v1.png) ![](https://img.icons8.com/color/48/000000/chrome--v1.png) ![](https://img.icons8.com/color/48/000000/safari--v1.png) ![](https://img.icons8.com/color/48/000000/docker.png) ![](https://img.icons8.com/fluency/48/000000/azure-1.png)
-
-**Manual Ubuntu 18 Installation** - For setups requiring manual intervention or when admin privileges are unavailable:
+**Manual Ubuntu 20 Installation** - For situations where administrative permissions are unavailable:
 
 ```sh
 sudo apt update
 sudo apt install -y apt-utils libgdiplus libc6-dev
 ```
 
-### Debian 11
+### Setup for Ubuntu 18
 
-![](https://img.icons8.com/color/48/000000/debian.png) ![](https://img.icons8.com/color/48/000000/microsoft.png) ![](https://img.icons8.com/color/48/000000/chrome--v1.png) ![](https://img.icons8.com/color/48/000000/safari--v1.png) ![](https://img.icons8.com/color/48/000000/docker.png) ![](https://img.icons8.com/fluency/48/000000/azure-1.png)
+![Icons](https://img.icons8.com/color/48/000000/microsoft.png) ![Ubuntu](https://img.icons8.com/color/48/000000/ubuntu--v1.png) ![Chrome](https://img.icons8.com/color/48/000000/chrome--v1.png) ![Safari](https://img.icons8.com/color/48/000000/safari--v1.png) ![Docker](https://img.icons8.com/color/48/000000/docker.png) ![Azure](https://img.icons8.com/fluency/48/000000/azure-1.png)
 
-**Manual Debian 11 Installation** - Appropriate for direct installation or cases where _sudo_ privileges are restricted:
-
-```sh
-sudo apt update
-sudo apt install -y apt-utils libgdiplus libc6-dev
-```
-
-### Debian 10
-
-![](https://img.icons8.com/color/48/000000/debian.png) ![](https://img.icons8.com/color/48/000000/microsoft.png) ![](https://img.icons8.com/color/48/000000/chrome--v1.png) ![](https://img.icons8.com/color/48/000000/safari--v1.png) ![](https://img.icons8.com/color/48/000000/docker.png) ![](https://img.icons8.com/fluency/48/000000/azure-1.png)
-
-_Developing .NET projects in Visual Studio typically defaults to Debian 10 as the Linux distribution when adding Docker compatibility._
-
-**Manual Debian 10 Installation** - To manually configure or where application usage does not permit _sudo_ commands:
+**Manual Ubuntu 18 Installation** - If installing manually without _sudo_ permissions:
 
 ```sh
 sudo apt update
 sudo apt install -y apt-utils libgdiplus libc6-dev
 ```
 
-### Other Linux Distros
+### Setup for Debian 11 and Debian 10
 
-Regardless of whether you utilize `HFS`, `yum`, `apt`, or `apt-get` as your package manager, software requirements remain consistent across distributions.
+Both setups are identical due to their requirements.
+
+**Manual Debian Setup** - Suitable when administrative rights are restricted.
 
 ```sh
 sudo apt update
-sudo apt install -y apt-utils libgdiplus libc6-dev tessseract-ocr libtesseract-dev
+sudo apt install -y apt-utils libgdiplus libc6-dev
+```
+
+### Additional Linux Distributions
+
+Regardless of which package manager you use (`HFS`, `yum`, `apt`, or `apt-get`), the requirements generally remain the same:
+
+```sh
+sudo apt update
+sudo apt install -y apt-utils libgdiplus libc6-dev tesseract-ocr libtesseract-dev
 ```
 
 <style>article.main-article.main-content img  { display:inline-block !important ;}</style>

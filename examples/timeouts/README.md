@@ -1,5 +1,7 @@
-The `TimeoutMs` setting allows you to specify a maximum duration, in milliseconds, for the OCR operation before it is automatically stopped.
+***Based on <https://ironsoftware.com/examples/timeouts/>***
 
-Like `AbortToken`, `TimeoutMs` is beneficial for managing the reading of large files, particularly if the process encounters an issue or hangs during execution.
+`TimeoutMs` offers an optional timeout setting, specified in milliseconds, that cancels the OCR reading task if it exceeds the defined period.
 
-It's important to mention that this functionality is not available in .NET Framework 4.x.x.
+Like `AbortToken`, `TimeoutMs` aids in managing the reading of extensive input files, especially helpful if the process halts during runtime.
+
+It's important to highlight that this functionality is not available in .NET Framework 4.x.x.

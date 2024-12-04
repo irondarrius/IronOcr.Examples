@@ -1,9 +1,13 @@
-OCR technology operates more efficiently and with greater accuracy when processing black text on a white background.
+***Based on <https://ironsoftware.com/examples/replace-color/>***
 
-In scenarios where text is presented in colors like blue on a pink background, converting the blue to black and the pink to white prior to OCR can enhance performance.
+OCR performance is optimized for reading black text against a white backdrop.
 
-Using `System.Drawing` for such color transformations can be inefficient and sluggish. Conversely, IronOCR offers a streamlined and automated solution.
+For instance, if you encounter blue text on a pink background, it's advantageous to convert the blue text to black and the pink background to white prior to OCR processing.
 
-The method `OcrInput.ReplaceColor` in IronOCR facilitates the substitution of one color for another within a document. It includes a tolerance feature that allows you to define how close the replacement color must match the original in terms of RGB percentage.
+Using `System.Drawing` for this task can be labor-intensive and inefficient. However, IronOCR simplifies this process significantly.
 
-This effectively eliminates the necessity for using complex tools like Photoshop or ImageMagick to preprocess images for OCR.
+The method `OcrInput.ReplaceColor` from IronOCR provides a straightforward way to change one color for another within a document.
+
+This method includes a fuzziness setting, allowing you to define a percentage tolerance for the exact RGB color match.
+
+With this functionality, there's no longer a necessity to employ Photoshop or ImageMagick scripts to prep images for OCR operations.

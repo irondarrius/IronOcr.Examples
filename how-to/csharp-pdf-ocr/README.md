@@ -1,89 +1,95 @@
 # C# PDF OCR
 
-Optical Character Recognition (OCR) of PDF documents is a prevalent requirement in the world of real-world .NET software development.
+***Based on <https://ironsoftware.com/how-to/csharp-pdf-ocr/>***
 
-Reasons for performing OCR on a PDF include:
 
-- Extracting content to be repurposed or updated
-- Enabling search capabilities in scanned PDF documents
-- Enhancing a search index
+Optical Character Recognition (OCR) on PDF documents is a prevalent requirement in modern .NET software development.
 
-IronOCR extends the capabilities of Tesseract 5, specifically tailored for .NET developers, to handle these tasks proficiently.
+The need to implement OCR on a PDF document could arise for various reasons, such as:
 
-## How to Perform OCR on a PDF using C#
+- Modernizing or reusing extracted content
+- Enabling search functionality on scanned PDFs
+- Enhancing the content for Search index population
 
-IronOcr offers a powerful API to extract text from PDF documents and make scanned PDFs searchable across C# and other .NET languages.
+IronOCR is a comprehensive API designed for .NET and C# developers, offering capabilities that incorporate Tesseract 5 along with specialized PDF functionalities for .NET users.
 
-Below is a C# code example demonstrating how to perform OCR on an existing PDF:
+## Executing OCR on a PDF Using C&num;
 
-```cs
-using IronOcr;
+IronOcr furnishes a powerful API that not only permits text extraction from PDFs but also transforms scanned PDFs into searchable documents within C# and other .NET supported languages.
 
-var OcrEngine = new IronTesseract();
-using (var PdfInput = new OcrInput("example.pdf"))
-{
-    var OcrResult = OcrEngine.Read(PdfInput);
-    Console.WriteLine(OcrResult.Text);  // Displaying extracted text
-}
-```
-
-To perform OCR on specific pages of a PDF, consider the following code:
+Here is a basic C# example to perform OCR on an existing PDF:
 
 ```cs
 using IronOcr;
 
-var OcrEngine = new IronTesseract();
-using (var PdfInput = new OcrInput())
+var ocr = new IronTesseract();
+using (var input = new OcrInput())
 {
-    PdfInput.AddPdfPages("example.pdf", new[] { 1, 2, 3 });  // Specifying pages to OCR
-    var OcrResult = OcrEngine.Read(PdfInput);
-    Console.WriteLine(OcrResult.Text);  // Displaying extracted text from specified pages
+    input.AddPdf("example.pdf"); 
+    var ocrResult = ocr.Read(input);
+    Console.WriteLine(ocrResult.Text);
 }
 ```
 
-#### PDF OCR Results Class
-
-The `OcrResult` object encompasses far more than just the text of the PDF. It also includes details regarding pages, paragraphs, lines, words, characters, and any barcodes that IronOcr detects within the document.
-
-Learn more about the `IronOcr.OcrResult` Class at: [IronOCR Results Objects](https://ironsoftware.com/csharp/ocr/examples/results-objects/).
-
-## Creating Searchable PDFs via OCR
-
-One of the popular functionalities is to create searchable PDFs from scanned documents. This feature enhances accessibility and simplifies indexing in search platforms like ElasticSearch or even Google.
-
-#### Making a Scanned PDF Searchable
-
-The following code snippet demonstrates enhancing a scanned PDF image quality and converting it into a searchable PDF:
+Additionally, text extraction from specific pages is possible:
 
 ```cs
 using IronOcr;
-var OcrEngine = new IronTesseract();
-using (var PdfInput = new OcrInput("scan.pdf"))
-{
-    PdfInput.Deskew();  // Correction for misaligned pages
 
-    var OcrResult = OcrEngine.Read(PdfInput);
-    OcrResult.SaveAsSearchablePdf("searchable.pdf");  // Saving as searchable PDF
+var ocr = new IronTesseract();
+using (var input = new OcrInput())
+{
+    input.AddPdfPages("example.pdf", new [] { 1, 2, 3 });
+    var ocrResult = ocr.Read(input);
+    Console.WriteLine(ocrResult.Text);
 }
 ```
 
-#### Converting Image Files to Searchable PDF
+#### Structure of PDF OCR Results
 
-IronOCR can also be used to convert image files into searchable PDFs using C#/.NET:
+The `ocrResult` object includes not just the text, but also detailed metadata such as Pages, Paragraphs, Lines, Words, Characters, and Barcodes detected in the PDF by IronOcr.
+
+More on the `IronOcr.OcrResult` Class at: [IronOcr OcrResult Class](https://ironsoftware.com/csharp/ocr/examples/results-objects/).
+
+## Generating Searchable PDFs through OCR
+
+Creating searchable PDFs from scanned documents is a highly utilized feature of OCR, making them more user-friendly and simpler to catalog by search systems like ElasticSearch or Google.
+
+#### Transforming a Scanned PDF into a Searchable PDF
+
+This snippet demonstrates improving a scanned PDF's image quality and converting it into a searchable PDF:
 
 ```cs
 using IronOcr;
-var OcrEngine = new IronTesseract();
-using (var ImgInput = new OcrInput())
+var ocr = new IronTesseract();
+using (var input = new OcrInput())
 {
-    ImgInput.Add(@"images\page1.png");
-    ImgInput.Add(@"images\page2.bmp");
-    ImgInput.Add(@"images\page3.tiff");
+    input.AddPdf("scan.pdf");
+ 
+    // Correct skewed pages
+    input.Deskew();
 
-    ImgInput.Deskew();  // Correcting page orientation issues
-    var OcrResult = OcrEngine.Read(ImgInput);
-    OcrResult.SaveAsSearchablePdf("searchable.pdf");  // Outputing as searchable PDF
+    var ocrResult = ocr.Read(input);
+    ocrResult.SaveAsSearchablePdf("searchable.pdf");
 }
 ```
 
-This tutorial guides you through utilizing IronOCR for proficiently handling PDF OCR tasks within the .NET framework.
+#### Converting Images to a Searchable PDF
+
+OCR technology can also be employed to convert image files into a searchable PDF document in C#/.NET:
+
+```cs
+using IronOcr;
+var ocr = new IronTesseract();
+using (var input = new OcrInput())
+{
+    input.Add(@"images/page1.png")
+    input.Add(@"images/page2.bmp")
+    input.Add(@"images/page3.tiff")
+
+    // Correct skewed pages
+    input.Deskew();
+    var ocrResult = ocr.Read(input);
+    ocrResult.SaveAsSearchablePdf("searchable.pdf");
+}
+```
