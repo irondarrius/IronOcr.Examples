@@ -1,10 +1,10 @@
 using System.Linq;
 using IronOcr;
-namespace ironocr.ReadSpecificDocument
+namespace IronOcr.Examples.HowTo.ReadSpecificDocument
 {
-    public class Section5
+    public static class Section5
     {
-        public void Run()
+        public static void Run()
         {
             // Instantiate OCR engine
             var ocr = new IronTesseract();

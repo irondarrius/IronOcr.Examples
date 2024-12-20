@@ -1,10 +1,10 @@
 using System;
 using IronOcr;
-namespace ironocr.ImageColorCorrection
+namespace IronOcr.Examples.HowTo.ImageColorCorrection
 {
-    public class Section5
+    public static class Section5
     {
-        public void Run()
+        public static void Run()
         {
             // Instantiate IronTesseract
             IronTesseract ocrTesseract = new IronTesseract();

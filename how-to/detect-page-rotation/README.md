@@ -1,49 +1,42 @@
-# Identifying Page Orientation
+# How to Identify Page Rotation
 
 ***Based on <https://ironsoftware.com/how-to/detect-page-rotation/>***
 
 
-Recognizing the specific rotation applied to a document page is essential in understanding if it has been rotated clockwise or counterclockwise by 0, 90, 180, or 270 degrees. Accurate determination of page orientation is crucial for properly rendering or processing documents, ensuring the pages are positioned correctly for display or printing purposes.
+Identifying the rotation of a page within a document involves determining the angle at which the page has been rotated. This could be either clockwise or counterclockwise at angles including 0, 90, 180, or 270 degrees. This detection is essential for accurate document rendering and processing, as it ensures pages appear in the intended orientation when viewed or printed.
 
-IronOCR enhances the capabilities of page rotation detection. After determining the rotation, the information can be utilized with the `Rotate` method to properly align the page to its intended orientation.
+IronOCR excels in the detection of page rotation. Once the rotation is identified, you can use the returned angle in conjunction with the `Rotate` method to align the page correctly.
+
+<h3>Getting Started with IronOCR</h3>
+
+------------------------------------------
 
 ## Example: Detecting Page Rotation
 
-Once the document has opened, the `DetectPageOrientation` method can be employed to ascertain the rotation degree of each page. This methodology is adept for rotations including 0, 90, 180, and 270 degrees. For addressing document skewness, the `Deskew` method can be applied to correct the image alignment. After this correction, the image should be rotated back to its rightful orientation according to the rotation degree identified. We will demonstrate using a [sample PDF](https://ironsoftware.com/static-assets/ocr/how-to/detect-page-rotation/Clockwise90.pdf).
+Start by loading the document. To determine the page rotation, apply the `DetectPageOrientation` method which handles angles of 0, 90, 180, and 270 degrees. For images that appear skewed, the `Deskew` method can help in correcting the image alignment. Afterward, use the obtained degree to rotate the image back to its intended orientation. Let's go through a [sample PDF](https://ironsoftware.com/static-assets/ocr/how-to/detect-page-rotation/Clockwise90.pdf).
 
-This technique ensures high efficiency with text-heavy documents.
+This function is particularly effective with documents that contain a lot of text.
 
 ```cs
-using System;
 using IronOcr;
-namespace ironocr.DetectPageRotation
+using System;
+
+using var input = new OcrInput("Clockwise90.pdf"); // Load PDF document
+
+// Determine page rotation
+var results = input.DetectPageOrientation();
+
+// Displaying results
+foreach(var result in results)
 {
-    public class OrientationDetectionExample
-    {
-        public void Execute()
-        {
-            using var document = new OcrInput();
-            
-            // Loading the PDF Document
-            document.LoadPdf("Clockwise90.pdf");
-            
-            // Determining the page orientation
-            var orientationResults = document.DetectPageOrientation();
-            
-            // Displaying the results
-            foreach(var orientation in orientationResults)
-            {
-                Console.WriteLine(orientation.PageNumber);
-                Console.WriteLine(orientation.HighConfidence);
-                Console.WriteLine(orientation.RotationAngle);
-            }
-        }
-    }
+    Console.WriteLine($"Page Number: {result.PageNumber}");
+    Console.WriteLine($"Confidence Level: {result.HighConfidence}");
+    Console.WriteLine($"Rotation Angle: {result.RotationAngle} degrees");
 }
 ```
 
-### Interpretation of Results
+### Interpreting the Results
 
-- **PageNumber**: Shows the position of the page within the document, starting from zero.
-- **RotationAngle**: Indicates the degree of correction needed. This angle is the orientation value used with the `Rotate` method, such as `document.Rotate(RotationAngle)` to correct the orientation. For instance, an image rotated clockwise by 90 degrees will have an angle return of 270 degrees.
-- **HighConfidence**: Reflects the confidence level associated with the detected orientation, ensuring reliability in the orientation result.
+- **PageNumber**: Refers to the zero-based page index within the document.
+- **RotationAngle**: Specifies the corrective angle in degrees. You can use this angle with the `Rotate` method, for instance, if an image is rotated by 90 degrees clockwise, you would apply a 270-degree rotation to correct it (`input.Rotate(RotationAngle)`).
+- **HighConfidence**: Reflects the reliability of the page orientation detection.

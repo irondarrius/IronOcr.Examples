@@ -1,9 +1,9 @@
 using IronOcr;
-namespace ironocr.ImageColorCorrection
+namespace IronOcr.Examples.HowTo.ImageColorCorrection
 {
-    public class Section3
+    public static class Section3
     {
-        public void Run()
+        public static void Run()
         {
             // Apply invert affect
             imageInput.Invert();

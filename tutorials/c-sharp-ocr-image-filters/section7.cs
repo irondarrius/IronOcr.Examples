@@ -1,10 +1,10 @@
 using System;
 using IronOcr;
-namespace ironocr.CSharpOcrImageFilters
+namespace IronOcr.Examples.Tutorial.CSharpOcrImageFilters
 {
-    public class Section7
+    public static class Section7
     {
-        public void Run()
+        public static void Run()
         {
             var image = @"before-invert.png";
             var ocr = new IronTesseract();

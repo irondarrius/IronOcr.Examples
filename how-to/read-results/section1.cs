@@ -1,10 +1,10 @@
 using System;
 using IronOcr;
-namespace ironocr.ReadResults
+namespace IronOcr.Examples.HowTo.ReadResults
 {
-    public class Section1
+    public static class Section1
     {
-        public void Run()
+        public static void Run()
         {
             using static IronOcr.OcrResult;
             

@@ -1,9 +1,9 @@
 using IronOcr;
-namespace ironocr.CsharpRecognizeTextFromImageComputerVision
+namespace IronOcr.Examples.Tutorial.CsharpRecognizeTextFromImageComputerVision
 {
-    public class Section3
+    public static class Section3
     {
-        public void Run()
+        public static void Run()
         {
             using var input = new OcrInput();
             // Load at least one image

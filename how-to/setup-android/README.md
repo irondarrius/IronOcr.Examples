@@ -1,22 +1,29 @@
+# How to Implement OCR in Android Using .NET MAUI
+
 ***Based on <https://ironsoftware.com/how-to/setup-android/>***
 
-/h74/android.svg">
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <img src="https://ironsoftware.com/img/platforms/h74/android.svg">
         </div>
     </div>
 </div>
 
-.NET MAUI (Multi-platform App UI) represents an advancement from the Xamarin.Forms framework, enabling developers to craft cross-platform applications for Android, iOS, macOS, and Windows with .NET. It streamlines the creation of native interfaces that are deployable across various platforms.
+.NET MAUI (Multi-platform App UI) represents an advancement over Xamarin.Forms, facilitating the development of cross-platform applications for Android, iOS, macOS, and Windows with .NET. The goal of .NET MAUI is to streamline the creation of native interfaces that are deployable across various platforms.
 
-The **IronOcr.Android package** adds OCR capabilities to Android projects built with .NET MAUI!
+The **IronOcr.Android package** introduces OCR capabilities to Android devices.
 
-## IronOCR Android Package
+## IronOCR Android Package Installation
 
-The **IronOcr.Android package** equips Android devices with OCR functionalities within .NET cross-platform solutions. Importing the standard IronOCR library separately is not required.
+**IronOcr.Android** allows the integration of OCR technologies into Android applications through .NET cross-platform projects, making the standard IronOCR library unnecessary.
 
 ```shell
 PM > Install-Package IronOcr.Android
 ```
 
+<link rel="stylesheet" type="text/css" href="https://ironsoftware.com/front/css/content__install-components__extended.css" media="print" onload="this.media='all'; this.onload=null;">
 <div class="products-download-section">
     <div class="js-modal-open product-item nuget" style="width: fit-content; margin-left: auto; margin-right: auto;" data-modal-id="trial-license-after-download">
         <div class="product-image">
@@ -39,38 +46,37 @@ PM > Install-Package IronOcr.Android
     </div>
 </div>
 
-## Create a .NET MAUI Project
+## Starting a New .NET MAUI Project
 
-Launch Visual Studio and opt for "Create a new project". Search for MAUI, select .NET MAUI App and proceed with "Next".
+Launch Visual Studio and select "Create a new project". Look for MAUI, choose the .NET MAUI App template, and proceed by clicking "Next".
 
-![Create .NET MAUI App project](https://ironsoftware.com/static-assets/ocr/how-to/setup-android/create-maui-app.webp)
+![Set up a .NET MAUI App project](https://ironsoftware.com/static-assets/ocr/how-to/setup-android/create-maui-app.webp)
 
-## Integrate IronOCR.Android Library
+## Integrating IronOCR.Android
 
-You can incorporate this library in various ways, with NuGet being the most straightforward approach.
+Adding the library is straightforward using NuGet.
 
-1. Within Visual Studio, right-click on "Dependencies" and choose "Manage NuGet Packages...".
-2. Navigate to the "Browse" tab and enter "IronOcr.Android" in the search bar.
-3. Click on the "IronOcr.Android" package, then select "Install".
+1. In Visual Studio, right-click "Dependencies" and choose "Manage NuGet Packages ...".
+2. Navigate to the "Browse" tab and look up "IronOcr.Android".
+3. Choose the "IronOcr.Android" package and press "Install".
 
-![Download IronOcr.Android package](https://ironsoftware.com/static-assets/ocr/how-to/setup-android/download-package.webp)
+![Install IronOcr.Android library](https://ironsoftware.com/static-assets/ocr/how-to/setup-android/download-package.webp)
 
-To avoid complications on other platforms, adapt the csproj file to include this package only for the Android platform:
+To ensure the library only affects Android builds:
 
-1. Right-click on the project and choose "Edit Project File".
-2. Add a new ItemGroup element structured as follows:
+1. Right-click on the project and select "Edit Project File".
+2. Add a new ItemGroup with a condition for Android platforms:
     ```xml
     <ItemGroup Condition="$(TargetFramework.Contains('android')) == true">
     </ItemGroup>
     ```
-3. Relocate the "IronOcr.Android" PackageReference to the newly formed ItemGroup.
+3. Transfer the `PackageReference` for "IronOcr.Android" into this newly created ItemGroup.
 
-This configuration ensures that the "IronOcr.Android" package is utilized solely for the Android platform and not on platforms like iOS (for iOS, consider installing [IronOcr.iOS](https://nuget.org/packages/IronOcr.iOS/)).
+This strategy prevents the "IronOcr.Android" package from interfering with other platforms' builds, such as iOS, for which you should use [IronOcr.iOS](https://nuget.org/packages/IronOcr.iOS/).
 
-## Modify "MainActivity.cs"
+## Modifying "MainActivity.cs"
 
-- Access the file "MainActivity.cs" by navigating to Platforms -> Android.
-- Incorporate the `MainActivity` constructor and call the `Initialize` method within it.
+Open the "MainActivity.cs" by navigating to Platforms -> Android, add the `MainActivity` constructor and call `Initialize` on `IronTesseract`.
 
 ```cs
 namespace MAUIIronOCRAndroidSample
@@ -86,12 +92,12 @@ namespace MAUIIronOCRAndroidSample
 }
 ```
 
-## Update "MainPage.xaml"
+## Configuring "MainPage.xaml"
 
-Adjust the XAML layout to feature a button and a label that will display the OCR results. Here’s how you might set it up:
+Modify the XAML to include a button and a label for displaying OCR results:
 
 ```xml
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MAUIIronOCRAndroidSample.MainPage">
@@ -107,7 +113,6 @@ Adjust the XAML layout to feature a button and a label that will display the OCR
             Grid.Row="0"
             HorizontalOptions="Center"
             Margin="20, 20, 20, 10"/>
-
         <ScrollView
             Grid.Row="1"
             BackgroundColor="LightGray"
@@ -120,13 +125,9 @@ Adjust the XAML layout to feature a button and a label that will display the OCR
 </ContentPage>
 ```
 
-## Revise "MainPage.xaml.cs"
+## Updating "MainPage.xaml.cs"
 
-Initially, establish an instance of the IronTesseract class. It's crucial to initiate the IronTesseract instance once per class to avoid inefficiencies and potential execution anomalies.
-
-Next, utilize the `FilePicker.PickAsync` function to choose a file, open a reading stream from the **FileResult**, configure a new OcrInput instance, load the image, perform OCR, and then display the resultant text on a label.
-
-It's important to note that the current implementation exclusively supports image files. The package does not presently accommodate PDF files; therefore, any settings related to PDF should be kept deactivated by default.
+Create and configure `IronTesseract` instance. Use `FilePicker.PickAsync` to select an image file, perform OCR, and display the text:
 
 ```cs
 using IronOcr;
@@ -135,13 +136,12 @@ namespace MAUIIronOCRAndroidSample;
 
 public partial class MainPage : ContentPage
 {
-    // Ensure IronTesseract is initialized just once per class
     private IronTesseract ocrTesseract = new IronTesseract();
 
     public MainPage()
     {
         InitializeComponent();
-        IronOcr.License.LicenseKey = "IRONOCR.MYLICENSE.KEY.1EF01";  // Apply License Key
+        IronOcr.License.LicenseKey = "IRONOCR.MYLICENSE.KEY.1EF01";
     }
 
     private async void ReadFileOnImport(object sender, EventArgs e)
@@ -159,33 +159,31 @@ public partial class MainPage : ContentPage
                 using var ocrInput = new OcrInput();
                 ocrInput.LoadImage(stream);
                 var ocrResult = ocrTesseract.Read(ocrInput);
-                OutputText.Text = ocrResult.Text;  // Display OCR results
+                OutputText.Text = ocrResult.Text;
             }
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine(ex);  // Handle exceptions
+            System.Diagnostics.Debug.WriteLine(ex);
         }
     }
 }
 ```
 
-Upon adjusting the .csproj file as previously described, you ensure that the project is solely built for Android, as only the Android package was incorporated.
-
 #### Execute the Project
 
-Follow these steps to run the project and perform OCR operations.
+Run the project to perform OCR on Android.
 
 <img src="https://ironsoftware.com/static-assets/ocr/how-to/setup-android/mauiProjectRun.gif" alt="Execute .NET MAUI App project" class="img-responsive add-shadow" style="margin-bottom: 30px;"/>
 
-## Download the Complete .NET MAUI App Project
+## Download .NET MAUI App Project
 
-Access the complete source code for this guide. It comes as a zipped file, ready to be opened in Visual Studio as a .NET MAUI App project.
+Download the full project code available as a zipped file for .NET MAUI App projects from Visual Studio.
 
-[Download the project here.](https://ironsoftware.com/static-assets/ocr/how-to/setup-android/MAUIIronOCRAndroidSample.zip)
+[Download the complete project here.](https://ironsoftware.com/static-assets/ocr/how-to/setup-android/MAUIIronOCRAndroidSample.zip)
 
-## Utilizing IronOcr.Android in Avalonia
+## Usage in Avalonia
 
-Just like in MAUI, you can implement IronOcr.Android in an Avalonia project following the instructions outlined above.
+Similar to MAUI, the IronOcr.Android package can be incorporated into Avalonia for OCR functionalities.
 
-For details on integrating OCR functionalities on iOS with .NET MAUI, refer to the article: "[How to Perform OCR on iOS in .NET MAUI](https://ironsoftware.com/csharp/ocr/how-to/setup-ios/)"
+For OCR capabilities on iOS, learn more from this detailed guide: "[How to Implement OCR on iOS in .NET MAUI](https://ironsoftware.com/csharp/ocr/how-to/setup-ios/)"

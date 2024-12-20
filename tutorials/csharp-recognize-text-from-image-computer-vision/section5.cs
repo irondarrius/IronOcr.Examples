@@ -1,9 +1,9 @@
 using IronOcr;
-namespace ironocr.CsharpRecognizeTextFromImageComputerVision
+namespace IronOcr.Examples.Tutorial.CsharpRecognizeTextFromImageComputerVision
 {
-    public class Section5
+    public static class Section5
     {
-        public void Run()
+        public static void Run()
         {
             var ocr = new IronTesseract();
             using var input = new OcrInput();

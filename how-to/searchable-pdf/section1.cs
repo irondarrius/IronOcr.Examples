@@ -1,9 +1,9 @@
 using IronOcr;
-namespace ironocr.SearchablePdf
+namespace IronOcr.Examples.HowTo.SearchablePdf
 {
-    public class Section1
+    public static class Section1
     {
-        public void Run()
+        public static void Run()
         {
             // Instantiate IronTesseract
             IronTesseract ocrTesseract = new IronTesseract();

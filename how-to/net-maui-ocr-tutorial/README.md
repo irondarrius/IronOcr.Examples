@@ -1,71 +1,97 @@
-# OCR Processing in .NET MAUI with IronOCR
+# .NET MAUI OCR Using IronOCR
 
 ***Based on <https://ironsoftware.com/how-to/net-maui-ocr-tutorial/>***
 
 
-## Overview
+## Introduction
 
-Microsoft's .NET MAUI (Multi-platform App UI) is a powerful framework designed to build cross-platform applications using a single codebase for Android, iOS, and Windows. This open-source framework enhances development efficiency by cutting down on time, resources, and effort. The source code and examples of .NET MAUI can be found on its [GitHub page](https://github.com/dotnet/maui).
+Microsoft unveiled .NET MAUI (Multi-platform App UI), a framework for creating cross-platform applications using the .NET Framework. It enables you to develop code that runs on platforms such as Android, iOS, and Windows from a single codebase, thereby saving time, resources, and effort. Being open-source, the .NET MAUI project source code along with samples is available on [GitHub](https://github.com/dotnet/maui).
 
-This guide will introduce how to leverage IronOCR, a .NET OCR library, to create OCR applications in .NET MAUI with practical examples.
+This guide will demonstrate how to build an OCR application using the IronOCR library in .NET MAUI, complete with examples.
 
-## About IronOCR: A .NET OCR Solution
+## IronOCR: .NET OCR library
 
-[IronOCR](https://ironsoftware.com/csharp/ocr/) is a .NET optical character recognition library available as a NuGet package. It allows developers to implement OCR capabilities in their applications efficiently. With IronOCR, you can scan PDFs and transform them into searchable, editable texts while maintaining high data fidelity. This simplifies accessing and manipulating PDF content.
+[IronOCR](https://ironsoftware.com/csharp/ocr/) is a prominent .NET OCR library available as a NuGet package, allowing developers to effortlessly incorporate Optical Character Recognition (OCR) capabilities into their applications. IronOCR ensures that PDF documents are scanned, converting them into searchable and editable text/data without compromising data quality. This utility enables users to quickly locate information within PDF documents and perform necessary modifications.
 
-IronOCR stands out as the most sophisticated version of the Tesseract engine, supporting all Tesseract versions from Tesseract 3 to Tesseract 5, and it is operational after a straightforward installation. It offers robust performance enhancements and language support for over 125 international languages. Additional languages can be added via NuGet or by downloading the relevant DLLs.
+IronOCR represents the pinnacle of Tesseract technology on any platform, offering enhanced speed, accuracy, and a native DLL/API. It supports all Tesseract versions from Tesseract 3 to Tesseract 5 with a simple installation.
 
-## IronOCR against Tesseract
+Supporting 125 international languages, IronOCR comes with English pre-installed. Additional languages can easily be added via NuGet or by directly downloading the corresponding DLLs.
 
-Intending specifically for C# development, IronOCR integrates seamlessly into .NET applications, unlike Tesseract, which is more general and requires custom wrappers for C#. IronOCR outshines other OCR tools with superior speed and accuracy, facilitated by advanced AI algorithms. Additionally, IronOCR delivers superior accuracy with a 99% rate, far outstripping Tesseract's 70.2% to 92.9%. An informative [YouTube video](https://www.youtube.com/watch?v=2QTEb6x8NJ4) offers further insight into the comparison between IronOCR and Tesseract.
+## Comparison with Tesseract
 
-## Developing an OCR App in .NET MAUI
+Designed specifically for C# developers, IronOCR integrates smoothly with .NET applications, unlike Tesseract, which is a generic OCR library necessitating custom wrappers for use with C#. Moreover, IronOCR surpasses other libraries with superior speed and accuracy, thanks to its advanced AI algorithms.
 
-### Necessary Setup
+IronOCR is renowned for its comprehensive documentation and robust technical support, ensuring a smooth experience for developers at all levels.
 
-Before starting, ensure you have:
+In terms of accuracy, IronOCR achieves an impressive rate of over 99%, significantly higher than Tesseract's 70.2% to 92.9%. For more insights and comparisons between IronOCR and Tesseract, watch this [YouTube video](https://www.youtube.com/watch?v=2QTEb6x8NJ4).
 
-1. Visual Studio 2022 (latest version)
+## Steps to Create an OCR MAUI app
+
+Here are the steps to develop an OCR application using the .NET MAUI framework with IronOCR.
+
+### Prerequisites
+
+Required tools and setups include:
+
+1. Visual Studio 2022 (Latest version)
 2. .NET 6 or 7
-3. MAUI packages integrated within Visual Studio
-4. An active .NET MAUI project environment in Visual Studio
+3. MAUI packages configured in Visual Studio
+4. A running .NET MAUI project within Visual Studio
 
-### Installing IronOCR
+### Install IronOCR
 
-Begin by adding the IronOCR library to your project via the NuGet Package Manager Console in Visual Studio:
+Initiate by installing the IronOCR library through the NuGet Packages Manager Console in Visual Studio as follows:
 
 ```shell
 Install-Package IronOcr
 ```
 
-### UI Layout Creation
+### Frontend Design
 
-Open the *MainPage.xaml* file to start the design:
+Begin by opening the *MainPage.xaml* file to design the application’s frontend.
+
+![.NET MAUI OCR Tutorial Using IronOCR - Figure 1: MainPage.xaml](https://ironsoftware.com/static-assets/ocr/how-to/net-maui-ocr-tutorial/net-maui-ocr-tutorial-1.webp)
+
+Designate a button to select the image or PDF for OCR processing. Additionally, include an `Image` box to display the selected file and an `Editor` control to display the extracted text.
 
 ```xml
-<Button
-    x:Name="OCR"
-    Text="Click to OCR"
-    Clicked="IOCR"
-    HorizontalOptions="Center" />
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IronOCR_MAUI_Test.MainPage">
 
-<Image
-    x:Name="OCRImage"
-    SemanticProperties.Description="Selected Image"
-    HeightRequest="300"
-    HorizontalOptions="Center" />
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="25"
+            Padding="30,0"
+            VerticalOptions="Center">
+            <Button
+                x:Name="OCR"
+                Text="Click to OCR"
+                Clicked="IOCR"
+                HorizontalOptions="Center" />
+            <Image
+                x:Name="OCRImage"
+                SemanticProperties.Description="Selected Image"
+                HeightRequest="300"
+                HorizontalOptions="Center" />
 
-<Editor
-    x:Name="outputText"
-    HorizontalOptions="Center"
-    WidthRequest="600"
-    HeightRequest="300"
-    />
+            <Editor
+                x:Name="outputText"
+                HorizontalOptions="Center"
+                WidthRequest="600"
+                HeightRequest="300"
+                />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
 ```
 
-### OCR Function Implementation
+### Code for OCR using IronOCR
 
-Navigate to the "MainPage.xaml.cs" class file to implement the OCR functionality:
+Proceed to the "MainPage.xaml.cs" class file to implement the OCR functionality:
+
+![.NET MAUI OCR Tutorial Using IronOCR - Figure 2: MainPage.xaml.cs](https://ironsoftware.com/static-assets/ocr/how-to/net-maui-ocr-tutorial/net-maui-ocr-tutorial-2.webp)
 
 ```cs
 private async void IOCR(object sender, EventArgs e)
@@ -79,22 +105,24 @@ private async void IOCR(object sender, EventArgs e)
     OCRImage.Source = path;
 
     var ocr = new IronTesseract();
-    using (var input = new OcrInput(path))
+    using (var input = new OcrInput())
     {
-        var result = ocr.Read(input);
-        outputText.Text = result.Text;
+        input.AddImage(path);
+        OcrResult result = ocr.Read(input);
+        string text = result.Text;
+        outputText.Text = text; 
     }
 }
 ```
 
-## Execution and Output
+## Output
 
-Upon execution, the interface will prompt selection of an image or PDF. Once a file is selected and processed, the recognized text will appear in the `Editor` control.
+The user interface displayed after launching the app allows you to select an image or PDF. Once a file is selected, IronOCR recognizes the content and presents the text within the Editor control, demonstrating high accuracy even with complex images.
 
-IronOCR shows exceptional ability in recognizing complex patterns in images, drawing on its sophisticated, pre-trained models.
+![.NET MAUI OCR Tutorial Using IronOCR - Figure 3: OCR Output](https://ironsoftware.com/static-assets/ocr/how-to/net-maui-ocr-tutorial/net-maui-ocr-tutorial-3.webp)
 
-## Conclusion and Further Reading
+## Conclusion
 
-For a deeper understanding of IronOCR's capabilities, especially for reading text from images, visit this detailed [tutorial](https://ironsoftware.com/csharp/ocr/tutorials/how-to-read-text-from-an-image-in-csharp-net/).
+For additional details on using IronOCR to extract text from images, refer to this comprehensive [tutorial](https://ironsoftware.com/csharp/ocr/tutorials/how-to-read-text-from-an-image-in-csharp-net/).
 
-IronOCR is free for development and offers affordable licensing options starting from the basic light license. Explore the pricing details [here](https://ironsoftware.com/csharp/ocr/licensing/).
+While IronOCR is free for development, commercial licenses start from a nominal fee. Review the available [pricing plans](https://ironsoftware.com/csharp/ocr/licensing/) for more information.

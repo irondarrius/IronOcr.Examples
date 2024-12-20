@@ -1,9 +1,9 @@
 using IronOcr;
-namespace ironocr.ImageQualityCorrection
+namespace IronOcr.Examples.HowTo.ImageQualityCorrection
 {
-    public class Section5
+    public static class Section5
     {
-        public void Run()
+        public static void Run()
         {
             // Apply erode filter
             imageInput.Erode();

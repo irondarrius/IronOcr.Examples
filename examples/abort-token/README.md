@@ -1,5 +1,5 @@
 ***Based on <https://ironsoftware.com/examples/abort-token/>***
 
-The functionality permits users to pause the current thread for a designated duration in milliseconds.
+The functionality enables users to pause the current thread for a designated duration in milliseconds.
 
-This is beneficial for processing large input files, particularly if there is a halt while the program or application is operational.
+This is particularly useful when dealing with large input files, allowing the program to handle situations where it may become unresponsive during execution.

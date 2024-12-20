@@ -1,5 +1,5 @@
 ***Based on <https://ironsoftware.com/examples/csharp-tesseract-multipage-tiff/>***
 
-The `OcrInput` method seamlessly processes TIFF files that traditional Tesseract engines struggle with.
+The `OcrInput` seamlessly handles TIFF files, even those that are incompatible with standard Tesseract implementations.
 
-Every single frame from your TIFF files will be accurately imported, resulting in a detailed multipage `IronOcr.OcrResult` document.
+Every single frame from your TIFF files will be processed to generate an extensive, multi-page `IronOcr.OcrResult` document.

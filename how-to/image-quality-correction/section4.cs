@@ -1,9 +1,9 @@
 using IronOcr;
-namespace ironocr.ImageQualityCorrection
+namespace IronOcr.Examples.HowTo.ImageQualityCorrection
 {
-    public class Section4
+    public static class Section4
     {
-        public void Run()
+        public static void Run()
         {
             // Apply dilate filter
             imageInput.Dilate();

@@ -1,10 +1,10 @@
 using System.Linq;
 using IronOcr;
-namespace ironocr.CsharpRecognizeTextFromImageComputerVision
+namespace IronOcr.Examples.Tutorial.CsharpRecognizeTextFromImageComputerVision
 {
-    public class Section7
+    public static class Section7
     {
-        public void Run()
+        public static void Run()
         {
             int pageIndex = 0;
             using var input = new OcrInput();

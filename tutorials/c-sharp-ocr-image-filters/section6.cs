@@ -1,10 +1,10 @@
 using System;
 using IronOcr;
-namespace ironocr.CSharpOcrImageFilters
+namespace IronOcr.Examples.Tutorial.CSharpOcrImageFilters
 {
-    public class Section6
+    public static class Section6
     {
-        public void Run()
+        public static void Run()
         {
             var image = @"no-binarize.jpg";
             var ocr = new IronTesseract();

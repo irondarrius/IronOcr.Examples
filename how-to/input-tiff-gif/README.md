@@ -1,36 +1,33 @@
-# Reading Multi-Frame/Page GIFs and TIFFs
+# Managing Multi-Frame/Page GIFs and TIFFs with IronOCR
 
 ***Based on <https://ironsoftware.com/how-to/input-tiff-gif/>***
 
 
-TIFF (Tagged Image File Format) is commonly used for high-quality images, supporting lossless compression, ideal for archival quality images such as scanned documents and professional photographs.
+TIFF (Tagged Image File Format) is favored for storing images in high quality. Its ability to use lossless compression is particularly useful for retaining the pristine quality of scanned documents and professional photographs.
 
-GIF (Graphics Interchange Format) is chosen for simple, internet-friendly images and animations due to its support for both lossless and lossy compression. Known for its animated capabilities in a single file, GIF is widely adopted for brief, repeating animations frequently seen on web pages and social media platforms.
+On the other hand, GIF (Graphics Interchange Format) is typically used for creating lightweight, web-optimized images and animations. This format is celebrated for its capability to house animated sequences in a single file, leading to its prevalent use in web graphics and digital communications.
 
-IronOCR offers functionality to process both single and multiple-frame/page GIFs and TIFFs effortlessly. Just by importing the image file with one of the provided methods, IronOCR handles the image reading seamlessly.
+IronOCR seamlessly handles both TIFF and GIF formats, including those with multiple frames or pages. Just load your image file with our easy-to-use methods, and let IronOCR take care of the rest.
 
-## Example: Reading Single/Multi-Frame TIFF
+<h3>Get Started with IronOCR</h3>
 
-To utilize OCR, initiate by creating an instance of the `IronTesseract` class. Through the `using` statement, form an `OcrImageInput` object. This object accommodates single or multiple frames in both TIFF and TIF formats. Use the `Read` method afterward to execute OCR on your TIFF file.
+---
+
+## Example: OCR on Single/Multi-Frame TIFF
+
+First, create an instance of the `IronTesseract` class. Use a `using` statement for memory management and initialize an `OcrImageInput` object to handle either single or multi-frame TIFF files. Then, apply the `Read` method to start the OCR process on the TIFF.
 
 ```cs
 using IronOcr;
-namespace ironocr.InputTiffGif
-{
-    public class Section1
-    {
-        public void Run()
-        {
-            // Set up IronTesseract
-            IronTesseract ocrTesseract = new IronTesseract();
-            
-            // Load the TIFF/TIF image
-            using var imageInput = new OcrImageInput("Potter.tiff");
-            // Execute OCR
-            OcrResult ocrResult = ocrTesseract.Read(imageInput);
-        }
-    }
-}
+
+// Create an IronTesseract instance
+IronTesseract ocrTesseract = new IronTesseract();
+
+// Load the TIFF image into IronOCR
+using var imageInput = new OcrImageInput("Potter.tiff");
+
+// Execute OCR
+OcrResult ocrResult = ocrTesseract.Read(imageInput);
 ```
 
 <div class="content-img-align-center">
@@ -39,62 +36,49 @@ namespace ironocr.InputTiffGif
     </div>
 </div>
 
-## Example: Reading GIF
+## OCR with GIFs
 
-For reading GIF files, simply define the file path in the `OcrImageInput` constructor. The class automatically prepares the image file for processing.
+To read GIF images, just specify the path to your GIF file while initializing your `OcrImageInput`. The constructor automatically handles the image loading.
 
 ```cs
 using IronOcr;
-namespace ironocr.InputTiffGif
-{
-    public class Section2
-    {
-        public void Run()
-        {
-            // Create IronTesseract
-            IronTesseract ocrTesseract = new IronTesseract();
-            
-            // Import the GIF
-            using var imageInput = new OcrImageInput("Potter.gif");
-            // Apply OCR
-            OcrResult ocrResult = ocrTesseract.Read(imageInput);
-        }
-    }
-}
+
+// Initialize IronTesseract
+IronTesseract ocrTesseract = new IronTesseract();
+
+// Load GIF for OCR
+using var imageInput = new OcrImageInput("Potter.gif");
+
+// Start OCR process
+OcrResult ocrResult = ocrTesseract.Read(imageInput);
 ```
 
-## Specifying a Scan Region
+## Defining a Scan Region
 
-Incorporate a `CropRectangle` object when initializing the `OcrImageInput` class to specify a region within the image document for targeted OCR. This technique is particularly beneficial for large images to improve OCR accuracy and performance.
+You can enhance OCR performance by defining a specific scan region within the image. Create a `CropRectangle` during the initialization of `OcrImageInput` to specify the area you want to focus on.
 
 ```cs
-using System;
 using IronOcr;
-namespace ironocr.InputTiffGif
-{
-    public class Section3
-    {
-        public void Run()
-        {
-            // Initialize IronTesseract
-            IronTesseract ocrTesseract = new IronTesseract();
-            
-            // Set the crop area
-            Rectangle scanRegion = new Rectangle(800, 200, 900, 400);
-            
-            // Include the image location and crop area
-            using var imageInput = new OcrImageInput("Potter.tiff", ContentArea: scanRegion);
-            // Start the OCR process
-            OcrResult ocrResult = ocrTesseract.Read(imageInput);
-            
-            // Print the OCR results
-            Console.WriteLine(ocrResult.Text);
-        }
-    }
-}
+using IronSoftware.Drawing;  // Needed for Rectangle
+using System;  // Using System for the Console class
+
+// Initialize IronTesseract
+IronTesseract ocrTesseract = new IronTesseract();
+
+// Define the crop area
+Rectangle scanRegion = new Rectangle(800, 200, 900, 400);
+
+// Load the Image with defined crop region
+using var imageInput = new OcrImageInput("Potter.tiff", ContentArea: scanRegion);
+
+// Execute OCR
+OcrResult ocrResult = ocrTesseract.Read(imageInput);
+
+// Print OCR results
+Console.WriteLine(ocrResult.Text);
 ```
 
-### OCR Output Example
+### Viewing OCR Results
 
 <div class="content-img-align-center">
     <div class="center-image-wrapper">

@@ -1,9 +1,9 @@
 using IronOcr;
-namespace ironocr.Quickstart
+namespace IronOcr.Examples.Overview.Quickstart
 {
-    public class Section13
+    public static class Section13
     {
-        public void Run()
+        public static void Run()
         {
             // PM> Install IronOcr.Languages.ChineseSimplified
             IronTesseract ocr = new IronTesseract();

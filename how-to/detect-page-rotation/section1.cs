@@ -1,10 +1,10 @@
 using System;
 using IronOcr;
-namespace ironocr.DetectPageRotation
+namespace IronOcr.Examples.HowTo.DetectPageRotation
 {
-    public class Section1
+    public static class Section1
     {
-        public void Run()
+        public static void Run()
         {
             using var input = new OcrInput();
             

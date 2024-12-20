@@ -1,56 +1,60 @@
-# Tracking Progress with IronOCR
+# Progress Monitoring with IronOCR
 
 ***Based on <https://ironsoftware.com/how-to/progress-tracking/>***
 
 
-IronOCR includes a specific event, `OcrProgress`, giving developers the ability to monitor the Optical Character Recognition process. This feature provides valuable insights, including the progress, duration, and status of the operation, which allows applications to manage and relay the progress of OCR tasks effectively.
+IronOCR includes a helpful feature that allows developers to subscribe to events that monitor the progress of OCR (Optical Character Recognition) tasks. These events provide essential details such as the progress status, timing, and completion insight, which can be invaluable for applications needing real-time updates during OCR operations.
 
-## Example of Implementing Progress Tracking
+<h3>Introduction to IronOCR</h3>
 
-By subscribing to the `OcrProgress` event, developers can receive real-time updates during the OCR process. This event dispatches details such as the operation's start time, total pages, progress percentage, duration, and completion time. For illustration, consider the following example document: "[Experiences in Biodiversity Research: A Field Course](https://ironsoftware.com/static-assets/ocr/how-to/progress-tracking/Experiences-in-Biodiversity-Research-A-Field-Course.pdf)" by Thea B. Gessler from Iowa State University.
+---
+
+## Example of Progress Monitoring
+
+You can subscribe to the `OcrProgress` event in IronOCR to get continuous updates during the OCR process. This event sends details about the progress, including start and end times, page counts, percentage completed, and the duration. Consider this document for our example: ["Experiences in Biodiversity Research: A Field Course" by Thea B. Gessler, Iowa State University](https://ironsoftware.com/static-assets/ocr/how-to/progress-tracking/Experiences-in-Biodiversity-Research-A-Field-Course.pdf).
 
 ```cs
-using System;
 using IronOcr;
-namespace ironocr.ProgressTracking
+using System;
+
+var ocrTesseract = new IronTesseract();
+
+// Hook into the OcrProgress event
+ocrTesseract.OcrProgress += (_, ocrProgressArgs) =>
 {
-    public class Section1
-    {
-        public void Run()
-        {
-            var ocrEngine = new IronTesseract();
-            
-            // Attaching to the OcrProgress event
-            ocrEngine.OcrProgress += (_, eventArgs) =>
-            {
-                Console.WriteLine("Start time (UTC): " + eventArgs.StartTimeUTC);
-                Console.WriteLine("Total pages: " + eventArgs.TotalPages);
-                Console.WriteLine("Current Progress(%) | Duration in Seconds");
-                Console.WriteLine("    " + eventArgs.ProgressPercent + "%     | " + eventArgs.Duration.TotalSeconds + "s");
-                Console.WriteLine("End time (UTC): " + eventArgs.EndTimeUTC);
-                Console.WriteLine("----------------------------------------------");
-            };
-            
-            using var document = new OcrInput("Experiences-in-Biodiversity-Research-A-Field-Course.pdf");
-            
-            // The event is triggered during the OCR operation
-            var ocrResult = ocrEngine.Read(document);
-        }
-    }
+    Console.WriteLine("Start time: " + ocrProgressArgs.StartTimeUTC.ToString());
+    Console.WriteLine("Total pages: " + ocrProgressArgs.TotalPages);
+    Console.WriteLine("Progress(%) | Duration(s)");
+    Console.WriteLine("    " + ocrProgressArgs.ProgressPercent + "%     | " + ocrProgressArgs.Duration.TotalSeconds);
+    Console.WriteLine("End time: " + ocrProgressArgs.EndTimeUTC.ToString());
+    Console.WriteLine("----------------------------------------------");
+};
+
+using (var input = new OcrInput())
+{
+    input.LoadPdf("Experiences-in-Biodiversity-Research-A-Field-Course.pdf");
+
+    // This will trigger progress events throughout the read process
+    var result = ocrTesseract.Read(input);
 }
 ```
 
 <div class="content-img-align-center">
     <div class="center-image-wrapper">
-         <img src="https://ironsoftware.com/static-assets/ocr/how-to/progress-tracking/progress-output.webp" alt="Progress update snapshot" class="img-responsive add-shadow">
+         <img src="https://ironsoftware.com/static-assets/ocr/how-to/progress-tracking/progress-output.webp" alt="Progress update illustration" class="img-responsive add-shadow">
     </div>
 </div>
 
-### Detailed Information on Event Properties
+### Details Provided by the Event
 
-- **ProgressPercent**: Displays the completion level of the OCR task as a percentage. This number varies from 0 to 100.
-- **TotalPages**: The total count of pages being processed.
-- **PagesComplete**: Number of pages for which the OCR has been completed fully. This count may rise incrementally as more pages undergo processing.
-- **Duration**: Indicates the overall time elapsed for the OCR operation, formatted as a TimeSpan. This metric updates every time the event is triggered.
-- **StartTimeUTC**: The Coordinated Universal Time marking the commencement of the OCR process.
-- **EndTimeUTC**: Coordinated Universal Time marking when the OCR process reaches completion. This value is null until the OCR finishes.
+**ProgressPercent**: Reflects the current progress of the OCR process, shown as a percentage of the total pages processed.
+
+**TotalPages**: The total number of pages that the OCR engine is processing.
+
+**PagesComplete**: The number of pages that have completed OCR processing. This number will increment as each page is processed.
+
+**Duration**: The cumulative duration of the OCR task, displayed in `TimeSpan` format, which updates with each event trigger.
+
+**StartTimeUTC**: The UTC timestamp marking the start of the OCR operation.
+
+**EndTimeUTC**: The UTC timestamp when the OCR task reaches 100% completion. This attribute will be null if the OCR is still in progress and is updated at the end of the process.

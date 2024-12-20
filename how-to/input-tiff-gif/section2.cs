@@ -1,9 +1,9 @@
 using IronOcr;
-namespace ironocr.InputTiffGif
+namespace IronOcr.Examples.HowTo.InputTiffGif
 {
-    public class Section2
+    public static class Section2
     {
-        public void Run()
+        public static void Run()
         {
             // Instantiate IronTesseract
             IronTesseract ocrTesseract = new IronTesseract();

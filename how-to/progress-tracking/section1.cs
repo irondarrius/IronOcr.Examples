@@ -1,10 +1,10 @@
 using System;
 using IronOcr;
-namespace ironocr.ProgressTracking
+namespace IronOcr.Examples.HowTo.ProgressTracking
 {
-    public class Section1
+    public static class Section1
     {
-        public void Run()
+        public static void Run()
         {
             var ocrTesseract = new IronTesseract();
             

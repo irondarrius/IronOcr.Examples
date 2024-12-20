@@ -1,9 +1,9 @@
 using IronOcr;
-namespace ironocr.HtmlHocrExport
+namespace IronOcr.Examples.HowTo.HtmlHocrExport
 {
-    public class Section1
+    public static class Section1
     {
-        public void Run()
+        public static void Run()
         {
             // Instantiate IronTesseract
             IronTesseract ocrTesseract = new IronTesseract();

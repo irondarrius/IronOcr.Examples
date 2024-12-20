@@ -1,136 +1,109 @@
-# How to Utilize System.Drawing Objects for Bitmap Handling
+# Understanding System.Drawing Objects
 
 ***Based on <https://ironsoftware.com/how-to/input-system-drawing/>***
 
 
-The `System.Drawing.Bitmap` class in the .NET Framework is designed for operations involving bitmap images. It offers a range of functionalities to create, modify, and display bitmap images efficiently.
+The `System.Drawing.Bitmap` is a vital class under the .NET Framework utilized for bitmap image processing. This includes capabilities for generating, transforming, and visualizing bitmap images.
 
-`System.Drawing.Image` serves as the foundational class for all GDI+ image objects within the .NET Framework, acting as the superclass for various specific image types, such as `System.Drawing.Bitmap`.
+The `System.Drawing.Image` serves as the foundational class for all GDI+ image objects within the .NET Framework, acting as the superclass for numerous image types like `System.Drawing.Bitmap`.
 
-IronSoftware.Drawing.AnyBitmap, part of the [IronDrawing](https://ironsoftware.com/open-source/csharp/drawing/docs/) open-source library developed by Iron Software, provides an excellent alternative to `System.Drawing.Common` for .NET applications across Windows, macOS, and Linux platforms.
+`IronSoftware.Drawing.AnyBitmap`, a component of [IronDrawing](https://ironsoftware.com/open-source/csharp/drawing/docs/), an open-source project spearheaded by Iron Software, is designed to facilitate the replacement of `System.Drawing.Common` across .NET applications on Windows, macOS, and Linux environments.
 
-## Example: Reading `System.Drawing.Bitmap`
+<h3>Initiating IronOCR</h3>
 
-To begin, create an instance of **IronTesseract** which handles OCR tasks. Then, generate a `System.Drawing.Bitmap` using any of the available methods. This example demonstrates using a file path for this purpose.
+--------------------------------------
 
-The 'using' statement is utilized to manage the `OcrImageInput` object. This object takes the bitmap image for processing. Finally, the `Read` method is invoked to execute OCR.
+## Example of Reading `System.Drawing.Bitmap`
+
+Start by creating an instance of the **IronTesseract** class to enable OCR capabilities. Then, generate a `System.Drawing.Bitmap` using a chosen method; here we retrieve the image from a file.
+
+Proceed by employing the 'using' statement to initialize an OcrImageInput object, passing in the `System.Drawing.Bitmap` object. Subsequently, utilize the `Read` method to execute OCR.
 
 ```cs
+using IronOcr;
 using System.Drawing;
-using IronOcr;
-namespace ironocr.InputSystemDrawing
-{
-    public class Section1
-    {
-        public void Run()
-        {
-            // Instantiate the OCR engine
-            IronTesseract ocrTesseract = new IronTesseract();
-            
-            // Load an image into a Bitmap object
-            Bitmap bitmap = new Bitmap("Potter.tiff");
-            
-            // Use Bitmap with the OCR engine
-            using var imageInput = new OcrImageInput(bitmap);
-            
-            // Execute OCR
-            OcrResult ocrResult = ocrTesseract.Read(imageInput);
-        }
-    }
-}
+
+// Instantiate IronTesseract
+IronTesseract ocrTesseract = new IronTesseract();
+
+// Load image into Bitmap
+Bitmap bitmap = new Bitmap("Potter.tiff");
+
+// Pass Bitmap to OcrImageInput
+using var imageInput = new OcrImageInput(bitmap);
+
+// Execute OCR
+OcrResult ocrResult = ocrTesseract.Read(imageInput);
 ```
 
-## Example: Working with `System.Drawing.Image`
+## Example of Reading `System.Drawing.Image`
 
-Using a `System.Drawing.Image` is straightforward. Simply construct an `OcrImageInput` with the image, and then proceed with the standard OCR process using the `Read` method.
+To read from a `System.Drawing.Image`, first generate an OcrImageInput object using the Image, and then perform OCR by applying the `Read` method.
 
 ```cs
 using IronOcr;
-namespace ironocr.InputSystemDrawing
-{
-    public class Section2
-    {
-        public void Run()
-        {
-            using Image = System.Drawing.Image;
-            
-            // Create OCR engine instance
-            IronTesseract ocrTesseract = new IronTesseract();
-            
-            // Load the image as System.Drawing.Image
-            Image image = Image.FromFile("Potter.tiff");
-            
-            // Initialize OcrImageInput with the image
-            using var imageInput = new OcrImageInput(image);
-            
-            // Execute OCR
-            OcrResult ocrResult = ocrTesseract.Read(imageInput);
-        }
-    }
-}
+using Image = System.Drawing.Image;
+
+// Initialize IronTesseract
+IronTesseract ocrTesseract = new IronTesseract();
+
+// Open image file and load it into Image
+Image image = Image.FromFile("Potter.tiff");
+
+// Pass Image to OcrImageInput
+using var imageInput = new OcrImageInput(image);
+
+// Execute OCR
+OcrResult ocrResult = ocrTesseract.Read(imageInput);
 ```
 
-## Example: Utilizing IronSoftware.Drawing.AnyBitmap
+## Example of Reading `IronSoftware.Drawing.AnyBitmap`
 
-After acquiring or creating an AnyBitmap instance, the `OcrImageInput` class constructor efficiently handles the necessary data import steps to prepare for OCR, as shown below.
+For handling an AnyBitmap object, construct an OcrImageInput class, ensuring all data is correctly imported. Below is an illustration of this process.
 
 ```cs
+using IronOcr;
 using IronSoftware.Drawing;
-using IronOcr;
-namespace ironocr.InputSystemDrawing
-{
-    public class Section3
-    {
-        public void Run()
-        {
-            // Initialize OCR engine
-            IronTesseract ocrTesseract = new IronTesseract();
-            
-            // Create an AnyBitmap from a file
-            AnyBitmap anyBitmap = AnyBitmap.FromFile("Potter.tiff");
-            
-            // Prepare AnyBitmap for OCR
-            using var imageInput = new OcrImageInput(anyBitmap);
-            
-            // Run OCR
-            OcrResult ocrResult = ocrTesseract.Read(imageInput);
-        }
-    }
-}
+
+// Set up IronTesseract
+IronTesseract ocrTesseract = new IronTesseract();
+
+// Load image into AnyBitmap
+AnyBitmap anyBitmap = AnyBitmap.FromFile("Potter.tiff");
+
+// Pass AnyBitmap to OcrImageInput
+using var imageInput = new OcrImageInput(anyBitmap);
+
+// Perform OCR
+OcrResult ocrResult = ocrTesseract.Read(imageInput);
 ```
 
-## Specifying a Scan Region
+## Setting Scan Region
 
-When creating `OcrImageInput`, you can specify a scanning region to focus OCR on a particular area of the image document, potentially improving accuracy and performance. In the following code example, only the chapter number and title are targeted for extraction.
+When creating the OcrImageInput class, you can define a specific scan area. This approach enables targeting a particular section of the image document for OCR, potentially boosting efficiency significantly. In the example below, the region containing only the chapter number and title is specified.
 
 ```cs
-using System;
 using IronOcr;
-namespace ironocr.InputSystemDrawing
-{
-    public class Section4
-    {
-        public let me know how it work you have any Run()
-        {
-            // Set up OCR engine
-            IronTesseract ocrTesseract = new IronTesseract();
-            
-            // Define the area for scanning
-            Rectangle scanRegion = new Rectangle(800, 200, 900, 400);
-            
-            // Configure OcrImageInput with the specified region
-            using var imageInput = new OcrImageInput("Potter.tiff", ContentArea: scanRegion);
-            
-            // Perform and output OCR results
-            OcrResult ocrResult = ocrTesseract.Read(imageInput);
-            
-            Console.WriteLine(ocrResult.Text);
-        }
-    }
-}
+using IronSoftware.Drawing;
+using System;
+
+// Create IronTesseract instance
+IronTesseract ocrTesseract = new IronTesseract();
+
+// Define target crop
+Rectangle scanRegion = new Rectangle(800, 200, 900, 400);
+
+// Load image with defined content area
+using var imageInput = new OcrImageInput("Potter.tiff", ContentArea: scanRegion);
+
+// Conduct OCR
+OcrResult ocrResult = ocrTesseract.Read(imageInput);
+
+// Display result in console
+Console.WriteLine(ocrResult.Text);
 ```
 
-### OCR Outcome Visualization
+### OCR Result Display
 
 <div class="content-img-align-center">
     <div class="center-image-wrapper">

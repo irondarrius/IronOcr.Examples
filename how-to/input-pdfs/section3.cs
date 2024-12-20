@@ -1,10 +1,10 @@
 using System;
 using IronOcr;
-namespace ironocr.InputPdfs
+namespace IronOcr.Examples.HowTo.InputPdfs
 {
-    public class Section3
+    public static class Section3
     {
-        public void Run()
+        public static void Run()
         {
             // Instantiate IronTesseract
             IronTesseract ocrTesseract = new IronTesseract();

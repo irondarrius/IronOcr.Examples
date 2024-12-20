@@ -1,9 +1,9 @@
 using IronOcr;
-namespace ironocr.HowToReadTextFromAnImageInCsharpNet
+namespace IronOcr.Examples.Tutorial.HowToReadTextFromAnImageInCsharpNet
 {
-    public class Section1
+    public static class Section1
     {
-        public void Run()
+        public static void Run()
         {
             // PM> Install-Package IronOcr
             using IronOcr;

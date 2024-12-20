@@ -1,10 +1,10 @@
 using System;
 using IronOcr;
-namespace ironocr.Async
+namespace IronOcr.Examples.HowTo.Async
 {
-    public class Section1
+    public static class Section1
     {
-        public void Run()
+        public static void Run()
         {
             var ocr = new IronTesseract();
             

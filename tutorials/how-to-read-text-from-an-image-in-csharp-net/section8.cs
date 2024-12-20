@@ -1,9 +1,9 @@
 using IronOcr;
-namespace ironocr.HowToReadTextFromAnImageInCsharpNet
+namespace IronOcr.Examples.Tutorial.HowToReadTextFromAnImageInCsharpNet
 {
-    public class Section8
+    public static class Section8
     {
-        public void Run()
+        public static void Run()
         {
             IronTesseract ocr = new IronTesseract();
             

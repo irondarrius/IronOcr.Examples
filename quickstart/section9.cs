@@ -1,9 +1,9 @@
 using IronOcr;
-namespace ironocr.Quickstart
+namespace IronOcr.Examples.Overview.Quickstart
 {
-    public class Section9
+    public static class Section9
     {
-        public void Run()
+        public static void Run()
         {
             IronTesseract ocr = new IronTesseract();
             using OcrInput input = new OcrInput();

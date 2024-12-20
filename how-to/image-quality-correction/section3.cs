@@ -1,9 +1,9 @@
 using IronOcr;
-namespace ironocr.ImageQualityCorrection
+namespace IronOcr.Examples.HowTo.ImageQualityCorrection
 {
-    public class Section3
+    public static class Section3
     {
-        public void Run()
+        public static void Run()
         {
             // Apply denoise filter
             imageInput.DeNoise();

@@ -1,7 +1,7 @@
 ***Based on <https://ironsoftware.com/examples/ocr-tesseract-multiple-languages/>***
 
-IronOCR is equipped to handle 125 international languages.
+IronOCR has compatibility with 125 global languages.
 
-Developers can simultaneously utilize multiple languages to process documents featuring text in various languages.
+Developers can leverage the ability to utilize multiple languages simultaneously to interpret documents that feature multilingual text.
 
-Additionally, IronOCR allows the integration of custom or proprietary languages and fonts, provided they adhere to the Tesseract **.traineddata** file format standard.
+Additionally, it's feasible to integrate custom or acquired languages and fonts that conform to the Tesseract **.traineddata** file format specification.

@@ -1,9 +1,9 @@
 using IronOcr;
-namespace ironocr.ImageQualityCorrection
+namespace IronOcr.Examples.HowTo.ImageQualityCorrection
 {
-    public class Section1
+    public static class Section1
     {
-        public void Run()
+        public static void Run()
         {
             // Instantiate IronTesseract
             IronTesseract ocrTesseract = new IronTesseract();

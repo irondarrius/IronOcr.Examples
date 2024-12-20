@@ -1,10 +1,10 @@
 using System;
 using IronOcr;
-namespace ironocr.CSharpOcrImageFilters
+namespace IronOcr.Examples.Tutorial.CSharpOcrImageFilters
 {
-    public class Section1
+    public static class Section1
     {
-        public void Run()
+        public static void Run()
         {
             var ocr = new IronTesseract();
             using var input = new OcrInput();

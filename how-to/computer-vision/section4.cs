@@ -1,9 +1,9 @@
 using IronOcr;
-namespace ironocr.ComputerVision
+namespace IronOcr.Examples.HowTo.ComputerVision
 {
-    public class Section4
+    public static class Section4
     {
-        public void Run()
+        public static void Run()
         {
             var ocr = new IronTesseract();
             using var input = new OcrInput();

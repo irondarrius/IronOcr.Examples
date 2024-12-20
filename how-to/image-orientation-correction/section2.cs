@@ -1,9 +1,9 @@
 using IronOcr;
-namespace ironocr.ImageOrientationCorrection
+namespace IronOcr.Examples.HowTo.ImageOrientationCorrection
 {
-    public class Section2
+    public static class Section2
     {
-        public void Run()
+        public static void Run()
         {
             // Apply deskew
             imageInput.Deskew();

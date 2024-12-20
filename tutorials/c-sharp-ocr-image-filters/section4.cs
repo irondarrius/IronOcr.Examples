@@ -1,10 +1,10 @@
 using System;
 using IronOcr;
-namespace ironocr.CSharpOcrImageFilters
+namespace IronOcr.Examples.Tutorial.CSharpOcrImageFilters
 {
-    public class Section4
+    public static class Section4
     {
-        public void Run()
+        public static void Run()
         {
             var image = @"paragraph_skewed.png";
             var ocr = new IronTesseract();

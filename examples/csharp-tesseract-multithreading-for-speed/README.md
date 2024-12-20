@@ -1,7 +1,7 @@
 ***Based on <https://ironsoftware.com/examples/csharp-tesseract-multithreading-for-speed/>***
 
-Previously, in 2021, `IronTesseract` included a method called `ReadMultithreaded` intended to enhance the efficiency of reading images and PDFs for .NET developers.
+`IronTesseract` underwent considerable improvements in 2021, including the `ReadMultithreaded` method which enabled .NET developers to process images and PDFs with greater efficiency.
 
-As of 2022, this method is obsolete. `IronOCR` has improved its capabilities, ensuring that all image processing and OCR reading tasks are handled in a multithreaded manner automatically. Developers no longer need to rely on specific APIs for multithreading.
+As of 2022, this specific method is no longer necessary. `IronOCR`, the underlying library for `IronTesseract`, now inherently supports multithreading across all its image processing and OCR tasks. This enhancement eliminates the requirement for developers to invoke special APIs for multithreading.
 
-`IronTesseract` is designed to optimally utilize available threads across all cores, maintaining smooth operation and responsiveness, especially concerning the main or GUI thread.
+`IronTesseract` is now smartly designed to automatically utilize all available threads across all processor cores while maintaining smooth operation and responsiveness of the main or GUI thread.

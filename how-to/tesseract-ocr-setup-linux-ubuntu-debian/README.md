@@ -1,77 +1,77 @@
-# IronOCR Compatibility & Setup on Linux
+# IronOCR Linux Compatibility & Setup Guide
 
 ***Based on <https://ironsoftware.com/how-to/tesseract-ocr-setup-linux-ubuntu-debian/>***
 
 
-IronOCR offers robust support for **.NET Core** and **.NET 5** on various platforms, including Linux, [Docker](https://ironsoftware.com/csharp/ocr/how-to/csharp-tesseract-ocr-docker-linux-setup-tutorial/), Azure, macOS, and Windows.
+IronOCR is fully compatible with Linux environments for **.NET Core** and **.NET 5** applications, including deployments using [Docker](https://ironsoftware.com/csharp/ocr/how-to/csharp-tesseract-ocr-docker-linux-setup-tutorial/), as well as other platforms like Azure, macOS, and Windows.
 
 ![Linux](https://img.icons8.com/color/96/000000/linux--v1.png) ![Docker](https://img.icons8.com/color/96/000000/docker.png) ![Azure](https://img.icons8.com/fluency/96/000000/azure-1.png) ![AWS](https://img.icons8.com/color/96/000000/amazon-web-services.png) ![Ubuntu](https://img.icons8.com/color/96/000000/ubuntu--v1.png) ![Debain](https://img.icons8.com/color/96/000000/debian--v1.png)
 
-We advise using .NET Core 3.1 and other runtimes that are [endorsed as LTS by Microsoft](https://dotnet.microsoft.com/platform/support/policy) for their extended support and stable performance on Linux.
+For optimal stability and support, we suggest using .NET Core 3.1 or other [LTS versions maintained by Microsoft](https://dotnet.microsoft.com/platform/support/policy). These versions offer long-term support and have been thoroughly tested on Linux systems.
 
-IronOCR typically requires no additional code modifications to function on Linux, performing optimally right away due to extensive testing and fine-tuning by our team.
+IronOCR requires no modifications to run on Linux systems. It is designed to work seamlessly 'out of the box', following extensive testing and optimization by our development team.
 
-Support for Linux is crucial as it underpins many cloud solutions like Azure Web Apps, Azure Functions, AWS EC2, AWS Lambda, and Azure Devops Docker, which are integral to many of our Enterprise and SaaS customers at Iron Software.
+Linux is a critical environment for many cloud services, including Azure Web Apps, Azure Functions, AWS EC2, AWS Lambda, and Docker operations in Azure DevOps. At Iron Software, we utilize these cloud solutions frequently and recognize their importance to our Enterprise and SAAS client base.
 
-## Supported Linux Distributions
+## Officially Supported Linux Distributions
 
-We **officially support** these 64-bit Linux distributions for seamless IronOCR integration:
+IronOCR is **officially supported** with a "zero-configuration" setup on the latest **64-bit** versions of the Linux operating systems listed below:
 
 - Ubuntu 20
 - Ubuntu 18
 - Debian 11
-- Debian 10 _[Currently the Microsoft Azure Default Linux Distro]_
+- Debian 10 _[The Default Linux Distro in Microsoft Azure]_
 
-For guidance on installing IronOCR on other Linux distributions, see "Other Linux Distros" section below.
+For Linux versions not **officially supported**, please see the "Other Linux Distros" section for further guidance on setting up IronOCR.
 
 ## IronOCR NuGet Packages
 
-To install, use:
-
-```bash
+```
 PM > Install-Package IronOCR
 ```
 
 ## Compatibility with Ubuntu
 
-Ubuntu is thoroughly tested as it is widely used in Azure, where we conduct ongoing testing and deployments. It enjoys robust support from Microsoft for .NET and official Docker images.
+Ubuntu receives the most testing because of its significant use in continuous testing and deployment processes, particularly within Azure's infrastructure. Ubuntu boasts official support from Microsoft for .NET and has official Docker images available.
 
-### Setup for Ubuntu 20
+### Ubuntu 20
 
-![Icons](https://img.icons8.com/color/48/000000/microsoft.png) ![Ubuntu](https://img.icons8.com/color/48/000000/ubuntu--v1.png) ![Chrome](https://img.icons8.com/color/48/000000/chrome--v1.png) ![Safari](https://img.icons8.com/color/48/000000/safari--v1.png) ![Docker](https://img.icons8.com/color/48/000000/docker.png) ![Azure](https://img.icons8.com/fluency/48/000000/azure-1.png)
+![](https://img.icons8.com/color/48/000000/microsoft.png) ![](https://img.icons8.com/color/48/000000/ubuntu--v1.png) ![](https://img.icons8.com/color/48/000000/chrome--v1.png) ![](https://img.icons8.com/color/48/000000/safari--v1.png) ![](https://img.icons8.com/color/48/000000/docker.png) ![](https://img.icons8.com/fluency/48/000000/azure-1.png)
 
-**Manual Ubuntu 20 Installation** - For situations where administrative permissions are unavailable:
-
-```sh
-sudo apt update
-sudo apt install -y apt-utils libgdiplus libc6-dev
-```
-
-### Setup for Ubuntu 18
-
-![Icons](https://img.icons8.com/color/48/000000/microsoft.png) ![Ubuntu](https://img.icons8.com/color/48/000000/ubuntu--v1.png) ![Chrome](https://img.icons8.com/color/48/000000/chrome--v1.png) ![Safari](https://img.icons8.com/color/48/000000/safari--v1.png) ![Docker](https://img.icons8.com/color/48/000000/docker.png) ![Azure](https://img.icons8.com/fluency/48/000000/azure-1.png)
-
-**Manual Ubuntu 18 Installation** - If installing manually without _sudo_ permissions:
+**Manual Setup for Ubuntu 20** - If manual installation is required or if running applications with _sudo_ privileges is not possible:
 
 ```sh
 sudo apt update
 sudo apt install -y apt-utils libgdiplus libc6-dev
 ```
 
-### Setup for Debian 11 and Debian 10
+### Ubuntu 18
 
-Both setups are identical due to their requirements.
+![](https://img.icons8.com/color/48/000000/microsoft.png) ![](https://img.icons8.com/color/48/000000/ubuntu--v1.png) ![](https://img.icons8.com/color/48/000000/chrome--v1.png) ![](https://img.icons8.com/color/48/000000/safari--v1.png) ![](https://img.icons8.com/color/48/000000/docker.png) ![](https://img.icons8.com/fluency/48/000000/azure-1.png)
 
-**Manual Debian Setup** - Suitable when administrative rights are restricted.
+**Manual Setup for Ubuntu 18** - This setup is also applicable when administrative privileges are restricted:
 
 ```sh
 sudo apt update
 sudo apt install -y apt-utils libgdiplus libc6-dev
 ```
 
-### Additional Linux Distributions
+### Debian 11 and Debian 10
 
-Regardless of which package manager you use (`HFS`, `yum`, `apt`, or `apt-get`), the requirements generally remain the same:
+![](https://img.icons8.com/color/48/000000/debian.png) ![](https://img.icons8.com/color/48/000000/microsoft.png) ![](https://img.icons8.com/color/48/000000/chrome--v1.png) ![](https://img.icons8.com/color/48/000000/safari--v1.png) ![](https://img.icons8.com/color/48/000000/docker.png) ![](https://img.icons8.com/fluency/48/000000/azure-1.png)
+
+**Manual Setup for Debian 11 and Debian 10** - For those opting to manually install IronOCR or when administrative access is constrained:
+
+```sh
+sudo apt update
+sudo apt install -y apt-utils libgdiplus libc6-dev
+```
+
+Both versions follow the same setup process.
+
+### Other Linux Distros
+
+Regardless of whether you utilize `HFS`, `yum`, `apt`, or `apt-get` as your package manager, the installation requirements are virtually identical.
 
 ```sh
 sudo apt update

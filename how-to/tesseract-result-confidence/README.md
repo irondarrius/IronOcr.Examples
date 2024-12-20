@@ -3,92 +3,78 @@
 ***Based on <https://ironsoftware.com/how-to/tesseract-result-confidence/>***
 
 
-Read confidence in OCR, or Optical Character Recognition, is a metric that quantifies the certainty or assurance in the accuracy of the text that the OCR process identified within a document or image. This metric serves as an indicator of the likelihood that the recognized text matches the text in the document.
+Read confidence in Optical Character Recognition (OCR) signifies the reliability level or certainty that the OCR technology attaches to the accuracy of the text it has identified from an image or document. Essentially, it's the OCR system's assurance that the text extracted is accurate.
 
-A high read confidence score reflects a strong assurance in the accuracy of the text identified, whereas a low score might imply potential inaccuracies.
+A higher read confidence score reflects greater certainty of correct recognition, whereas a lower score may indicate potential inaccuracies.
 
-## Example: Obtaining Read Confidence
+<h3>Begin Using IronOCR</h3>
 
-Post-OCR processing, the accuracy of the recognized text can be gauged through the **Confidence** attribute. Use the `using` statement for proper resource management. You can feed the OCR engine with different types of documents, like images and PDFs, using `OcrImageInput` and `OcrPdfInput` classes respectively. The `Read` method produces an `OcrResult` object which provides access to the **Confidence** property.
+-----------------------
+
+## Example of Retrieving Read Confidence
+
+Following an OCR operation on an image, the text's confidence level is stored within the **Confidence** attribute. Utilize a 'using' statement for efficient resource management. Images and PDFs can be input using `OcrImageInput` and `OcrPdfInput` classes, respectively. The `Read` method produces an `OcrResult` object, where the **Confidence** property can be accessed.
 
 ```cs
 using IronOcr;
-namespace ironocr.TesseractResultConfidence {
-    public class Section1 {
-        public void Run() {
-            // Create a new IronTesseract instance
-            IronTesseract ocrTesseract = new IronTesseract();
-            
-            // Load the image
-            using var imageInput = new OcrImageInput("sample.tiff");
-            // Execute OCR
-            OcrResult ocrResult = ocrTesseract.Read(imageInput);
 
-            // Retrieve the confidence score
-            double confidence = ocrResult.Confidence;
-        }
-    }
-}
+// Create an instance of IronTesseract
+IronTesseract ocrInstance = new IronTesseract();
+
+// Input image
+using var inputImage = new OcrImageInput("sample.tiff");
+// Execute OCR
+OcrResult result = ocrInstance.Read(inputImage);
+
+// Extract confidence level
+double extractedConfidence = result.Confidence;
 ```
 
-## Detailed Confidence Levels Retrieval
+## Accessing Read Confidence at Various Granular Levels
 
-OCR results can be detailed to the extent of fetching confidence levels for each document segment—pages, paragraphs, lines, words, and characters. Additionally, the confidence level for a block, which is a grouping of one or more paragraphs, can be obtained as well.
+You can determine the confidence level not only for the entire document but also for individual pages, paragraphs, lines, words, and characters. Additionally, confidence for a block, which represents a group of paragraphs in close proximity, can also be accessed.
 
 ```cs
-using IronOcr;
-namespace ironocr.TesseractResultConfidence {
-    public class Section2 {
-        public void Run() {
-            // Retrieve page confidence
-            double pageConfidence = ocrResult.Pages[0].Confidence;
-            
-            // Retrieve paragraph confidence
-            double paragraphConfidence = ocrResult.Paragraphs[0].Confidence;
-            
-            // Retrieve line confidence
-            double lineConfidence = ocrResult.Lines[0].Confidence;
-            
-            // Retrieve word confidence
-            double wordConfidence = ocrResult.Words[0].Confidence;
-            
-            // Retrieve character confidence
-            double characterConfidence = ocrResult.Characters[0].Confidence;
-            
-            // Retrieve block confidence
-            double blockConfidence = ocrResult.Blocks[0].Confidence;
-        }
-    }
-}
+// Retrieve the confidence level for a page
+double pageConfidence = result.Pages[0].Confidence;
+
+// Retrieve the confidence level for a paragraph
+double paragraphConfidence = result.Paragraphs[0].Confidence;
+
+// Retrieve the confidence level for a line
+double lineConfidence = result.Lines[0].Confidence;
+
+// Retrieve the confidence level for a word
+double wordConfidence = result.Words[0].Confidence;
+
+// Retrieve the confidence level for a character
+double characterConfidence = result.Characters[0].Confidence;
+
+// Retrieve the confidence level for a block
+double blockConfidence = result.Blocks[0].Confidence;
 ```
 
 ## Exploring Character Choices
 
-Another insightful aspect of OCR results is the **Choices** property. This feature offers a list of alternative word suggestions along with their statistical relevance, providing additional interpretations of the scanned text.
+Beyond confidence levels, an intriguing attribute named **Choices** provides a list of alternative word suggestions along with their statistical significance. This feature helps users explore possible variations of the characters recognized.
 
 ```cs
 using IronOcr;
-namespace ironocr.TesseractResultConfidence {
-    public class Section3 {
-        public void Run() {
-            using static IronOcr.OcrResult;
-            
-            // Initialize IronTesseract
-            IronTesseract ocrTesseract = new IronTesseract();
-            
-            // Load the image
-            using var imageInput = new OcrImageInput("Potter.tiff");
-            // Carry out OCR
-            OcrResult ocrResult = ocrTesseract.Read(imageInput);
-            
-            // List possible character choices
-            Choice[] choices = ocrResult.Characters[0].Choices;
-        }
-    }
-}
+using static IronOcr.OcrResult;
+
+// Initialize IronTesseract
+IronTesseract tessOcr = new IronTesseract();
+
+// Input image
+using var inputTextImage = new OcrImageInput("Potter.tiff");
+// Conduct OCR
+OcrResult tessResult = tessOcr.Read(inputTextImage);
+
+// Access choices
+Choice[] characterChoices = tessResult.Characters[0].Choices;
 ```
 
-### Visual Information
+### Visual Representation
 
 <div class="content-img-align-center">
     <div class="center-image-wrapper">

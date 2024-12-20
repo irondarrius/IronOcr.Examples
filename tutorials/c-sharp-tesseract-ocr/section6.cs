@@ -1,9 +1,9 @@
 using IronOcr;
-namespace ironocr.CSharpTesseractOcr
+namespace IronOcr.Examples.Tutorial.CSharpTesseractOcr
 {
-    public class Section6
+    public static class Section6
     {
-        public void Run()
+        public static void Run()
         {
             var ocr = new IronTesseract();
             ocr.Language = OcrLanguage.Arabic;

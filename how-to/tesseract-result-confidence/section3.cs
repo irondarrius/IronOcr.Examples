@@ -1,9 +1,9 @@
 using IronOcr;
-namespace ironocr.TesseractResultConfidence
+namespace IronOcr.Examples.HowTo.TesseractResultConfidence
 {
-    public class Section3
+    public static class Section3
     {
-        public void Run()
+        public static void Run()
         {
             using static IronOcr.OcrResult;
             

@@ -1,22 +1,24 @@
-# Implementing Document Reading with IronOcr on AWS Lambda
+# Employing IronOCR in AWS Lambda for Document Reading
 
 ***Based on <https://ironsoftware.com/how-to/iron-ocr-aws-tutorial/>***
 
 
-This tutorial provides an overview on how to configure AWS Lambda to utilize IronOCR for document reading tasks, specifically from an S3 Bucket.
+This instructional article is designed to guide you step-by-step through the deployment of IronOCR on an AWS Lambda function. By following this tutorial, you'll be equipped to configure IronOCR and fetch documents from an S3 bucket effectively.
 
-## 1. Initialize a Containerized AWS Lambda
+## Step 1: Initialize AWS Lambda with a Container Template
 
-To run IronOcr effectively, it is essential to install certain dependencies on the environment. To facilitate this, you should employ a containerized approach for your Lambda function.
+To ensure that IronOCR operates as expected, it is crucial to set up a working environment with all required dependencies. Employing a containerized Lambda function facilitates this. You can easily create a containerized Lambda via Visual Studio:
 
-You can create a containerized Lambda effortlessly using Visual Studio. First, install the [AWS Toolkit for Visual Studio](https://aws.amazon.com/visualstudio/). Choose an AWS Lambda C# project, select the **Container Image** as the template, and conclude by clicking "Finish".
+1. Install the [AWS Toolkit for Visual Studio](https://aws.amazon.com/visualstudio/).
+2. Choose a C# AWS Lambda template and select the **Container Image** option.
+3. Click "Finish".
 
-## 2. Update Project Dependencies
+## Step 2: Incorporate Package Dependencies
 
-Amend the Dockerfile in your project as below:
+Update the Dockerfile of your project with the following configurations to include necessary dependencies:
 
 ```dockerfile
-# Adjust according to your needs: dotnet:5 or dotnet:6 for respective .NET versions.
+# Choose either dotnet:5 or dotnet:6 based on your .NET version preference
 
 ***Based on <https://ironsoftware.com/how-to/iron-ocr-aws-tutorial/>***
 
@@ -24,32 +26,26 @@ FROM public.ecr.aws/lambda/dotnet:7
 
 WORKDIR /var/task
 
-# Update the packages list and install required libraries.
-
-***Based on <https://ironsoftware.com/how-to/iron-ocr-aws-tutorial/>***
-
 RUN yum update -y
+
 RUN yum install -y amazon-linux-extras
 RUN amazon-linux-extras install epel -y
 RUN yum install -y libgdiplus
 
-# Copy your build output directory here.
-
-***Based on <https://ironsoftware.com/how-to/iron-ocr-aws-tutorial/>***
-
 COPY "bin/Release/lambda-publish" .
 ```
 
-## 3. Incorporate IronOcr NuGet Packages
+## Step 3: Adding IronOcr and IronOcr.Linux NuGet Packages
 
-To add `IronOcr` and `IronOcr.Linux` to your project in Visual Studio:
+To integrate IronOcr libraries into your Visual Studio project, follow these steps:
 
-1. Navigate to `Project > Manage NuGet Packages...`
-2. Click on `Browse`, type in `IronOcr` and `IronOcr.Linux`, then proceed to install the located packages.
+1. Navigate to `Project > Manage NuGet Packages...`.
+2. Use the `Browse` tab to find `IronOcr` and `IronOcr.Linux`.
+3. Select and install the necessary packages.
 
-## 4. Adapt the FunctionHandler Code
+## Step 4: Adjust the FunctionHandler Code
 
-This snippet demonstrates retrieving and reading an image from an S3 bucket. Ensure the setup of your bucket and installation of the [SixLabors.ImageSharp](https://www.nuget.org/packages/SixLabors.ImageSharp) package beforehand.
+The following code demonstrates how to extract an image from an S3 bucket and use IronOcr to read it. Make sure you have an S3 bucket ready and have installed the [SixLabors.ImageSharp](https://www.nuget.org/packages/SixLabors.ImageSharp) package:
 
 ```cs
 using Amazon;
@@ -59,20 +55,26 @@ using Amazon.S3.Model;
 using SixLabors.ImageSharp;
 using IronOcr;
 
+// Enabling JSON serialization for lambda input into a .NET class
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 
 namespace IronOcrAWSLambda;
 
 public class Function
 {
+	private readonly IAmazonS3 _s3Client;
 	private readonly string accessKey = "ACCESS-KEY";
 	private readonly string secretKey = "SECRET-KEY";
-	private readonly IAmazonS3 _s3Client = new AmazonS3Client(accessKey, secretKey);
+
+	public Function()
+	{
+		_s3Client = new AmazonS3Client(accessKey, secretKey, RegionEndpoint.USWest2);
+	}
 
 	public async Task<string> FunctionHandler(string input, ILambdaContext context)
 	{
 		IronOcr.License.LicenseKey = "IRONOCR-LICENSE-KEY";
-		const string bucketName = "S3-BUCKET-NAME";
+		string bucketName = "YOUR-S3-BUCKET-NAME";
 
 		var getObjectRequest = new GetObjectRequest
 		{
@@ -80,17 +82,17 @@ public class Function
 			Key = input,
 		};
 
-		using (var response = await _s3Client.GetObjectAsync(getObjectRequest))
+		using (GetObjectResponse response = await _s3Client.GetObjectAsync(getObjectRequest))
 		{
 			using (Stream responseStream = response.ResponseStream)
 			{
-				Console.WriteLine("Fetching image from S3");
+				Console.WriteLine("Loading image from S3");
 				Image image = Image.Load(responseStream);
 
 				Console.WriteLine("Processing image with IronOCR");
-				var ironTesseract = new IronTesseract();
-				var ocrInput = new OcrInput(image);
-				var result = ironTesseract.Read(ocrInput);
+				IronTesseract ironTesseract = new IronTesseract();
+				OcrInput ocrInput = new OcrInput(image);
+				OcrResult result = ironTesseract.Read(ocrInput);
 
 				return result.Text;
 			}
@@ -99,21 +101,19 @@ public class Function
 }
 ```
 
-## 5. Configure Memory and Execution Timeout Settings
+## Step 5: Configure Memory and Timeout Settings
 
-Depending on the document size, adjust memory size and timeout settings in `aws-lambda-tools-defaults.json`:
+Assign appropriate memory and timeout configurations in the `aws-lambda-tools-defaults.json` file to accommodate the document processing demands:
 
 ```json
-{
-  "function-memory-size": 512,
-  "function-timeout": 300
-}
+"function-memory-size": 512,
+"function-timeout": 300
 ```
 
-## 6. Deploy to AWS Lambda
+## Step 6: Deployment
 
-In Visual Studio, right-click the solution and choose `Publish to AWS Lambda...`. Configure settings accordingly. More details can be found on the [AWS Lambda deployment guide](https://docs.aws.amazon.com/toolkit-for-visual-studio/latest/user-guide/lambda-creating-project-in-visual-studio.html#publish-to-lambda).
+Deploy your project directly from Visual Studio by right-clicking the solution and selecting `Publish to AWS Lambda...`. Set up the required configurations as needed. Detailed instructions on Lambda deployment can be found on the [AWS Documentation](https://docs.aws.amazon.com/toolkit-for-visual-studio/latest/user-guide/lambda-creating-project-in-visual-studio.html#publish-to-lam).
 
-## 7. Test Your Configuration
+## Step 7: Test Your Lambda Function
 
-Test the Lambda function through the AWS Lambda management console or directly from Visual Studio to ensure everything is set up properly.
+Activate and test your Lambda function either from the AWS Lambda management console at [Lambda Console](https://console.aws.amazon.com/lambda) or via Visual Studio to ensure it functions correctly.

@@ -1,7 +1,7 @@
 ***Based on <https://ironsoftware.com/examples/ocr-image-dpi-for-tesseract/>***
 
-The `OcrInput` class in IronTesseract is designed to efficiently handle images of low resolution.
+The `OcrInput` class efficiently handles low-resolution images when used with `IronTesseract`.
 
-`IronTesseract` is optimized for high accuracy, exceeding 99% on scans with a resolution of 225 DPI, despite the general requirement of 300 DPI by standard Tesseract. This optimization can result in OCR operations that are twice as fast.
+Tesseract typically operates best with a 300 DPI input, but `IronTesseract` is optimized to achieve above 99% accuracy even with 225 DPI scans, effectively doubling the OCR process's speed.
 
-Using a DPI that is too high can slow down the process, whereas a DPI that is too low may lead to inaccuracies. If you're unsure, it's best to let IronTesseract automatically configure the optimal settings for you.
+Extremely high DPI settings can reduce processing speed, while very low DPI may compromise accuracy. If unsure, it's best to let `IronTesseract` automatically adjust settings for optimal performance.

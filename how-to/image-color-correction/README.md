@@ -1,198 +1,127 @@
-# Enhancing Image Readability for OCR Applications
+# Enhancing Image Colors for Optimal Reading
 
 ***Based on <https://ironsoftware.com/how-to/image-color-correction/>***
 
 
-Enhancing the readability and quality of images is crucial, especially in Optical Character Recognition (OCR) applications. IronOcr provides various techniques such as binarization, grayscale conversion, color inversion, and color replacement to improve the clarity and aesthetic appeal of images. These methods are particularly valuable for ensuring that the text within images is more legible and easier to extract.
+Enhancing the colors of an image involves various techniques aimed at improving the readability and overall appearance of the image. IronOcr provides a suite of methods like binarization, grayscale, inversion, and color replacement to adjust the visual elements of an image for better clarity and aesthetics. This is particularly useful in OCR (Optical Character Recognition) applications, where extracting text from images is essential. Additionally, it's possible to isolate and read text based on specific color selections.
 
-## Example of Binarization
+### Getting Started with IronOCR
 
-Binarization is a technique that converts images to a two-tone color scheme, commonly black and white. This is beneficial for distinguishing text from its background and minimizing visual noise, thereby making the text clearer.
+---
 
-You can achieve binarization using the `Binarize` method. This technique is essential for creating high-contrast images (black text on a white background), which are ideal for OCR processes.
+## Example of Binarizing Images
 
-```cs
-using IronOcr;
-namespace ironocr.ImageColorCorrection
-{
-    public class BinarizationExample
-    {
-        public void Execute()
-        {
-            IronTesseract tesseract = new IronTesseract();
-            
-            using var inputImage = new OcrImageInput("sample.jpg");
-            inputImage.Binarize();
-            
-            inputImage.ExportAs("binarized-image");
-        }
-    }
-}
-```
+The binarization process transforms the image to a two-tone, usually black and white, which is ideal for enhancing text visibility against backgrounds and minimizing visual noise.
 
-You can save the processed image using the `ExportAs` method. Here's a visual before and after applying binarization:
-
-<div class="image-comparison">
-    <div style="width: 48%;">
-        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-quality-correction/sample.jpg" alt="Original image" class="responsive-image shadow">
-        <p style="color: #181818; font-style: italic;">Before</p>
-    </div>
-    <div style="width: 48%;">
-        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-color-correction/binarize_0.png" alt="Binarized image" class="responsive-image shadow">
-        <p style="color: #181818; font-style: italic;">After</p>
-    </div>
-</div>
-
-<hr>
-
-## Grayscale Conversion Example
-
-Transforming images to grayscale involves converting them into shades of gray, which can reduce distractions caused by colors and enhance readability.
-
-Implement the grayscale conversion by using the `ToGrayScale` method, which calculates the average of the RGB values of the original colors.
+You can binarize an image using the `Binarize` method. Since OCR technology operates most effectively with clear contrast, such as black text on a white backdrop, this adjustment is crucial for distinct text visibility.
 
 ```cs
 using IronOcr;
-namespace ironocr.ImageColorCorrection
-{
-    public class GrayscaleExample
-    {
-        public void Execute()
-        {
-            using var inputImage = new OcrImageInput("sample.jpg");
-            inputImage.ToGrayScale();
-        }
-    }
-}
+
+// Create a new instance of IronTesseract
+IronTesseract ocrTesseract = new IronTesseract();
+
+// Initialize a new OCR image input
+using var imageInput = new OcrImageInput("sample.jpg");
+// Apply binarization
+imageInput.Binarize();
+
+// Save the altered image
+imageInput.SaveAsImages("binarize.jpg");
 ```
 
-Below are images showing the effects of the grayscale process:
+You can easily save the altered image using the `SaveAsImages` method. Here's a look at how the image appears before and after binarization:
 
-<div class="image-comparison">
-    <div style="width: 48%;">
-        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-quality-correction/sample.jpg" alt="Original image" class="responsive-image shadow">
-        <p style="color: #181818; font-style: italic;">Before</p>
+<div class="competitors-section__wrapper-even-1">
+    <div class="competitors__card" style="width: 48%;">
+        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-quality-correction/sample.jpg" alt="Sample image" class="img-responsive add-shadow">
+        <p class="competitors__download-link" style="color: #181818; font-style: italic;">Before</p>
     </div>
-    <div style="width: 48%;">
-        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-color-correction/grayscale_0.webp" alt="Grayscaled image" class="responsive-image shadow">
-        <p style="color: #181818; font-style: italic;">After</p>
+    <div class="competitors__card" style="width: 48%;">
+        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-color-correction/binarize_0.png" alt="Binarized image" class="img-responsive add-shadow">
+        <p class="competitors__download-link" style="color: #181818; font-style: italic;">After</p>
     </div>
 </div>
 
-<hr>
+---
 
-## Inverting Colors Example
+## Grayscale Image Conversion Example
 
-Color inversion can be used to switch colors, such as turning white text on a black background to black text on a white background, which might help in improving text visibility.
+Transforming an image into grayscale simplifies the image by reducing it to shades of gray, which can be less distracting and easier on the eyes, especially when colors in the original image are too loud.
 
-Use the `Invert` method to invert colors. This method can also accept a boolean to return the image in grayscale form.
+Implement the grayscale effect with the `ToGrayScale` method. The process essentially averages the red, green, and blue values of each pixel.
+
+```cs
+// Change image to grayscale
+imageInput.ToGrayScale();
+```
+
+Here are comparative visuals before and after applying grayscale:
+
+<div class="competitors-section__wrapper-even-1">
+    <div class="competitors__card" style="width: 48%;">
+        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-quality-correction/sample.jpg" alt="Sample image" class="img-responsive add-shadow">
+        <p class="competitors__download-link" style="color: #181818; font-style: italic;">Before</p>
+    </div>
+    <div class="competitors__card" style="width: 48%;">
+        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-color-correction/grayscale_0.webp" alt="Grayscaled image" class="img-responsive add-shadow">
+        <p class="competitors__download-link" style="color: #181818; font-style: italic;">After</p>
+    </div>
+</div>
+
+---
+
+## Inverting Image Colors Example
+
+Inverting image colors can significantly enhance the contrast between text and its background. Converting light text on dark backgrounds to dark text on light backgrounds, for example, can enhance legibility.
+
+Use the `Invert` method to toggle the colors of an image. Optionally, pass a boolean to convert the image to grayscale post-inversion.
+
+```cs
+// Apply color inversion
+imageInput.Invert();
+```
+
+Here are the images showing the result of applying the Invert method, with and without converting to grayscale:
+
+<div class="competitors-section__wrapper-even-1">
+    <div class="competitors__card" style="width: 48%;">
+        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-color-correction/invert_0.webp" alt="Inverted image" class="img-responsive add-shadow">
+        <p class="competitors__download-link" style="color: #181818; font-style: italic;">Inverted</p>
+    </div>
+    <div class="competitors__card" style="width: 48%;">
+        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-color-correction/invertTrue_0.webp" alt="Inverted and grayscaled image" class="img-responsive add-shadow">
+        <p class="competitors__download-link" style="color: #181818; font-style: italic;">Inverted & Grayscaled</p>
+    </div>
+</div>
+
+---
+
+## Replacing Specific Colors in Images Example
+
+Altering specific colors within an image can make elements either stand out or recede, which is useful for emphasizing text or correcting poor color choices.
+
+To change a color, use the `ReplaceColor` method, specifying the current and new colors and a tolerance level, which helps in images with blurriness.
 
 ```cs
 using IronOcr;
-namespace ironocr.ImageColorCorrection
-{
-    public class InversionExample
-    {
-        public void Execute()
-        {
-            using var inputImage = new OcrImageInput("sample.jpg");
-            inputImage.Invert();
-        }
-    }
-}
+
+// Create a new IronTesseract instance
+IronTesseract ocrTesseract = new IronTesseract();
+
+// Load the image
+using var imageInput = new OcrImageInput("sample.jpg");
+IronSoftware.Drawing.Color currentColor = new IronSoftware.Drawing.Color("#DB645C");
+IronSoftware.Drawing.Color newColor = IronSoftware.Drawing.Color.DarkCyan;
+
+// Execute color replacement
+imageInput.ReplaceColor(currentColor, newColor, 80);
+
+// Save the newly adjusted image
+imageInput.SaveAsImages("replaceColor.jpg");
 ```
 
-Here are the images showing the results of using the Invert method:
+Below are the results showing the image before and after the color replacement:
 
-<div class="image-comparison">
-    <div style="width: 48%;">
-        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-color-correction/invert_0.webp" alt="Inverted image" class="responsive-image shadow">
-        <p style="color: #181818; font-style: italic;">Inverted</p>
-    </div>
-    <div style="width: 48%;">
-        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-color-correction/invertTrue_0.webp" alt="Inverted and grayscaled image" class="responsive-image shadow">
-        <p style="color: #181818; font-style: italic;">Inverted & Grayscaled</p>
-    </div>
-</div>
-
-<hr>
-
-## Color Replacement Example
-
-Replacing specific colors in an image with others can help in emphasizing or reducing the prominence of certain elements. This method is often used to make text stand out or to adjust color contrasts that are problematic.
-
-To replace a color, use the `ReplaceColor` method, specifying the original and new colors along with a tolerance value to account for variations in similar colors.
-
-```cs
-using IronOcr;
-namespace ironocr.ImageColorCorrection
-{
-    public class ColorReplacementExample
-    {
-        public void Execute()
-        {
-            IronTesseract tesseract = new IronTesseract();
-            
-            using var inputImage = new OcrImageInput("sample.jpg");
-            var originalColor = IronSoftware.Drawing.Color.FromHtml("#DB645C");
-            var newColor = IronSoftware.Drawing.Color.DarkCyan;
-            
-            inputImage.ReplaceColor(originalColor, newColor, 80);
-            
-            inputImage.ExportAs("color-replaced");
-        }
-    }
-}
-```
-
-Images below illustrate the change before and after color replacement:
-<div class="image-comparison">
-    <div style="width: 48%;">
-        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-quality-correction/sample.jpg" alt="Before color replacement" class="responsive-image shadow">
-        <p style="color: #181818; fontStyle: italic;">Before</p>
-    </div>
-    <div style="width: 48%;">
-        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-color-correction/replaceColor_0.webp" alt="After color replacement" class="responsive-image shadow">
-        <p style="color: #181818; fontStyle: italic;">After</p>
-    </div>
-</div>
-
-<hr>
-
-## Reading Specific Text Color Example
-
-Reading specific text colors can be crucial in OCR applications where only particular text colors are of interest.
-
-The `SelectTextColor` method allows specifying the text color that IronOcr should focus on during the OCR process. Here's how you can set it up:
-
-```cs
-using System;
-using IronOcr;
-namespace ironocr.ImageColorCorrection
-{
-    public class SpecificTextColorExample
-    {
-        public void Execute()
-        {
-            IronTesseract tesseract = new IronTesseract();
-            
-            using var inputImage = new OcrImageInput("sample.jpg");
-            var focusColor = IronSoftware.Drawing.Color.FromHtml("#DB645C");
-            
-            inputImage.SelectTextColor(focusColor, 60);
-            
-            var ocrResult = tesseract.Read(inputImage);
-            
-            Console.WriteLine(ocrResult.Text);
-        }
-    }
-}
-```
-
-The OCR result specifically focusing on the chosen text color is shown below:
-
-<div class="image-center">
-    <div>
-        <img src="https://ironsoftware.com/static-assets/ocr/how-to/image-color-correction/read-certain-text-color.webp" alt="OCR result" class="responsive-image shadow">
-    </div>
-</div>
+<div class="competitors-section__wrapper-even-1">
+    <div class="competitors__card" style="w

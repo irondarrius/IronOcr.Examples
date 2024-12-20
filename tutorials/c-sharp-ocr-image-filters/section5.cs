@@ -1,10 +1,10 @@
 using System;
 using IronOcr;
-namespace ironocr.CSharpOcrImageFilters
+namespace IronOcr.Examples.Tutorial.CSharpOcrImageFilters
 {
-    public class Section5
+    public static class Section5
     {
-        public void Run()
+        public static void Run()
         {
             var image = @"small_barcode.png";
             var ocr = new IronTesseract();

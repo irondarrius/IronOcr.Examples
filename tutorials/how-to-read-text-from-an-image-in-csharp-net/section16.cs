@@ -1,10 +1,10 @@
 using IronSoftware.Drawing;
 using IronOcr;
-namespace ironocr.HowToReadTextFromAnImageInCsharpNet
+namespace IronOcr.Examples.Tutorial.HowToReadTextFromAnImageInCsharpNet
 {
-    public class Section16
+    public static class Section16
     {
-        public void Run()
+        public static void Run()
         {
             // We can delve deep into OCR results as an object model of Pages, Barcodes, Paragraphs, Lines, Words and Characters
             // This allows us to explore, export and draw OCR content using other APIs

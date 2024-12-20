@@ -1,9 +1,9 @@
 using IronOcr;
-namespace ironocr.ImageOrientationCorrection
+namespace IronOcr.Examples.HowTo.ImageOrientationCorrection
 {
-    public class Section3
+    public static class Section3
     {
-        public void Run()
+        public static void Run()
         {
             // Apply scale
             imageInput.Scale(70);

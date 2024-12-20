@@ -1,9 +1,9 @@
 using IronOcr;
-namespace ironocr.IronTesseract
+namespace IronOcr.Examples.HowTo.IronTesseract
 {
-    public class Section1
+    public static class Section1
     {
-        public void Run()
+        public static void Run()
         {
             IronTesseract ocr = new IronTesseract();
         }

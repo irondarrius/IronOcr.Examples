@@ -1,22 +1,26 @@
 ***Based on <https://ironsoftware.com/examples/ocr-tiff-to-searchable-pdf/>***
 
-The `IronTesseract` class from Iron Software is crafted specifically for .NET developers, facilitating the seamless conversion of TIFF images into searchable PDF files. This functionality is crucial for implementing Optical Character Recognition (OCR) capabilities within C# applications, allowing businesses and individuals to digitize and index large volumes of archival content efficiently.
+The `IronTesseract` C# class from Iron Software adeptly facilitates the conversion of TIFF images into searchable PDF documents. Harnessing optical character recognition (OCR) technology, `IronTesseract` offers a straightforward approach to transform these images into fully searchable and editable text formats ideal for data storage, retrieval, and management.
 
-```csharp
-// Install the necessary package via NuGet
-// PM> Install-Package IronOcr
+To begin the process, first ensure that `IronOcr` is installed in your development environment. You can do this simply by executing the NuGet package manager command:
 
-using IronOcr;
-
-var Ocr = new IronTesseract();
-
-// Set up the input TIFF file and output PDF file paths
-string inputPath = @"path\to\your\file.tif";
-string outputPath = @"path\to\your\output.pdf";
-
-// Configure the OCR engine to read from TIFF and output as PDF
-Ocr.Read(inputPath).SaveAsSearchablePdf(outputPath);
-
+```bash
+PM> Install-Package IronOcr
 ```
 
-For comprehensive guidance on using the `IronTesseract` OCR functionality and to view additional customization options, see the complete documentation here: [IronTesseract Documentation](https://ironsoftware.com/csharp/ocr/) .
+Once installed, you can create an instance of the `IronTesseract` class and use it to read TIFF images and convert them into PDF format as shown in the following code snippet:
+
+```csharp
+using IronOcr;
+
+var ocr = new IronTesseract();
+using (var input = new OcrInput("path/to/your/image.tiff"))
+{
+    var result = ocr.Read(input);
+    result.SaveAsSearchablePdf("output/path/your_output.pdf");
+}
+```
+
+This example illustrates the initialization of the `IronTesseract` object, loading the TIFF image, and processing it to create a searchable PDF formatted file at the specified location. The resultant PDF will contain text that is fully searchable, making it perfect for applications that need to extract and utilize textual data from scanned documents.
+
+For more detailed documentation on implementing `IronTesseract` and leveraging its full potential, refer to Iron Software's official guides and resources .

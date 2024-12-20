@@ -1,9 +1,9 @@
 using IronOcr;
-namespace ironocr.SearchablePdf
+namespace IronOcr.Examples.HowTo.SearchablePdf
 {
-    public class Section2
+    public static class Section2
     {
-        public void Run()
+        public static void Run()
         {
             // Export searchable PDF byte
             byte[] pdfByte = ocrResult.SaveAsSearchablePdfBytes();

@@ -1,46 +1,40 @@
-# How to Interpret OCR Results
+# Extracting Read Results
 
 ***Based on <https://ironsoftware.com/how-to/read-results/>***
 
 
-The OCR or optical character recognition outcome delivers detailed data about the recognized paragraphs, lines, words, and characters. For each of these segments, detailed information is provided including their content, position, and dimensions.
+The OCR or read result contains detailed information about the paragraphs, lines, words, and individual characters detected. For each component, an extensive array of details is provided, including the text itself, exact X and Y coordinates, dimensions, text direction, and location within a [`CropRectangle`](https://ironsoftware.com/open-source/csharp/drawing/examples/convert-measurement-unit-of-croprectangle/) object.
 
-Each segment furnishes details such as textual content, exact `X` and `Y` coordinates, size (width and height), the direction of the text (from Left to Right or Top to Bottom), and placement within a [`CropRectangle`](https://ironsoftware.com/open-source/csharp/drawing/examples/convert-measurement-unit-of-croprectangle/) structure.
+### Starting with IronOCR
 
-## Content of OcrResult
+----------------------------------------
 
-The returned `OcrResult` does more than just provide the extracted text; it encompasses data about pages, paragraphs, lines, words, characters, and barcodes found in the scanned PDF or image document. This data can be accessed from the `OcrResult` object using the `Read` method.
+## Insights from OcrResult
+
+The `OcrResult` not only yields the extracted text but also offers insights about the pages, paragraphs, lines, words, characters, and barcodes found in PDFs and image documents using IronOcr. You can fetch this data from the `OcrResult` object through the `Read` method.
 
 ```cs
-using System;
 using IronOcr;
-namespace ironocr.ReadResults
-{
-    public class Section1
-    {
-        public void Run()
-        {
-            // Create an instance of IronTesseract
-            IronTesseract ocrTesseract = new IronTesseract();
-            
-            // Load an image
-            using var imageInput = new OcrImageInput("sample.jpg");
-            // Execute the OCR process
-            OcrResult ocrResult = ocrTesseract.Read(imageInput);
-            
-            // Access paragraphs from the OCR result
-            Paragraph[] paragraphs = ocrResult.Paragraphs;
-            
-            // Display paragraph details to console
-            Console.WriteLine($"Text: {paragraphs[0].Text}");
-            Console.WriteLine($"X: {paragraphs[0].X}");
-            Console.WriteLine($"Y: {paragraphs[0].Y}");
-            Console.WriteLine($"Width: {paragraphs[0].Width}");
-            Console.WriteLine($"Height: {paragraphs[0].Height}");
-            Console.WriteLine($"Text direction: {paragraphs[0].TextDirection}");
-        }
-    }
-}
+using System;
+
+// Initialize IronTesseract
+IronTesseract ocr = new IronTesseract();
+
+// Load image
+using var image = new OcrImageInput("sample.jpg");
+// Execute OCR
+OcrResult result = ocr.Read(image);
+
+// Access detected paragraphs
+Paragraph[] detectedParagraphs = result.Paragraphs;
+
+// Display information
+Console.WriteLine($"Text: {detectedParagraphs[0].Text}");
+Console.WriteLine($"X: {detectedParagraphs[0].X}");
+Console.WriteLine($"Y: {detectedParagraphs[0].Y}");
+Console.WriteLine($"Width: {detectedParagraphs[0].Width}");
+Console.WriteLine($"Height: {detectedParagraphs[0].Height}");
+Console.WriteLine($"Text Direction: {detectedParagraphs[0].TextDirection}");
 ```
 
 <div class="content-img-align-center">
@@ -49,21 +43,22 @@ namespace ironocr.ReadResults
     </div>
 </div>
 
-For each text section like paragraphs, lines, words, and characters, the details are as follows:
+For each text component such as paragraphs, lines, words, and characters, details provided include:
 
-- Text: The textual content as a string.
-- X: Horizontal position from the left edge of the page, measured in pixels.
-- Y: Vertical position from the top edge of the page, in pixels.
-- Width: The span in pixels.
-- Height: The vertical extent in pixels.
-- Text Direction: The orientation in which the text is read (e.g., 'Left to Right' or 'Top to Bottom').
-- Location: The bounding rectangle that encloses the text, described in pixels.
+- Text: The extracted text.
+- X: Horizontal positioning from the left margin in pixels.
+- Y: Vertical positioning from the top margin in pixels.
+- Width: The text width in pixels.
+- Height: The text height in pixels.
+- Text Direction: The orientation of the text, either 'Left to Right' or 'Top to Bottom.'
+- Location: A rectangle indicating the text location in pixels.
 
-## Comparing Paragraphs, Lines, Words, and Characters
+## Comparison of Text Elements
 
-Here is a visual comparison of the recognized paragraphs, lines, words, and characters.
+Here we compare the detected paragraphs, lines, words, and characters visually:
 
-<table class="table" style="text-align: center; background-color: #f1f9fb;">
+<table class="table" style="text-align: center; background-color:
+#f1f9fb;">
     <tr>
         <td style="width: 50%;">
         <div class="content-img-align-center">
@@ -93,7 +88,7 @@ Here is a visual comparison of the recognized paragraphs, lines, words, and char
         </td>
         <td>
         <div class="content-img-align-center">
-            <div class="center-image-wrapper">
+            <div the "center-image-wrapper">
                 <img src="https://ironsoftware.com/static-assets/ocr/how-to/read-results/character.webp" alt="Highlight character" class="img-responsive add-shadow" >
                 <p class="competitors__download-link" style="color: #181818; font-style: italic;">Character</p>
             </div>
@@ -104,48 +99,41 @@ Here is a visual comparison of the recognized paragraphs, lines, words, and char
 
 ## Barcode and QR Code Recognition
 
-Indeed! Apart from text, IronOcr is capable of reading barcodes and QR codes. While it's not as specialized as IronBarcode, it indeed supports various common barcode formats. To activate barcode detection, simply set the `Configuration.ReadBarCodes` property to true.
+Indeed, IronOcr is capable of reading barcodes and QR codes. Although it might not be as comprehensive as IronBarcode, IronOcr still supports the detection of common barcode types. Activate this feature by setting the **Configuration.ReadBarCodes** to true.
 
-The following snippet demonstrates how to extract barcode information, which includes the barcode format, value, and geometric details:
+Further, the barcode detection reveals essential details such as the barcode format, value, positions (x, y), size, and the placement within an [`Rectangle`](https://ironsoftware.com/open-source/csharp/drawing/docs/) object for precise localization on the document.
 
 ```cs
-using System;
 using IronOcr;
-namespace ironocr.ReadResults
+using System;
+
+// Initialize IronTesseract
+IronTesseract ocrTesseract = new IronTesseract();
+
+// Enable barcode detection
+ocrTesseract.Configuration.ReadBarCodes = true;
+
+// Load PDF
+using OcrInput input = new OcrInput();
+input.LoadPdf("sample.pdf");
+
+// Carry out OCR
+OcrResult result = ocrTesseract.Read(input);
+
+// Output barcode details to console
+foreach(var barcode in result.Barcodes)
 {
-    public class Section2
-    {
-        public void Run()
-        {
-            // Initialize IronTesseract
-            IronTesseract ocrTesseract = new IronTesseract();
-            
-            // Activate barcode reading
-            ocrTesseract.Configuration.ReadBarCodes = true;
-            
-            // Load a PDF file
-            using OcrInput ocrInput = new OcrInput("sample.pdf");
-            
-            // Perform the OCR operation
-            OcrResult ocrResult = ocrTesseract.Read(ocrInput);
-            
-            // Print barcode details
-            foreach(var barcode in ocrResult.Barcodes)
-            {
-                Console.WriteLine("Format = " + barcode.Format);
-                Console.WriteLine("Value = " + barcode.Value);
-                Console.WriteLine("X = " + barcode.X);
-                Console.WriteLine("Y = " + barcode.Y);
-            }
-            Console.WriteLine(ocrResult.Text);
-        }
-    }
+    Console.WriteLine("Format = " + barcode.Format);
+    Console.WriteLine("Value = " + barcode.Value);
+    Console.WriteLine("X = " + barcode.X);
+    Console.WriteLine("Y = " + barcode.Y);
 }
+Console.WriteLine(result.Text);
 ```
 
 ### Output
 <div class="content-img-align-center">
-    <div class="center-image-wrapper">
+    <div "center-image-wrapper">
         <img src="https://ironsoftware.com/static-assets/ocr/how-to/read-results/barcodes.webp" alt="Detect barcodes" class="img-responsive add-shadow" >
     </div>
 </div>

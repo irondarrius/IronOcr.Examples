@@ -1,75 +1,64 @@
-# Stream Reading Techniques in Programming
+# How to Read from Streams
 
 ***Based on <https://ironsoftware.com/how-to/input-streams/>***
 
 
-In computer programming, ‘stream’ data signifies a steady flow of binary data that can be efficiently read or written piece by piece. This approach is particularly useful for handling large datasets that are too extensive to fully load into memory.
+In computing, "stream data" refers to a continuous sequence of binary data that can be incrementally read or written. Streams are particularly useful when processing large datasets that might not fit completely into memory, allowing for data handling in manageable portions.
 
-IronOcr supports the use of data streams, allowing the import and OCR of image streams seamlessly. By feeding image stream data directly into its import functions, IronOcr simplifies the process, seamlessly handling the complexities of stream management.
+IronOcr supports reading from data streams, specifically for images. This functionality allows you to directly pass a stream into its import methods for image reading and processing.
 
-## Example of Reading Streams
+<h3>Getting Started with IronOCR</h3>
 
-To commence, create an instance of the **IronTesseract** class to utilize OCR capabilities. Utilize the `FromFile` method from AnyBitmap to load the image file, which can subsequently convert the image into a stream. With the aid of a 'using' statement, construct an OcrImageInput by injecting the stream produced by the `GetStream` method from AnyBitmap, and then apply the `Read` method to execute OCR.
+--------------------------------------
+
+## Reading Streams Example
+
+Begin by creating an instance of the **IronTesseract** class to execute OCR operations. Utilize the `FromFile` method of the AnyBitmap class to load an image. This method converts the image file into a data stream. By utilizing the `using` statement, you can create an `OcrImageInput` instance by feeding it the stream from the AnyBitmap's `GetStream` method. Complete the process by invoking the `Read` method to perform OCR.
 
 ```cs
+using IronOcr;
 using IronSoftware.Drawing;
-using IronOcr;
-namespace ironocr.InputStreams
-{
-    public class Section1
-    {
-        public void Run()
-        {
-            // Creates an instance of IronTesseract
-            IronTesseract ocrTesseract = new IronTesseract();
-            
-            // Loads image file into AnyBitmap
-            AnyBitmap anyBitmap = AnyBitmap.FromFile("Potter.tiff");
-            
-            // Transfers image stream
-            using var imageInput = new OcrImageInput(anyBitmap.GetStream());
-            // Executes OCR
-            OcrResult ocrResult = ocrTesseract.Read(imageInput);
-        }
-    }
-}
+
+// Create an IronTesseract instance
+IronTesseract ocrTesseract = new IronTesseract();
+
+// Load the image into AnyBitmap
+AnyBitmap anyBitmap = AnyBitmap.FromFile("Potter.tiff");
+
+// Convert image to stream
+using var imageInput = new OcrImageInput(anyBitmap.GetStream());
+// Execute OCR
+OcrResult ocrResult = ocrTesseract.Read(imageInput);
 ```
 
-## Setting a Scan Region
+## Specifying a Scan Region
 
-For enhanced efficiency with large images or to target specific sections of an image, the CropRectangle is a useful feature. This class can be passed as a parameter to the OcrImageInput constructor, specifying the desired area of the image to be processed. The subsequent example demonstrates setting the OCR region to include only the chapter number and title from an image.
+To enhance OCR performance on large images or to focus on specific areas of the image, use the CropRectangle class. When constructing the OcrImageInput, you can pass a CropRectangle instance as an additional parameter to define the image area to be analyzed. The following example demonstrates setting this up to only read the region containing a chapter number and title.
 
 ```cs
-using System;
 using IronOcr;
-namespace ironocr.InputStreams
-{
-    public class Section2
-    {
-        public void Run()
-        {
-            // Initializes IronTesseract
-            IronTesseract ocrTesseract = new IronTesseract();
-            
-            // Loads the image into AnyBitmap
-            AnyBitmap anyBitmap = AnyBitmap.FromFile("Potter.tiff");
-            
-            // Sets the scanning region
-            Rectangle scanRegion = new Rectangle(800, 200, 900, 400);
-            
-            // Processes the specified image section
-            using var imageInput = new OcrImageInput(anyBitmap.GetStream(), ContentArea: scanRegion);
-            // Executes OCR
-            OcrResult ocrResult = ocrTesseract.Read(imageInput);
-            
-            // Prints the OCR result to the console
-            Console.WriteLine(ocrResult.Text);
-        }
-    }
-}
+using IronSoftware.Drawing;
+using System;
+
+// Initialize IronTesseract
+IronTesseract ocrTesseract = new IronTesseract();
+
+// Load the image to AnyBitmap
+AnyBitmap anyBitmap = AnyBitmap.FromFile("Potter.tiff");
+
+// Define the area of interest
+Rectangle scanRegion = new Rectangle(800, 200, 900, 400);
+
+// Prepare the image for OCR
+using var imageInput = new OcrImageInput(anyBitmap.GetStream(), ContentArea: scanRegion);
+// Execute OCR
+OcrResult ocrResult = ocrTesseract.Read(imageInput);
+
+// Display the OCR result
+Console.WriteLine(ocrResult.Text);
 ```
 
-### OCR Output Example
+### OCR Result
 
 <div class="content-img-align-center">
     <div class="center-image-wrapper">

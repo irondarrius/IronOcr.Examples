@@ -1,10 +1,10 @@
 using System;
 using IronOcr;
-namespace ironocr.IronTesseract
+namespace IronOcr.Examples.HowTo.IronTesseract
 {
-    public class Section4
+    public static class Section4
     {
-        public void Run()
+        public static void Run()
         {
             IronTesseract Ocr = new IronTesseract();
             

@@ -1,9 +1,9 @@
 using IronOcr;
-namespace ironocr.CSharpTesseractOcr
+namespace IronOcr.Examples.Tutorial.CSharpTesseractOcr
 {
-    public class Section5
+    public static class Section5
     {
-        public void Run()
+        public static void Run()
         {
             var text = new IronTesseract().Read("img.png").Text;
         }

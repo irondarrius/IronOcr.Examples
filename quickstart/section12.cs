@@ -1,9 +1,9 @@
 using IronOcr;
-namespace ironocr.Quickstart
+namespace IronOcr.Examples.Overview.Quickstart
 {
-    public class Section12
+    public static class Section12
     {
-        public void Run()
+        public static void Run()
         {
             // PM> Install IronOcr.Languages.Arabic
             IronTesseract ocr = new IronTesseract();

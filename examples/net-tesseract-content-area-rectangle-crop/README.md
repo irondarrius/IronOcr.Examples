@@ -1,3 +1,3 @@
 ***Based on <https://ironsoftware.com/examples/net-tesseract-content-area-rectangle-crop/>***
 
-The sample demonstrates a significant enhancement in performance—up to 41% faster—by selecting a particular region of an image for OCR processing in .NET. This method utilizes `ContentAreas` or `CropAreas` to specify the region.
+This example demonstrates a noticeable 41% increase in processing speed by selecting a specific region of an image for OCR operations in .NET. Such regions are referred to as `ContentAreas` or `CropAreas`.

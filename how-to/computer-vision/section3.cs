@@ -1,10 +1,10 @@
 using System.Linq;
 using IronOcr;
-namespace ironocr.ComputerVision
+namespace IronOcr.Examples.HowTo.ComputerVision
 {
-    public class Section3
+    public static class Section3
     {
-        public void Run()
+        public static void Run()
         {
             var ocr = new IronTesseract();
             using var input = new OcrInput();

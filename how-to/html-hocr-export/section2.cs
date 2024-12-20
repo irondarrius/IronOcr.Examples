@@ -1,9 +1,9 @@
 using IronOcr;
-namespace ironocr.HtmlHocrExport
+namespace IronOcr.Examples.HowTo.HtmlHocrExport
 {
-    public class Section2
+    public static class Section2
     {
-        public void Run()
+        public static void Run()
         {
             // Export as HTML string
             string hocr = ocrResult.SaveAsHocrString();

@@ -1,9 +1,9 @@
 using IronOcr;
-namespace ironocr.TesseractResultConfidence
+namespace IronOcr.Examples.HowTo.TesseractResultConfidence
 {
-    public class Section2
+    public static class Section2
     {
-        public void Run()
+        public static void Run()
         {
             // Get page confidence level
             double pageConfidence = ocrResult.Pages[0].Confidence;

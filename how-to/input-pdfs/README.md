@@ -1,32 +1,28 @@
-# Understanding PDF Reading
+# PDF Reading Overview
 
 ***Based on <https://ironsoftware.com/how-to/input-pdfs/>***
 
 
-PDF, which stands for "Portable Document Format," is a file format concocted by Adobe to maintain the authenticity of document designs including fonts, images, and layouts, no matter the software or hardware where it was created. PDFs are widely embraced for their ability to display contents consistently across different environments. Using Iron Software's IronOcr, developers can successfully manage and read PDFs in various versions with efficiency and ease.
+PDF, which stands for "Portable Document Format," is a versatile file format developed by Adobe. It effectively preserves the fonts, images, graphics, and overall layout of any document, irrespective of the application or platform originally used to create it. This makes PDFs ideal for consistent document sharing and viewing across various devices. IronOcr is adept at handling different versions of PDF documents with ease.
 
-## PDF Reading Tutorial
+<h3>Initializing IronOCR for OCR Tasks</h3>
 
-To begin reading PDFs, establish an instance of `IronTesseract`. Use a 'using' statement to initiate an `OcrPdfInput` instance by passing the path of the PDF. Then, process the document using the `Read` method.
+---
+
+## Reading PDF Example
+
+Start by creating an instance of the `IronTesseract` class for Optical Character Recognition (OCR). Then, within a 'using' statement, initialize an `OcrPdfInput` object by providing the path to your PDF file. Finally, execute the OCR process by calling the `Read` method.
 
 ```cs
 using IronOcr;
-namespace ironocr.InputPdfs
-{
-    public class Section1
-    {
-        public void ReadPdf()
-        {
-            // Create a new instance of IronTesseract
-            IronTesseract tesseract = new IronTesseract();
-            
-            // Initialize the PDF input
-            using var pdfReader = new OcrPdfInput("Potter.pdf");
-            // Execute the OCR process
-            OcrResult result = tesseract.Read(pdfReader);
-        }
-    }
-}
+
+// Create an IronTesseract instance
+IronTesseract ocrTesseract = new IronTesseract();
+
+// Load a PDF
+using var pdfInput = new OcrPdfInput("Potter.pdf");
+// Execute OCR
+OcrResult ocrResult = ocrTesseract.Read(pdfInput);
 ```
 
 <div class="content-img-align-center">
@@ -35,70 +31,55 @@ namespace ironocr.InputPdfs
     </div>
 </div>
 
-Usually, setting the DPI parameter isn't required, but using a higher DPI might improve the precision of the OCR.
+Generally, it's not necessary to adjust the DPI setting, but increasing this value in the `OcrPdfInput` constructor can improve the accuracy of the OCR results.
 
-## Reading Specific PDF Pages
+## Reading Specific PDF Pages Example
 
-To extract text from particular pages within a PDF file, specify the desired pages using the `PageIndices` array. Enter zero-based index numbers for each page you want to include.
+To read particular pages from a PDF, specify the page indices at which import should occur. While constructing the `OcrPdfInput`, pass these indices to the `PageIndices` parameter. Remember, these indices are zero-based.
 
 ```cs
+using IronOcr;
 using System.Collections.Generic;
-using IronOcr;
-namespace ironocr.InputPdfs
-{
-    public class Section2
-    {
-        public void ReadSelectedPages()
-        {
-            // Initialize IronTesseract
-            IronTesseract tesseract = new IronTesseract();
-            
-            // List desired pages
-            List<int> pageIndex = new List<int> { 0, 2 };
-            
-            // Setup the PDF reader with specific pages
-            using var pdfReader = new OcrPdfInput("Potter.pdf", PageIndices: pageIndex);
-            // Execute OCR
-            OcrResult result = tesseract.Read(pdfReader);
-        }
-    }
-}
+
+// Initialize IronTesseract
+IronTesseract ocrTesseract = new IronTesseract();
+
+// Define specific page indices to be read
+List<int> pageIndices = new List<int>() { 0, 2 };
+
+// Load PDF with specified pages
+using var pdfInput = new OcrPdfInput("Potter.pdf", PageIndices: pageIndices);
+// Process OCR
+OcrResult ocrResult = ocrTesseract.Read(pdfInput);
 ```
 
-## Targeting Specific Scan Regions
+## Setting Scanning Region
 
-You can enhance OCR performance by specifying the exact area of the PDF to be analyzed. This strategy is particularly useful when you need to extract information from specific portions of a page.
+Focusing on a specific region of a PDF can substantially increase the precision and efficiency of the OCR process. This can be configured by setting specific areas for the OCR engine to analyze. The following example demonstrates how to instruct IronOcr to focus on specific sections of a document, such as extracting chapter numbers and titles.
 
 ```cs
-using System;
 using IronOcr;
-namespace ironocr.InputPdfs
+using IronSoftware.Drawing;
+using System;
+
+// Create an IronTesseract instance
+IronTesseract ocrTesseract = new IronTesseract();
+
+// Define regions to scan
+Rectangle[] scanRegions = { new Rectangle(550, 100, 600, 300) };
+
+// Load PDF with specific content areas
+using (var pdfInput = new OcrPdfInput("Potter.pdf", ContentAreas: scanRegions))
 {
-    public class Section3
-    {
-        public void ReadRestrictedArea()
-        {
-            // Initialize IronTesseract
-            IronTesseract tesseract = new IronTesseract();
-            
-            // Define specific reading regions
-            Rectangle[] contentAreas = { new Rectangle(550, 100, 600, 300) };
-            
-            // Prepare the PDF reader with constrained content areas
-            using (var pdfReader = new OcrPdfInput("Potter.pdf", ContentAreas: contentAreas))
-            {
-                // Perform OCR
-                OcrResult result = tesseract.Read(pdfReader);
-            
-                // Print the output to the console
-                Console.WriteLine(result.Text);
-            }
-        }
-    }
+    // Execute OCR
+    OcrResult ocrResult = ocrTesseract.Read(pdfInput);
+
+    // Print the OCR results
+    Console.WriteLine(ocrResult.Text);
 }
 ```
 
-### OCR Output Visualization
+### OCR Results Display
 
 <div class="content-img-align-center">
     <div class="center-image-wrapper">

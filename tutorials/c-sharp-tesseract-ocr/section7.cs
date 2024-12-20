@@ -1,9 +1,9 @@
 using IronOcr;
-namespace ironocr.CSharpTesseractOcr
+namespace IronOcr.Examples.Tutorial.CSharpTesseractOcr
 {
-    public class Section7
+    public static class Section7
     {
-        public void Run()
+        public static void Run()
         {
             // For the Chinese Language Pack:
             // PM> Install IronOcr.Languages.ChineseSimplified
